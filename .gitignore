@@ -1,0 +1,60 @@
+# =========================
+# Java / Build
+# =========================
+/target/
+/out/
+/bin/
+/build/
+
+# Gradle
+.gradle/
+/build/
+
+# Maven
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# =========================
+# IDEs
+# =========================
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+*.classpath
+*.project
+*.settings/
+.apt_generated/
+.factorypath/
+
+# VS Code
+.vscode/
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Temporary / Misc
+# =========================
+*.tmp
+*.swp
+*.swo
+
+# =========================
+# Quarkus specific
+# =========================
+# Dev mode generated files
+/dev/
