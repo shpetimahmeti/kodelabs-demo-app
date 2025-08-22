@@ -2,10 +2,12 @@ package org.kodelabs.domain.airport;
 
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Facet;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import io.quarkus.mongodb.reactive.ReactiveMongoClient;
 import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import io.smallrye.mutiny.Multi;
+import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -28,6 +30,15 @@ public class AirportRepository {
     String airportCollection;
 
     private final String NAME_FIELD = "name";
+
+    public Uni<AirportEntity> findById(String iata) {
+        ReactiveMongoCollection<AirportEntity> collection = client.getDatabase(database)
+                .getCollection(airportCollection, AirportEntity.class);
+
+        return Multi.createFrom().publisher(collection.find(Filters.eq("iata", iata)))
+                .collect().first()
+                .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
+    }
 
     public Multi<AirportFacetResult> findAirportsWithPagination(int page, int size, boolean ascending) {
         ReactiveMongoCollection<AirportFacetResult> collection = client.getDatabase(database)

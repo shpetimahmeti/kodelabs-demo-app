@@ -22,4 +22,10 @@ public class AirportResource {
                                                       @QueryParam("asc") @DefaultValue("true") boolean ascending) {
         return service.findAll(page, size, ascending);
     }
+
+    @GET
+    @Path("/{iata}")
+    public Uni<AirportDTO> findById(@PathParam("iata") String iata) {
+        return service.findOneByIata(iata);
+    }
 }

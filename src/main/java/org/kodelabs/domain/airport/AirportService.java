@@ -18,6 +18,10 @@ public class AirportService {
         this.repository = repository;
     }
 
+    public Uni<AirportDTO> findOneByIata(String iata) {
+        return repository.findById(iata).onItem().transform(this::mapToDTO);
+    }
+
     public Uni<PaginatedResponse<AirportDTO>> findAll(int page, int size, boolean ascending) {
         return repository.findAirportsWithPagination(page, size, ascending)
                 .collect().asList()
