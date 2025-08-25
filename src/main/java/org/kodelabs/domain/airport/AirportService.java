@@ -19,7 +19,7 @@ public class AirportService {
     }
 
     public Uni<AirportDTO> findOneByIata(String iata) {
-        return repository.findById(iata).onItem().transform(this::mapToDTO);
+        return repository.findOneByIata(iata).onItem().transform(this::mapToDTO);
     }
 
     public Uni<PaginatedResponse<AirportDTO>> findAll(int page, int size, boolean ascending) {

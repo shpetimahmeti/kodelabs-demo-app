@@ -31,7 +31,7 @@ public class AirportRepository {
 
     private final String NAME_FIELD = "name";
 
-    public Uni<AirportEntity> findById(String iata) {
+    public Uni<AirportEntity> findOneByIata(String iata) {
         ReactiveMongoCollection<AirportEntity> collection = client.getDatabase(database)
                 .getCollection(airportCollection, AirportEntity.class);
 
