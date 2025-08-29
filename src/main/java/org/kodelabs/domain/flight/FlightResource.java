@@ -9,9 +9,9 @@ import org.kodelabs.domain.route.RouteEntity;
 import org.kodelabs.domain.route.RouteSearchParams;
 import org.kodelabs.domain.route.RouteService;
 import org.kodelabs.domain.segment.SegmentEntity;
+import org.kodelabs.domain.segment.SegmentWithConnections;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @Path("/flights")
@@ -41,7 +41,7 @@ public class FlightResource {
 
     @GET
     @Path("/segment/all")
-    public Uni<List<SegmentEntity>> getAllSegments() {
+    public Uni<List<SegmentWithConnections>> getAllSegments() {
         return routeService.getAllSegments(
                 "PRN",
                 "LAX",

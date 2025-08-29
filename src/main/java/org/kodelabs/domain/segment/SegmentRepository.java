@@ -13,7 +13,8 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @ApplicationScoped
@@ -44,11 +45,13 @@ public class SegmentRepository {
                 .getCollection(segmentCollection, SegmentEntity.class);
     }
 
-    public Multi<SegmentEntity> findSegments(String originIata,
+    public Multi<SegmentWithConnections> findSegments(String originIata,
                                              String destination,
                                              LocalDate startDepartureDate,
                                              LocalDate endDepartureDate) {
-        ReactiveMongoCollection<SegmentEntity> collection = getCollection();
+        ReactiveMongoCollection<SegmentWithConnections> collection =
+                client.getDatabase(database)
+                        .getCollection(segmentCollection, SegmentWithConnections.class);
 
         GraphLookupOptions options = new GraphLookupOptions();
 
@@ -58,6 +61,23 @@ public class SegmentRepository {
                 Filters.eq("stops", 0),
                 Filters.lte("departureTime", Instant.parse("2025-09-07T00:00:00Z"))
         ));
+
+        Document ifNull = new Document("$ifNull", Arrays.asList("$connections", Collections.emptyList()));
+
+        Document map = new Document("$map",
+                new Document("input", "$$value")
+                        .append("as", "c")
+                        .append("in", "$$c.segmentId"));
+
+        Document inExpr = new Document("$in", Arrays.asList("$$this.segmentId", map));
+        Document concatArrays = new Document("$concatArrays", Arrays.asList("$$value", Arrays.asList("$$this")));
+        Document cond = new Document("$cond", Arrays.asList(inExpr, "$$value", concatArrays));
+
+        Document reduce = new Document("$reduce", new Document("input", ifNull)
+                .append("initialValue", Collections.emptyList())
+                .append("in", cond));
+
+        Bson dedupeStage = Aggregates.set(new Field<>("connections", reduce));
 
         List<Bson> pipeline = List.of(
                 //match
@@ -79,7 +99,7 @@ public class SegmentRepository {
                         "to",
                         "from",
                         "connections",
-                        new GraphLookupOptions()
+                        options
                 ),
                 //match end destination
                 Aggregates.match(Filters.or(
@@ -95,10 +115,12 @@ public class SegmentRepository {
                                         .append("sortBy", new Document("departureTime", 1))
                         )
                 )),
+                dedupeStage,
                 //skip
                 Aggregates.skip(0),
                 //limit
                 Aggregates.limit(10)
+
         );
 
         return collection.aggregate(pipeline);
