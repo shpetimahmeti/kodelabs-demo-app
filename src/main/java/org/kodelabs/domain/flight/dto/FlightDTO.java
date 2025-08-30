@@ -1,7 +1,5 @@
 package org.kodelabs.domain.flight.dto;
 
-import org.bson.types.ObjectId;
-
 import java.time.Instant;
 import java.util.List;
 

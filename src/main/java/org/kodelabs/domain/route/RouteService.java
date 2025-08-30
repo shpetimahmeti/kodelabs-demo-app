@@ -1,16 +1,13 @@
 package org.kodelabs.domain.route;
 
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.kodelabs.domain.segment.SegmentEntity;
-import org.kodelabs.domain.segment.SegmentRepository;
-import org.kodelabs.domain.segment.SegmentWithConnections;
+import org.kodelabs.domain.segment.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class RouteService {
@@ -33,29 +30,67 @@ public class RouteService {
         return segmentRepository.getFirstSegment();
     }
 
-    public Uni<List<SegmentWithConnections>> getAllSegments(String originIata,
-                                                            String destinationIata,
-                                                            LocalDate startDepartureDate,
-                                                            LocalDate endDepartureDate) {
+    public Multi<GroupedSegmentsWrapper> getAllSegments(String originIata,
+                                                        String destinationIata,
+                                                        LocalDate startDepartureDate,
+                                                        LocalDate endDepartureDate) {
 
         return segmentRepository.findSegments(
                 originIata,
                 destinationIata,
                 startDepartureDate,
                 endDepartureDate
-        ).collect().asList().invoke(allSegments -> {
+        ).onItem().transform(segmentWithConnections -> {
+            Map<String, List<String>> graph = new HashMap<>();
+            Map<String, SegmentEntity> segmentsMap = new HashMap<>();
 
-            allSegments.forEach(segment -> {
-                Map<String, List<String>> graph = new HashMap<>();
+            buildGraphAndSegmentsMap(segmentWithConnections, graph, segmentsMap);
 
-                graph.put(segment.from, new ArrayList<>(List.of(segment.to)));
-                segment.connections.forEach(connection -> {
-                    graph.putIfAbsent(connection.from, new ArrayList<>());
-                    graph.get(connection.from).add(connection.to);
-                });
+            List<List<String>> paths = findAllPaths(originIata, destinationIata, graph);
+            List<List<String>> listOfConnectedPaths = new ArrayList<>();
 
-                List<List<String>> paths = findAllPaths(originIata, destinationIata, graph);
-            });
+            for (List<String> arr : paths) {
+                List<String> pairs = new ArrayList<>();
+                for (int i = 0; i < arr.size() - 1; i++) {
+                    pairs.add(arr.get(i) + "-" + arr.get(i + 1));
+                }
+                listOfConnectedPaths.add(pairs);
+            }
+
+            List<GroupedSegments> orderedResult =
+                    listOfConnectedPaths.stream()
+                            .map(temp -> {
+                                GroupedSegments group = new GroupedSegments();
+
+                                temp.forEach(path -> {
+                                    SegmentEntity entity = Optional.ofNullable(segmentsMap.get(path))
+                                            .orElseThrow(() -> new RuntimeException("Segment " + path + " not found"));
+
+                                    group.getSegmentsGroupedByRouteId()
+                                            .computeIfAbsent(entity.routeInstanceId.toString(), k -> new ArrayList<>())
+                                            .add(entity);
+                                });
+
+                                return group;
+                            })
+                            .toList();
+            return new GroupedSegmentsWrapper(orderedResult);
+        });
+    }
+
+    private void buildGraphAndSegmentsMap(
+            SegmentWithConnections segmentWithConnections,
+            Map<String, List<String>> graphToPopulate,
+            Map<String, SegmentEntity> segmentsMapToPopulate) {
+
+        graphToPopulate.put(segmentWithConnections.from, new ArrayList<>(List.of(segmentWithConnections.to)));
+        segmentsMapToPopulate.put(segmentWithConnections.segmentId, segmentWithConnections);
+
+        segmentWithConnections.connections.forEach(connection -> {
+            segmentsMapToPopulate.put(connection.segmentId, connection);
+
+            graphToPopulate.putIfAbsent(connection.from, new ArrayList<>());
+            graphToPopulate.get(connection.from).add(connection.to);
         });
     }
 

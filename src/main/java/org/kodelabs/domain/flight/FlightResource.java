@@ -8,8 +8,8 @@ import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.route.RouteEntity;
 import org.kodelabs.domain.route.RouteSearchParams;
 import org.kodelabs.domain.route.RouteService;
+import org.kodelabs.domain.segment.GroupedSegmentsWrapper;
 import org.kodelabs.domain.segment.SegmentEntity;
-import org.kodelabs.domain.segment.SegmentWithConnections;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,7 +30,10 @@ public class FlightResource {
 
     @GET
     public Uni<List<RouteEntity>> searchRoutes(@Valid @BeanParam RouteSearchParams params) {
-        return routeService.getAllRoutes(params.origin, params.destination, params.departureDate);
+        return routeService.getAllRoutes(
+                params.getOrigin(),
+                params.getDestination(),
+                params.getDepartureDate());
     }
 
     @GET
@@ -41,13 +44,13 @@ public class FlightResource {
 
     @GET
     @Path("/segment/all")
-    public Uni<List<SegmentWithConnections>> getAllSegments() {
+    public Uni<List<GroupedSegmentsWrapper>> getAllSegments(@Valid @BeanParam RouteSearchParams params) {
         return routeService.getAllSegments(
-                "PRN",
-                "LAX",
-                LocalDate.parse("2025-09-05"),
-                LocalDate.parse("2025-09-06")
-        );
+                params.getOrigin(),
+                params.getDestination(),
+                params.getDepartureDate(),
+                params.getDepartureDate().plusDays(1) //LocalDate.parse("2025-09-06")
+        ).collect().asList();
     }
 }
 
