@@ -2,17 +2,10 @@ package org.kodelabs.domain.flight;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.kodelabs.domain.route.RouteEntity;
-import org.kodelabs.domain.route.RouteSearchParams;
-import org.kodelabs.domain.route.RouteService;
-import org.kodelabs.domain.segment.GroupedSegmentsWrapper;
-import org.kodelabs.domain.segment.SegmentEntity;
-
-import java.time.LocalDate;
-import java.util.List;
+import org.kodelabs.domain.flight.dto.FlightDTO;
 
 @Path("/flights")
 @Produces(MediaType.APPLICATION_JSON)
@@ -20,38 +13,17 @@ import java.util.List;
 public class FlightResource {
 
     @Inject
-    RouteService routeService;
+    FlightService flightService;
 
     @GET
-    @Path("/first")
-    public Uni<RouteEntity> getFirstRoutes() {
-        return routeService.getFirstRoute();
+    @Path("/{id}")
+    public Uni<FlightDTO> findByObjectId(@PathParam("id")
+                                         @NotBlank(message = "id is required") String id) {
+        return flightService.findOneByObjectId(id);
     }
 
-    @GET
-    public Uni<List<RouteEntity>> searchRoutes(@Valid @BeanParam RouteSearchParams params) {
-        return routeService.getAllRoutes(
-                params.getOrigin(),
-                params.getDestination(),
-                params.getDepartureDate());
-    }
-
-    @GET
-    @Path("/segment")
-    public Uni<SegmentEntity> getFirstSegment() {
-        return routeService.getFirstSegment();
-    }
-
-    @GET
-    @Path("/segment/all")
-    public Uni<List<GroupedSegmentsWrapper>> getAllSegments(@Valid @BeanParam RouteSearchParams params) {
-        return routeService.getAllSegments(
-                params.getOrigin(),
-                params.getDestination(),
-                params.getDepartureDate(),
-                params.getDepartureDate().plusDays(1) //LocalDate.parse("2025-09-06")
-        ).collect().asList();
-    }
+    //TODO implement find by object id and departure date
+    //TODO implement to search by multiple object ids
 }
 
 

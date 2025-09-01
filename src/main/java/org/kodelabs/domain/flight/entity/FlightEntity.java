@@ -1,14 +1,15 @@
-package org.kodelabs.domain.flight.dto;
+package org.kodelabs.domain.flight.entity;
 
+import org.bson.types.ObjectId;
 import org.kodelabs.domain.flight.model.Place;
 import org.kodelabs.domain.flight.model.Seat;
 
 import java.time.Instant;
 import java.util.List;
 
-public class FlightDTO {
+public class FlightEntity {
 
-    private String id;
+    private ObjectId id;
     private String routeId;
     private int routeVersion;
     private String routeInstanceId;
@@ -21,14 +22,20 @@ public class FlightDTO {
     private String aircraftRegistration;
     private String aircraftType;
     private String status;
+    private Instant date;
+
+    private String overallStatus;
+
     private int availableSeatsCount;
     private List<Seat> seats;
+    private Instant createdAt;
+    private Instant updatedAt;
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -48,12 +55,60 @@ public class FlightDTO {
         this.routeVersion = routeVersion;
     }
 
+    public String getRouteInstanceId() {
+        return routeInstanceId;
+    }
+
+    public void setRouteInstanceId(String routeInstanceId) {
+        this.routeInstanceId = routeInstanceId;
+    }
+
     public String getPublishedFlightNumber() {
         return publishedFlightNumber;
     }
 
     public void setPublishedFlightNumber(String publishedFlightNumber) {
         this.publishedFlightNumber = publishedFlightNumber;
+    }
+
+    public Instant getDate() {
+        return date;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public String getOverallStatus() {
+        return overallStatus;
+    }
+
+    public void setOverallStatus(String overallStatus) {
+        this.overallStatus = overallStatus;
+    }
+
+    public int getAvailableSeatsCount() {
+        return availableSeatsCount;
+    }
+
+    public void setAvailableSeatsCount(int availableSeatsCount) {
+        this.availableSeatsCount = availableSeatsCount;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getOperatingFlightNumber() {
@@ -120,27 +175,11 @@ public class FlightDTO {
         this.status = status;
     }
 
-    public int getAvailableSeatsCount() {
-        return availableSeatsCount;
-    }
-
-    public void setAvailableSeatsCount(int availableSeatsCount) {
-        this.availableSeatsCount = availableSeatsCount;
-    }
-
     public List<Seat> getSeats() {
         return seats;
     }
 
     public void setSeats(List<Seat> seats) {
         this.seats = seats;
-    }
-
-    public String getRouteInstanceId() {
-        return routeInstanceId;
-    }
-
-    public void setRouteInstanceId(String routeInstanceId) {
-        this.routeInstanceId = routeInstanceId;
     }
 }

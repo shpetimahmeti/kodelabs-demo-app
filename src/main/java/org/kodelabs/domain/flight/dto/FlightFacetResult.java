@@ -1,6 +1,6 @@
 package org.kodelabs.domain.flight.dto;
 
-import org.kodelabs.domain.flight.FlightEntity;
+import org.kodelabs.domain.flight.entity.FlightEntity;
 
 import java.util.List;
 
