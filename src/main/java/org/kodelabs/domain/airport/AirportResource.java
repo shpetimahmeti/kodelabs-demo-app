@@ -28,4 +28,6 @@ public class AirportResource {
     public Uni<AirportDTO> findById(@PathParam("iata") String iata) {
         return service.findOneByIata(iata);
     }
+
+    //TODO cache results
 }
