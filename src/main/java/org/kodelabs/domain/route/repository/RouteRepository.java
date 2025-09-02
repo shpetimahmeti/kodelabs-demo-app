@@ -1,6 +1,5 @@
-package org.kodelabs.domain.route;
+package org.kodelabs.domain.route.repository;
 
-import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import io.quarkus.mongodb.reactive.ReactiveMongoClient;
 import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
@@ -10,6 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.conversions.Bson;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.kodelabs.domain.route.entity.RouteEntity;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -19,7 +19,6 @@ import java.util.List;
 
 
 import static com.mongodb.client.model.Aggregates.match;
-import static com.mongodb.client.model.Filters.elemMatch;
 import static com.mongodb.client.model.Filters.eq;
 
 @ApplicationScoped
@@ -38,12 +37,6 @@ public class RouteRepository {
     private final String FROM_FIELD = "from";
     private final String TO_FIELD = "to";
     private final String DATE_FIELD = "date";
-
-    public Uni<RouteEntity> getFirstRoute() {
-        ReactiveMongoCollection<RouteEntity> collection = getCollection();
-
-        return Uni.createFrom().publisher(collection.find());
-    }
 
     public Multi<RouteEntity> getAllRoutes(String originIata, String destinationIata, LocalDate localDate) {
         ReactiveMongoCollection<RouteEntity> collection = getCollection();
@@ -70,11 +63,6 @@ public class RouteRepository {
         List<Bson> pipeline = List.of(match(Filters.and(filters)));
 
         return collection.aggregate(pipeline, RouteEntity.class);
-    }
-
-    public Uni<Void> getAllTemp(String originIata, String destinationIata, LocalDate localDate) {
-
-        return Uni.createFrom().voidItem();
     }
 
     private ReactiveMongoCollection<RouteEntity> getCollection() {

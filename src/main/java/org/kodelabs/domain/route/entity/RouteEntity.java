@@ -1,4 +1,4 @@
-package org.kodelabs.domain.route;
+package org.kodelabs.domain.route.entity;
 
 import org.bson.types.ObjectId;
 

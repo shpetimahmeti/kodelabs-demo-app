@@ -27,7 +27,6 @@ public class AirportFacetResult {
     public static class CountResult {
         private long count;
 
-
         public long getCount() {
             return count;
         }

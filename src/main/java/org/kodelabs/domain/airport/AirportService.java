@@ -2,6 +2,7 @@ package org.kodelabs.domain.airport;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.bson.types.ObjectId;
 import org.kodelabs.domain.airport.dto.AirportDTO;
 import org.kodelabs.domain.airport.dto.AirportFacetResult;
@@ -12,11 +13,8 @@ import java.util.List;
 @ApplicationScoped
 public class AirportService {
 
-    private final AirportRepository repository;
-
-    public AirportService(AirportRepository repository) {
-        this.repository = repository;
-    }
+    @Inject
+    AirportRepository repository;
 
     public Uni<AirportDTO> findOneByIata(String iata) {
         return repository.findOneByIata(iata).onItem().transform(this::mapToDTO);

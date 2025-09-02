@@ -4,14 +4,12 @@ import com.mongodb.client.model.*;
 import io.quarkus.mongodb.reactive.ReactiveMongoClient;
 import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,26 +27,10 @@ public class SegmentRepository {
     @ConfigProperty(name = "app.mongodb.segment-collection")
     String segmentCollection;
 
-    private final String SEGMENTS_FIELD = "segments";
-    private final String FROM_FIELD = "from";
-    private final String TO_FIELD = "to";
-    private final String DATE_FIELD = "date";
-
-    public Uni<SegmentEntity> getFirstSegment() {
-        ReactiveMongoCollection<SegmentEntity> collection = getCollection();
-
-        return Uni.createFrom().publisher(collection.find());
-    }
-
-    private ReactiveMongoCollection<SegmentEntity> getCollection() {
-        return client.getDatabase(database)
-                .getCollection(segmentCollection, SegmentEntity.class);
-    }
-
     public Multi<SegmentWithConnections> findSegments(String originIata,
-                                             String destination,
-                                             LocalDate startDepartureDate,
-                                             LocalDate endDepartureDate) {
+                                                      String destination,
+                                                      LocalDate startDepartureDate,
+                                                      LocalDate endDepartureDate) {
         ReactiveMongoCollection<SegmentWithConnections> collection =
                 client.getDatabase(database)
                         .getCollection(segmentCollection, SegmentWithConnections.class);
@@ -59,7 +41,7 @@ public class SegmentRepository {
         options.depthField("depth");
         options.restrictSearchWithMatch(Filters.and(
                 Filters.eq("stops", 0),
-                Filters.lte("departureTime", Instant.parse("2025-09-07T00:00:00Z"))
+                Filters.lte("departureTime", endDepartureDate)
         ));
 
         Document ifNull = new Document("$ifNull", Arrays.asList("$connections", Collections.emptyList()));
@@ -80,7 +62,6 @@ public class SegmentRepository {
         Bson dedupeStage = Aggregates.set(new Field<>("connections", reduce));
 
         List<Bson> pipeline = List.of(
-                //match
                 Aggregates.match(
                         Filters.and(
                                 Filters.eq("from", originIata),
@@ -88,11 +69,7 @@ public class SegmentRepository {
                                 Filters.gte("departureTime", startDepartureDate),
                                 Filters.lte("departureTime", endDepartureDate)
                         )),
-
-                //sort
                 Aggregates.sort(Sorts.ascending("departureTime")),
-
-                //graphLookup
                 Aggregates.graphLookup(
                         "segments",
                         "$to",
@@ -101,26 +78,34 @@ public class SegmentRepository {
                         "connections",
                         options
                 ),
-                //match end destination
                 Aggregates.match(Filters.or(
                         Filters.eq("to", destination),
                         Filters.eq("connections.to", destination)
                 )),
 
-                //addFields (sort connections by departureTime)
-                Aggregates.addFields(
-                        new Field<>("connections",
-                        new Document("$sortArray",
+                Aggregates.addFields(new Field<>("connections",
+                        new Document("$filter",
                                 new Document("input", "$connections")
-                                        .append("sortBy", new Document("departureTime", 1))
+                                        .append("as", "connection")
+                                        .append("cond",
+                                                new Document("$gte", Arrays.asList(
+                                                        "$$connection.departureTime",
+                                                        startDepartureDate
+                                                ))
+                                        )
                         )
                 )),
-                dedupeStage,
-                //skip
-                Aggregates.skip(0),
-                //limit
-                Aggregates.limit(10)
 
+                Aggregates.addFields(
+                        new Field<>("connections",
+                                new Document("$sortArray",
+                                        new Document("input", "$connections")
+                                                .append("sortBy", new Document("departureTime", 1))
+                                )
+                        )),
+                dedupeStage,
+                Aggregates.skip(0),
+                Aggregates.limit(10)
         );
 
         return collection.aggregate(pipeline);

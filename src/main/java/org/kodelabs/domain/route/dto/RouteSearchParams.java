@@ -1,4 +1,4 @@
-package org.kodelabs.domain.route;
+package org.kodelabs.domain.route.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.QueryParam;

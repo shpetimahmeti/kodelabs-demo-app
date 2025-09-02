@@ -1,18 +1,22 @@
-package org.kodelabs.domain.flight.dto;
+package org.kodelabs.domain.route.dto;
+
+import org.kodelabs.domain.segment.model.SegmentPrice;
 
 import java.time.Instant;
 import java.util.List;
 
-//represents a full path of connected direct segments
-//PRN - ZRH - BOS - LAX
-//this is a full connected path
-public class FlightSearchResponse {
+
+/***
+ * Represents a full path of connected direct segments,
+ * from the origin to the destination
+ */
+public class RouteSearchResponse {
 
     private String origin;
     private String destination;
     private int stops;
     private int totalFlightDurationMin;
-    private TotalPrice totalPrice;
+    private SegmentPrice totalPrice;
     private boolean isSelfTransfer;
     private List<Leg> legs;
     private List<Group> groups;
@@ -49,14 +53,13 @@ public class FlightSearchResponse {
         this.totalFlightDurationMin = totalFlightDurationMin;
     }
 
-    public TotalPrice getTotalPrice() {
+    public SegmentPrice getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(TotalPrice totalPrice) {
+    public void setTotalPrice(SegmentPrice totalPrice) {
         this.totalPrice = totalPrice;
     }
-
 
 
     public List<Leg> getLegs() {
@@ -81,34 +84,6 @@ public class FlightSearchResponse {
 
     public void setSelfTransfer(boolean selfTransfer) {
         isSelfTransfer = selfTransfer;
-    }
-
-    public static class TotalPrice {
-        private int amount;
-        private String currency;
-
-        public TotalPrice() {}
-
-        public TotalPrice(int amount, String currency) {
-            this.amount = amount;
-            this.currency = currency;
-        }
-
-        public int getAmount() {
-            return amount;
-        }
-
-        public void setAmount(int amount) {
-            this.amount = amount;
-        }
-
-        public String getCurrency() {
-            return currency;
-        }
-
-        public void setCurrency(String currency) {
-            this.currency = currency;
-        }
     }
 
     public static class Group {

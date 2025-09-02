@@ -1,10 +1,12 @@
-package org.kodelabs.domain.route;
+package org.kodelabs.domain.route.service;
 
 import io.smallrye.mutiny.Multi;
-import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.kodelabs.domain.route.dto.RouteSearchResponse;
+import org.kodelabs.domain.route.builder.RouteResponseBuilder;
 import org.kodelabs.domain.segment.*;
+import org.kodelabs.domain.segment.entity.SegmentEntity;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -13,34 +15,19 @@ import java.util.*;
 public class RouteService {
 
     @Inject
-    RouteRepository routeRepository;
-
-    @Inject
     SegmentRepository segmentRepository;
 
-    public Uni<List<RouteEntity>> getAllRoutes(String originIata, String destinationIata, LocalDate localDate) {
-        return routeRepository.getAllRoutes(originIata, destinationIata, localDate).collect().asList();
-    }
-
-    public Uni<RouteEntity> getFirstRoute() {
-        return routeRepository.getFirstRoute();
-    }
-
-    public Uni<SegmentEntity> getFirstSegment() {
-        return segmentRepository.getFirstSegment();
-    }
-
-    public Multi<GroupedSegmentsWrapper> getAllSegments(String originIata,
-                                                        String destinationIata,
-                                                        LocalDate startDepartureDate,
-                                                        LocalDate endDepartureDate) {
+    public Multi<RouteSearchResponse> findRoutes(String originIata,
+                                                 String destinationIata,
+                                                 LocalDate startDepartureDate,
+                                                 LocalDate endDepartureDate) {
 
         return segmentRepository.findSegments(
                 originIata,
                 destinationIata,
                 startDepartureDate,
                 endDepartureDate
-        ).onItem().transform(segmentWithConnections -> {
+        ).onItem().transformToMultiAndMerge(segmentWithConnections -> {
             Map<String, List<String>> graph = new HashMap<>();
             Map<String, SegmentEntity> segmentsMap = new HashMap<>();
 
@@ -57,24 +44,18 @@ public class RouteService {
                 listOfConnectedPaths.add(pairs);
             }
 
-            List<GroupedSegments> orderedResult =
-                    listOfConnectedPaths.stream()
-                            .map(temp -> {
-                                GroupedSegments group = new GroupedSegments();
+            List<RouteSearchResponse> routeSearchResponse = new ArrayList<>();
+            listOfConnectedPaths.forEach(path -> {
+                List<SegmentEntity> connectedSegmentsThatFormFullPath = path.stream().map(segmentsMap::get).toList();
+                RouteSearchResponse response = RouteResponseBuilder.buildFlightSearchResponse(
+                        originIata,
+                        destinationIata,
+                        segmentWithConnections.getPrice().getAmount(),
+                        connectedSegmentsThatFormFullPath);
+                routeSearchResponse.add(response);
+            });
 
-                                temp.forEach(path -> {
-                                    SegmentEntity entity = Optional.ofNullable(segmentsMap.get(path))
-                                            .orElseThrow(() -> new RuntimeException("Segment " + path + " not found"));
-
-                                    group.getSegmentsGroupedByRouteId()
-                                            .computeIfAbsent(entity.routeInstanceId.toString(), k -> new ArrayList<>())
-                                            .add(entity);
-                                });
-
-                                return group;
-                            })
-                            .toList();
-            return new GroupedSegmentsWrapper(orderedResult);
+            return Multi.createFrom().iterable(routeSearchResponse);
         });
     }
 
@@ -83,14 +64,14 @@ public class RouteService {
             Map<String, List<String>> graphToPopulate,
             Map<String, SegmentEntity> segmentsMapToPopulate) {
 
-        graphToPopulate.put(segmentWithConnections.from, new ArrayList<>(List.of(segmentWithConnections.to)));
-        segmentsMapToPopulate.put(segmentWithConnections.segmentId, segmentWithConnections);
+        graphToPopulate.put(segmentWithConnections.getFrom(), new ArrayList<>(List.of(segmentWithConnections.getTo())));
+        segmentsMapToPopulate.put(segmentWithConnections.getSegmentId(), segmentWithConnections);
 
         segmentWithConnections.connections.forEach(connection -> {
-            segmentsMapToPopulate.put(connection.segmentId, connection);
+            segmentsMapToPopulate.put(connection.getSegmentId(), connection);
 
-            graphToPopulate.putIfAbsent(connection.from, new ArrayList<>());
-            graphToPopulate.get(connection.from).add(connection.to);
+            graphToPopulate.putIfAbsent(connection.getFrom(), new ArrayList<>());
+            graphToPopulate.get(connection.getFrom()).add(connection.getTo());
         });
     }
 
