@@ -1,18 +1,14 @@
 package org.kodelabs.domain.flight.entity;
 
-import org.bson.types.ObjectId;
+import org.kodelabs.domain.common.BaseEntity;
 import org.kodelabs.domain.flight.model.Place;
 import org.kodelabs.domain.flight.model.Seat;
 
 import java.time.Instant;
 import java.util.List;
 
-public class FlightEntity {
+public class FlightEntity extends BaseEntity {
 
-    private ObjectId id;
-    private String routeId;
-    private int routeVersion;
-    private String routeInstanceId;
     private String publishedFlightNumber;
     private String operatingFlightNumber;
     private Place from;
@@ -22,46 +18,9 @@ public class FlightEntity {
     private String aircraftRegistration;
     private String aircraftType;
     private String status;
-    private Instant date;
-
-    private String overallStatus;
 
     private int availableSeatsCount;
     private List<Seat> seats;
-    private Instant createdAt;
-    private Instant updatedAt;
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
-
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
-    public int getRouteVersion() {
-        return routeVersion;
-    }
-
-    public void setRouteVersion(int routeVersion) {
-        this.routeVersion = routeVersion;
-    }
-
-    public String getRouteInstanceId() {
-        return routeInstanceId;
-    }
-
-    public void setRouteInstanceId(String routeInstanceId) {
-        this.routeInstanceId = routeInstanceId;
-    }
 
     public String getPublishedFlightNumber() {
         return publishedFlightNumber;
@@ -69,22 +28,6 @@ public class FlightEntity {
 
     public void setPublishedFlightNumber(String publishedFlightNumber) {
         this.publishedFlightNumber = publishedFlightNumber;
-    }
-
-    public Instant getDate() {
-        return date;
-    }
-
-    public void setDate(Instant date) {
-        this.date = date;
-    }
-
-    public String getOverallStatus() {
-        return overallStatus;
-    }
-
-    public void setOverallStatus(String overallStatus) {
-        this.overallStatus = overallStatus;
     }
 
     public int getAvailableSeatsCount() {
