@@ -2,7 +2,7 @@
   "_id": "68b6f680b62afdce01bcad1d",
   "publishedFlightNumber": "LX1989",
   "operatingFlightNumber": "LX1989-PRN-ZRH",
-  "price": "350",
+  "price": 350,
   "from": {
     "iata": "PRN",
     "icao": "BKPR",
