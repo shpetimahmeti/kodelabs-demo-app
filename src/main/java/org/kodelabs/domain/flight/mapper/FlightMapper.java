@@ -50,9 +50,11 @@ public class FlightMapper {
         int totalPrice = 0;
         response.setLegs(flights.stream().map(FlightMapper::fromEntity).toList());
 
-        //        for (FlightEntity flight : flights) {
-        //            totalPrice += flight.getPrice();
-        //        }
+        for (FlightEntity flight : flights) {
+            totalPrice += flight.getPrice();
+        }
+
+        response.setTotalPrice(totalPrice);
 
         return response;
     }
