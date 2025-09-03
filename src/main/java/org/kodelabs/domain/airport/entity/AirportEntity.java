@@ -1,5 +1,6 @@
-package org.kodelabs.domain.airport;
+package org.kodelabs.domain.airport.entity;
 
+import org.kodelabs.domain.airport.model.Location;
 import org.kodelabs.domain.common.BaseEntity;
 
 public class AirportEntity extends BaseEntity {

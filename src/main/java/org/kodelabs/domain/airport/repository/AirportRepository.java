@@ -1,4 +1,4 @@
-package org.kodelabs.domain.airport;
+package org.kodelabs.domain.airport.repository;
 
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Facet;
@@ -14,6 +14,7 @@ import jakarta.inject.Inject;
 import org.bson.conversions.Bson;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.kodelabs.domain.airport.dto.AirportFacetResult;
+import org.kodelabs.domain.airport.entity.AirportEntity;
 
 import java.util.List;
 

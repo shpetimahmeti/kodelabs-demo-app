@@ -1,4 +1,4 @@
-package org.kodelabs.domain.airport;
+package org.kodelabs.domain.airport.resource;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.airport.dto.AirportDTO;
+import org.kodelabs.domain.airport.service.AirportService;
 import org.kodelabs.domain.common.PaginatedResponse;
 
 @Path("/airports")

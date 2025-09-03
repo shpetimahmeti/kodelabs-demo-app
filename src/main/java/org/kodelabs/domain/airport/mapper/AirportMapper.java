@@ -1,6 +1,6 @@
 package org.kodelabs.domain.airport.mapper;
 
-import org.kodelabs.domain.airport.AirportEntity;
+import org.kodelabs.domain.airport.entity.AirportEntity;
 import org.kodelabs.domain.airport.dto.AirportDTO;
 
 public class AirportMapper {

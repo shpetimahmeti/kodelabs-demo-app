@@ -1,4 +1,4 @@
-package org.kodelabs.domain.airport;
+package org.kodelabs.domain.airport.model;
 
 import java.util.List;
 

@@ -1,8 +1,9 @@
-package org.kodelabs.domain.airport;
+package org.kodelabs.domain.airport.service;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.kodelabs.domain.airport.repository.AirportRepository;
 import org.kodelabs.domain.airport.dto.AirportDTO;
 import org.kodelabs.domain.airport.dto.AirportFacetResult;
 import org.kodelabs.domain.airport.mapper.AirportMapper;

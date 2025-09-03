@@ -1,6 +1,6 @@
 package org.kodelabs.domain.airport.dto;
 
-import org.kodelabs.domain.airport.Location;
+import org.kodelabs.domain.airport.model.Location;
 
 public class AirportDTO {
     private String id;

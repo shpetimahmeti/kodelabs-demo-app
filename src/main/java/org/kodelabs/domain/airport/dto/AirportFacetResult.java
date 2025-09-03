@@ -1,6 +1,6 @@
 package org.kodelabs.domain.airport.dto;
 
-import org.kodelabs.domain.airport.AirportEntity;
+import org.kodelabs.domain.airport.entity.AirportEntity;
 
 import java.util.List;
 
