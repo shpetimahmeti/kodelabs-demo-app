@@ -18,9 +18,9 @@ public class FlightEntity extends BaseEntity {
     private String aircraftRegistration;
     private String aircraftType;
     private String status;
-
     private int availableSeatsCount;
     private List<Seat> seats;
+    private int price;
 
     public String getPublishedFlightNumber() {
         return publishedFlightNumber;
@@ -124,5 +124,13 @@ public class FlightEntity extends BaseEntity {
 
     public void setSeats(List<Seat> seats) {
         this.seats = seats;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
