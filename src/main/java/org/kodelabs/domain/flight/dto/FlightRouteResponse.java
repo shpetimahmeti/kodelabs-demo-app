@@ -7,9 +7,8 @@ public class FlightRouteResponse {
     private String destIata;
 
     private int stops;
-    private int totalFlightDurationMin;
+    private int totalPrice = 0;
     private List<FlightDTO> legs;
-
 
     public int getStops() {
         return stops;
@@ -17,14 +16,6 @@ public class FlightRouteResponse {
 
     public void setStops(int stops) {
         this.stops = stops;
-    }
-
-    public int getTotalFlightDurationMin() {
-        return totalFlightDurationMin;
-    }
-
-    public void setTotalFlightDurationMin(int totalFlightDurationMin) {
-        this.totalFlightDurationMin = totalFlightDurationMin;
     }
 
     public List<FlightDTO> getLegs() {
@@ -52,5 +43,13 @@ public class FlightRouteResponse {
 
     public void setDestIata(String destIata) {
         this.destIata = destIata;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
