@@ -2,7 +2,7 @@
   "_id": "68b6f680b62afdce01bcad1d",
   "publishedFlightNumber": "LX1989",
   "operatingFlightNumber": "LX1989-PRN-ZRH",
-  "legIndex": 0,
+  "price": "350",
   "from": {
     "iata": "PRN",
     "icao": "BKPR",
@@ -46,7 +46,7 @@
     "_id": "68b6f680b62afdce01bcad1e",
     "publishedFlightNumber": "LX1990",
     "operatingFlightNumber": "LX1990-ZRH-BOS",
-    "legIndex": 0,
+    "price": 140,
     "from": {
       "iata": "ZRH",
       "icao": "LSZH",
@@ -90,7 +90,7 @@
     "_id": "68b6f680b62afdce01bcad1f",
     "publishedFlightNumber": "BA2001",
     "operatingFlightNumber": "BA2001-PRN-LHR",
-    "legIndex": 0,
+    "price": 220,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -134,7 +134,7 @@
     "_id": "68b6f680b62afdce01bcad20",
     "publishedFlightNumber": "BA2002",
     "operatingFlightNumber": "BA2002-LHR-BOS",
-    "legIndex": 0,
+    "price": 210,
     "from": {
       "iata": "LHR",
       "icao": "EGLL",
@@ -178,7 +178,7 @@
     "_id": "68b6f680b62afdce01bcad21",
     "publishedFlightNumber": "UA3001",
     "operatingFlightNumber": "UA3001-PRN-BOS",
-    "legIndex": 0,
+    "price": 180,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -222,7 +222,7 @@
     "_id": "68b6f6afb62afdce01bcad23",
     "publishedFlightNumber": "LX1989",
     "operatingFlightNumber": "LX1989-PRN-ZRH",
-    "legIndex": 0,
+    "price": 140,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -266,7 +266,7 @@
     "_id": "68b6f6afb62afdce01bcad24",
     "publishedFlightNumber": "LX1990",
     "operatingFlightNumber": "LX1990-ZRH-BOS",
-    "legIndex": 0,
+    "price": 190,
     "from": {
       "iata": "ZRH",
       "icao": "LSZH",
@@ -288,7 +288,7 @@
     "_id": "68b6f6afb62afdce01bcad25",
     "publishedFlightNumber": "BA2001",
     "operatingFlightNumber": "BA2001-PRN-LHR",
-    "legIndex": 0,
+    "price": 110,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -332,7 +332,7 @@
     "_id": "68b6f6afb62afdce01bcad26",
     "publishedFlightNumber": "BA2002",
     "operatingFlightNumber": "BA2002-LHR-BOS",
-    "legIndex": 0,
+    "price": 800,
     "from": {
       "iata": "LHR",
       "icao": "EGLL",
@@ -376,7 +376,7 @@
     "_id": "68b6f6afb62afdce01bcad27",
     "publishedFlightNumber": "UA3001",
     "operatingFlightNumber": "UA3001-PRN-BOS",
-    "legIndex": 0,
+    "price": 300,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -420,7 +420,7 @@
     "_id": "68b6f6dfb62afdce01bcad29",
     "publishedFlightNumber": "LX1989",
     "operatingFlightNumber": "LX1989-PRN-ZRH",
-    "legIndex": 0,
+    "price": 220,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -464,7 +464,7 @@
     "_id": "68b6f6dfb62afdce01bcad2a",
     "publishedFlightNumber": "LX1990",
     "operatingFlightNumber": "LX1990-ZRH-BOS",
-    "legIndex": 0,
+    "price": 500,
     "from": {
       "iata": "ZRH",
       "icao": "LSZH",
@@ -508,7 +508,7 @@
     "_id": "68b6f6dfb62afdce01bcad2b",
     "publishedFlightNumber": "BA2001",
     "operatingFlightNumber": "BA2001-PRN-LHR",
-    "legIndex": 0,
+    "price": 240,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -552,7 +552,7 @@
     "_id": "68b6f6dfb62afdce01bcad2c",
     "publishedFlightNumber": "BA2002",
     "operatingFlightNumber": "BA2002-LHR-BOS",
-    "legIndex": 0,
+    "price": 700,
     "from": {
       "iata": "LHR",
       "icao": "EGLL",
@@ -596,7 +596,7 @@
     "_id": "68b6f6dfb62afdce01bcad2d",
     "publishedFlightNumber": "UA3001",
     "operatingFlightNumber": "UA3001-PRN-BOS",
-    "legIndex": 0,
+    "price": 500,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -640,7 +640,7 @@
     "_id": "68b6f6f7b62afdce01bcad2f",
     "publishedFlightNumber": "LX1989",
     "operatingFlightNumber": "LX1989-PRN-ZRH",
-    "legIndex": 0,
+    "price": 550,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -684,7 +684,7 @@
     "_id": "68b6f6f7b62afdce01bcad30",
     "publishedFlightNumber": "LX1990",
     "operatingFlightNumber": "LX1990-ZRH-BOS",
-    "legIndex": 0,
+    "price": 290,
     "from": {
       "iata": "ZRH",
       "icao": "LSZH",
@@ -728,7 +728,7 @@
     "_id": "68b6f6f7b62afdce01bcad31",
     "publishedFlightNumber": "BA2001",
     "operatingFlightNumber": "BA2001-PRN-LHR",
-    "legIndex": 0,
+    "price": 240,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
@@ -772,7 +772,7 @@
     "_id": "68b6f6f7b62afdce01bcad32",
     "publishedFlightNumber": "BA2002",
     "operatingFlightNumber": "BA2002-LHR-BOS",
-    "legIndex": 0,
+    "price": 400,
     "from": {
       "iata": "LHR",
       "icao": "EGLL",
@@ -816,7 +816,7 @@
     "_id": "68b6f6f7b62afdce01bcad33",
     "publishedFlightNumber": "UA3001",
     "operatingFlightNumber": "UA3001-PRN-BOS",
-    "legIndex": 0,
+    "price": 200,
     "from": {
       "iata": "PRN",
       "icao": "BKPR",
