@@ -9,9 +9,6 @@ import java.util.List;
 public class FlightDTO {
 
     private String id;
-    private String routeId;
-    private int routeVersion;
-    private String routeInstanceId;
     private String publishedFlightNumber;
     private String operatingFlightNumber;
     private Place from;
@@ -23,6 +20,7 @@ public class FlightDTO {
     private String status;
     private int availableSeatsCount;
     private List<Seat> seats;
+    private int price;
 
     public String getId() {
         return id;
@@ -32,21 +30,6 @@ public class FlightDTO {
         this.id = id;
     }
 
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
-    public int getRouteVersion() {
-        return routeVersion;
-    }
-
-    public void setRouteVersion(int routeVersion) {
-        this.routeVersion = routeVersion;
-    }
 
     public String getPublishedFlightNumber() {
         return publishedFlightNumber;
@@ -136,11 +119,11 @@ public class FlightDTO {
         this.seats = seats;
     }
 
-    public String getRouteInstanceId() {
-        return routeInstanceId;
+    public int getPrice() {
+        return price;
     }
 
-    public void setRouteInstanceId(String routeInstanceId) {
-        this.routeInstanceId = routeInstanceId;
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
