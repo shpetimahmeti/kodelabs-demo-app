@@ -1,9 +1,8 @@
 package org.kodelabs.domain.airport;
 
-import org.bson.types.ObjectId;
+import org.kodelabs.domain.common.BaseEntity;
 
-public class AirportEntity {
-    private ObjectId id;
+public class AirportEntity extends BaseEntity {
     private String name;
     private String iata;
     private String icao;
@@ -87,13 +86,5 @@ public class AirportEntity {
 
     public void setLoc(Location loc) {
         this.loc = loc;
-    }
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
     }
 }
