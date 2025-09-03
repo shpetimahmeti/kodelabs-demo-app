@@ -6,10 +6,9 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
-import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.service.FlightService;
 import org.kodelabs.domain.flight.dto.FlightDTO;
-import org.kodelabs.domain.route.dto.RouteSearchParams;
+import org.kodelabs.domain.flight.dto.RouteSearchParams;
 
 import java.util.List;
 
