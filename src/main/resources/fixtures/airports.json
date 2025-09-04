@@ -1,0 +1,1782 @@
+[{
+  "_id": "68a82862df0b41909d5a589b",
+  "city": "Atlanta",
+  "country": "US",
+  "elevation_ft": 1026,
+  "iata": "ATL",
+  "icao": "KATL",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -84.427778,
+      33.636667
+    ]
+  },
+  "name": "Hartsfield-Jackson Atlanta International Airport",
+  "state": "Georgia",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a82862df0b41909d5a589c",
+  "city": "Tokyo",
+  "country": "JP",
+  "elevation_ft": 21,
+  "iata": "HND",
+  "icao": "RJTT",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      139.781111,
+      35.552222
+    ]
+  },
+  "name": "Tokyo Haneda Airport",
+  "state": "Tokyo",
+  "timezone": "Asia/Tokyo"
+},
+{
+  "_id": "68a82862df0b41909d5a589d",
+  "city": "London",
+  "country": "GB",
+  "elevation_ft": 83,
+  "iata": "LHR",
+  "icao": "EGLL",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -0.461389,
+      51.4775
+    ]
+  },
+  "name": "London Heathrow Airport",
+  "state": "England",
+  "timezone": "Europe/London"
+},
+{
+  "_id": "68a82862df0b41909d5a589e",
+  "city": "Dubai",
+  "country": "AE",
+  "elevation_ft": 62,
+  "iata": "DXB",
+  "icao": "OMDB",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      55.364444,
+      25.252778
+    ]
+  },
+  "name": "Dubai International Airport",
+  "state": "Dubai",
+  "timezone": "Asia/Dubai"
+},
+{
+  "_id": "68a82862df0b41909d5a589f",
+  "city": "Singapore",
+  "country": "SG",
+  "elevation_ft": 22,
+  "iata": "SIN",
+  "icao": "WSSS",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      103.991667,
+      1.364444
+    ]
+  },
+  "name": "Singapore Changi Airport",
+  "state": "",
+  "timezone": "Asia/Singapore"
+},
+{
+  "_id": "68a82862df0b41909d5a58a0",
+  "city": "Paris",
+  "country": "FR",
+  "elevation_ft": 392,
+  "iata": "CDG",
+  "icao": "LFPG",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      2.578125,
+      49.012778
+    ]
+  },
+  "name": "Paris Charles de Gaulle Airport",
+  "state": "Île-de-France",
+  "timezone": "Europe/Paris"
+},
+{
+  "_id": "68a82862df0b41909d5a58a1",
+  "city": "Shanghai",
+  "country": "CN",
+  "elevation_ft": 13,
+  "iata": "PVG",
+  "icao": "ZSPD",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      121.799722,
+      31.143333
+    ]
+  },
+  "name": "Shanghai Pudong International Airport",
+  "state": "Shanghai",
+  "timezone": "Asia/Shanghai"
+},
+{
+  "_id": "68a82862df0b41909d5a58a3",
+  "city": "Seoul",
+  "country": "KR",
+  "elevation_ft": 23,
+  "iata": "ICN",
+  "icao": "RKSI",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      126.451111,
+      37.469167
+    ]
+  },
+  "name": "Incheon International Airport",
+  "state": "Incheon",
+  "timezone": "Asia/Seoul"
+},
+{
+  "_id": "68a82862df0b41909d5a58a4",
+  "city": "Frankfurt",
+  "country": "DE",
+  "elevation_ft": 364,
+  "iata": "FRA",
+  "icao": "EDDF",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      8.570556,
+      50.033333
+    ]
+  },
+  "name": "Frankfurt Airport",
+  "state": "Hesse",
+  "timezone": "Europe/Berlin"
+},
+{
+  "_id": "68a82862df0b41909d5a58a5",
+  "city": "Sydney",
+  "country": "AU",
+  "elevation_ft": 21,
+  "iata": "SYD",
+  "icao": "YSSY",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      151.175,
+      -33.946111
+    ]
+  },
+  "name": "Sydney Kingsford Smith Airport",
+  "state": "New South Wales",
+  "timezone": "Australia/Sydney"
+},
+{
+  "_id": "68a82862df0b41909d5a58a6",
+  "city": "São Paulo",
+  "country": "BR",
+  "elevation_ft": 2461,
+  "iata": "GRU",
+  "icao": "SBGR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -46.473056,
+      -23.435556
+    ]
+  },
+  "name": "São Paulo-Guarulhos International Airport",
+  "state": "São Paulo",
+  "timezone": "America/Sao_Paulo"
+},
+{
+  "_id": "68a82862df0b41909d5a58a7",
+  "city": "Istanbul",
+  "country": "TR",
+  "elevation_ft": 325,
+  "iata": "IST",
+  "icao": "LTFM",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      28.7499,
+      41.2619
+    ]
+  },
+  "name": "Istanbul Airport",
+  "state": "Istanbul",
+  "timezone": "Europe/Istanbul"
+},
+{
+  "_id": "68a82862df0b41909d5a58a8",
+  "city": "Denver",
+  "country": "US",
+  "elevation_ft": 5434,
+  "iata": "DEN",
+  "icao": "KDEN",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -104.673056,
+      39.861667
+    ]
+  },
+  "name": "Denver International Airport",
+  "state": "Colorado",
+  "timezone": "America/Denver"
+},
+{
+  "_id": "68a82862df0b41909d5a58a9",
+  "city": "Madrid",
+  "country": "ES",
+  "elevation_ft": 2000,
+  "iata": "MAD",
+  "icao": "LEMD",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -3.5675,
+      40.471944
+    ]
+  },
+  "name": "Madrid–Barajas Airport",
+  "state": "Madrid",
+  "timezone": "Europe/Madrid"
+},
+{
+  "_id": "68a82862df0b41909d5a58aa",
+  "city": "Mexico City",
+  "country": "MX",
+  "elevation_ft": 7316,
+  "iata": "MEX",
+  "icao": "MMMX",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -99.0725,
+      19.436389
+    ]
+  },
+  "name": "Mexico City International Airport",
+  "state": "Mexico City",
+  "timezone": "America/Mexico_City"
+},
+{
+  "_id": "68a82862df0b41909d5a58ab",
+  "city": "Toronto",
+  "country": "CA",
+  "elevation_ft": 569,
+  "iata": "YYZ",
+  "icao": "CYYZ",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -79.629167,
+      43.677222
+    ]
+  },
+  "name": "Toronto Pearson International Airport",
+  "state": "Ontario",
+  "timezone": "America/Toronto"
+},
+{
+  "_id": "68a82862df0b41909d5a58ac",
+  "city": "Moscow",
+  "country": "RU",
+  "elevation_ft": 625,
+  "iata": "SVO",
+  "icao": "UUEE",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      37.414667,
+      55.9725
+    ]
+  },
+  "name": "Moscow Sheremetyevo International Airport",
+  "state": "Moscow Oblast",
+  "timezone": "Europe/Moscow"
+},
+{
+  "_id": "68a82862df0b41909d5a58ad",
+  "city": "Osaka",
+  "country": "JP",
+  "elevation_ft": 20,
+  "iata": "KIX",
+  "icao": "RJBB",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      135.244167,
+      34.427778
+    ]
+  },
+  "name": "Kansai International Airport",
+  "state": "Osaka Prefecture",
+  "timezone": "Asia/Tokyo"
+},
+{
+  "_id": "68a82862df0b41909d5a58ae",
+  "city": "Newark",
+  "country": "US",
+  "elevation_ft": 18,
+  "iata": "EWR",
+  "icao": "KEWR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -74.175,
+      40.6925
+    ]
+  },
+  "name": "Newark Liberty International Airport",
+  "state": "New Jersey",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a82862df0b41909d5a58af",
+  "city": "Houston",
+  "country": "US",
+  "elevation_ft": 97,
+  "iata": "IAH",
+  "icao": "KIAH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -95.340003,
+      29.984444
+    ]
+  },
+  "name": "George Bush Intercontinental Airport",
+  "state": "Texas",
+  "timezone": "America/Chicago"
+},
+{
+  "_id": "68a82862df0b41909d5a58b0",
+  "city": "Miami",
+  "country": "US",
+  "elevation_ft": 8,
+  "iata": "MIA",
+  "icao": "KMIA",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -80.290556,
+      25.793333
+    ]
+  },
+  "name": "Miami International Airport",
+  "state": "Florida",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a82862df0b41909d5a58b1",
+  "city": "Zurich",
+  "country": "CH",
+  "elevation_ft": 1416,
+  "iata": "ZRH",
+  "icao": "LSZH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      8.549167,
+      47.464722
+    ]
+  },
+  "name": "Zurich Airport",
+  "state": "Canton of Zurich",
+  "timezone": "Europe/Zurich"
+},
+{
+  "_id": "68a82862df0b41909d5a58b2",
+  "city": "Vancouver",
+  "country": "CA",
+  "elevation_ft": 14,
+  "iata": "YVR",
+  "icao": "CYVR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -123.184444,
+      49.193889
+    ]
+  },
+  "name": "Vancouver International Airport",
+  "state": "British Columbia",
+  "timezone": "America/Vancouver"
+},
+{
+  "_id": "68a82862df0b41909d5a58b3",
+  "city": "Jeddah",
+  "country": "SA",
+  "elevation_ft": 49,
+  "iata": "JED",
+  "icao": "OEJN",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      39.155556,
+      21.679167
+    ]
+  },
+  "name": "King Abdulaziz International Airport",
+  "state": "Makkah",
+  "timezone": "Asia/Riyadh"
+},
+{
+  "_id": "68a82909df0b41909d5a58b4",
+  "city": "Barcelona",
+  "country": "ES",
+  "elevation_ft": 14,
+  "iata": "BCN",
+  "icao": "LEBL",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      2.078333,
+      41.2975
+    ]
+  },
+  "name": "Barcelona–El Prat Airport",
+  "state": "Catalonia",
+  "timezone": "Europe/Madrid"
+},
+{
+  "_id": "68a82909df0b41909d5a58b5",
+  "city": "Lisbon",
+  "country": "PT",
+  "elevation_ft": 374,
+  "iata": "LIS",
+  "icao": "LPPT",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -9.135278,
+      38.775556
+    ]
+  },
+  "name": "Lisbon Airport",
+  "state": "Lisbon",
+  "timezone": "Europe/Lisbon"
+},
+{
+  "_id": "68a82909df0b41909d5a58b6",
+  "city": "Dublin",
+  "country": "IE",
+  "elevation_ft": 279,
+  "iata": "DUB",
+  "icao": "EIDW",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -6.260833,
+      53.426389
+    ]
+  },
+  "name": "Dublin Airport",
+  "state": "County Dublin",
+  "timezone": "Europe/Dublin"
+},
+{
+  "_id": "68a82909df0b41909d5a58b7",
+  "city": "São Paulo",
+  "country": "BR",
+  "elevation_ft": 2631,
+  "iata": "CGH",
+  "icao": "SBSP",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -46.6575,
+      -23.626111
+    ]
+  },
+  "name": "São Paulo–Congonhas Airport",
+  "state": "São Paulo",
+  "timezone": "America/Sao_Paulo"
+},
+{
+  "_id": "68a82909df0b41909d5a58b8",
+  "city": "Bogota",
+  "country": "CO",
+  "elevation_ft": 8361,
+  "iata": "BOG",
+  "icao": "SKBO",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -74.146944,
+      4.701111
+    ]
+  },
+  "name": "Bogota El Dorado International Airport",
+  "state": "Bogota",
+  "timezone": "America/Bogota"
+},
+{
+  "_id": "68a82909df0b41909d5a58b9",
+  "city": "Hong Kong",
+  "country": "HK",
+  "elevation_ft": 30,
+  "iata": "HKG",
+  "icao": "VHHH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      113.918889,
+      22.308889
+    ]
+  },
+  "name": "Hong Kong International Airport",
+  "state": "Hong Kong",
+  "timezone": "Asia/Hong_Kong"
+},
+{
+  "_id": "68a82909df0b41909d5a58ba",
+  "city": "Zurich",
+  "country": "CH",
+  "elevation_ft": 1416,
+  "iata": "ZRH",
+  "icao": "LSZH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      8.549167,
+      47.464722
+    ]
+  },
+  "name": "Zurich Airport",
+  "state": "Canton of Zurich",
+  "timezone": "Europe/Zurich"
+},
+{
+  "_id": "68a82909df0b41909d5a58bb",
+  "city": "Vienna",
+  "country": "AT",
+  "elevation_ft": 600,
+  "iata": "VIE",
+  "icao": "LOWW",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      16.56,
+      48.110278
+    ]
+  },
+  "name": "Vienna International Airport",
+  "state": "Lower Austria",
+  "timezone": "Europe/Vienna"
+},
+{
+  "_id": "68a82909df0b41909d5a58bc",
+  "city": "San Francisco",
+  "country": "US",
+  "elevation_ft": 13,
+  "iata": "SFO",
+  "icao": "KSFO",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -122.375,
+      37.618889
+    ]
+  },
+  "name": "San Francisco International Airport",
+  "state": "California",
+  "timezone": "America/Los_Angeles"
+},
+{
+  "_id": "68a82909df0b41909d5a58bd",
+  "city": "Seattle",
+  "country": "US",
+  "elevation_ft": 433,
+  "iata": "SEA",
+  "icao": "KSEA",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -122.308889,
+      47.449722
+    ]
+  },
+  "name": "Seattle–Tacoma International Airport",
+  "state": "Washington",
+  "timezone": "America/Los_Angeles"
+},
+{
+  "_id": "68a82909df0b41909d5a58be",
+  "city": "Las Vegas",
+  "country": "US",
+  "elevation_ft": 2181,
+  "iata": "LAS",
+  "icao": "KLAS",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -115.152222,
+      36.08
+    ]
+  },
+  "name": "Las Vegas Harry Reid International Airport",
+  "state": "Nevada",
+  "timezone": "America/Los_Angeles"
+},
+{
+  "_id": "68a82909df0b41909d5a58bf",
+  "city": "Orlando",
+  "country": "US",
+  "elevation_ft": 96,
+  "iata": "MCO",
+  "icao": "KMCO",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -81.308889,
+      28.429444
+    ]
+  },
+  "name": "Orlando International Airport",
+  "state": "Florida",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a82909df0b41909d5a58c0",
+  "city": "Kuala Lumpur",
+  "country": "MY",
+  "elevation_ft": 71,
+  "iata": "KUL",
+  "icao": "WMKK",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      101.693056,
+      2.745556
+    ]
+  },
+  "name": "Kuala Lumpur International Airport",
+  "state": "Selangor",
+  "timezone": "Asia/Kuala_Lumpur"
+},
+{
+  "_id": "68a82909df0b41909d5a58c1",
+  "city": "Mexico City",
+  "country": "MX",
+  "elevation_ft": 7316,
+  "iata": "MEX",
+  "icao": "MMMX",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -99.0725,
+      19.436389
+    ]
+  },
+  "name": "Benito Juárez International Airport",
+  "state": "Mexico City",
+  "timezone": "America/Mexico_City"
+},
+{
+  "_id": "68a82909df0b41909d5a58c2",
+  "city": "Rome",
+  "country": "IT",
+  "elevation_ft": 13,
+  "iata": "FCO",
+  "icao": "LIRF",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      12.246111,
+      41.800278
+    ]
+  },
+  "name": "Rome Fiumicino Airport",
+  "state": "Lazio",
+  "timezone": "Europe/Rome"
+},
+{
+  "_id": "68a82909df0b41909d5a58c3",
+  "city": "Rome",
+  "country": "IT",
+  "elevation_ft": 13,
+  "iata": "FCO",
+  "icao": "LIRF",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      12.246111,
+      41.800278
+    ]
+  },
+  "name": "Leonardo da Vinci–Fiumicino Airport",
+  "state": "Lazio",
+  "timezone": "Europe/Rome"
+},
+{
+  "_id": "68a82909df0b41909d5a58c4",
+  "city": "Athens",
+  "country": "GR",
+  "elevation_ft": 334,
+  "iata": "ATH",
+  "icao": "LGAV",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      23.945833,
+      37.936389
+    ]
+  },
+  "name": "Athens International Airport",
+  "state": "Attica",
+  "timezone": "Europe/Athens"
+},
+{
+  "_id": "68a82909df0b41909d5a58c5",
+  "city": "Copenhagen",
+  "country": "DK",
+  "elevation_ft": 16,
+  "iata": "CPH",
+  "icao": "EKCH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      12.655833,
+      55.617917
+    ]
+  },
+  "name": "Copenhagen Airport",
+  "state": "Capital Region of Denmark",
+  "timezone": "Europe/Copenhagen"
+},
+{
+  "_id": "68a82909df0b41909d5a58c6",
+  "city": "Oslo",
+  "country": "NO",
+  "elevation_ft": 661,
+  "iata": "OSL",
+  "icao": "ENGM",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      11.100278,
+      60.193889
+    ]
+  },
+  "name": "Oslo Airport",
+  "state": "Akershus",
+  "timezone": "Europe/Oslo"
+},
+{
+  "_id": "68a82909df0b41909d5a58c7",
+  "city": "Helsinki",
+  "country": "FI",
+  "elevation_ft": 180,
+  "iata": "HEL",
+  "icao": "EFHK",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      24.963333,
+      60.317222
+    ]
+  },
+  "name": "Helsinki Airport",
+  "state": "Uusimaa",
+  "timezone": "Europe/Helsinki"
+},
+{
+  "_id": "68a82909df0b41909d5a58c8",
+  "city": "Wrocław",
+  "country": "PL",
+  "elevation_ft": 404,
+  "iata": "WRO",
+  "icao": "EPWR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      16.885833,
+      51.102778
+    ]
+  },
+  "name": "Wrocław Airport",
+  "state": "Lower Silesian Voivodeship",
+  "timezone": "Europe/Warsaw"
+},
+{
+  "_id": "68a82909df0b41909d5a58c9",
+  "city": "Prague",
+  "country": "CZ",
+  "elevation_ft": 1247,
+  "iata": "PRG",
+  "icao": "LKPR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      14.26,
+      50.100833
+    ]
+  },
+  "name": "Prague Václav Havel Airport",
+  "state": "Prague",
+  "timezone": "Europe/Prague"
+},
+{
+  "_id": "68a82909df0b41909d5a58ca",
+  "city": "Budapest",
+  "country": "HU",
+  "elevation_ft": 495,
+  "iata": "BUD",
+  "icao": "LHBP",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      19.255556,
+      47.433333
+    ]
+  },
+  "name": "Budapest Ferenc Liszt International Airport",
+  "state": "Budapest",
+  "timezone": "Europe/Budapest"
+},
+{
+  "_id": "68a82909df0b41909d5a58cb",
+  "city": "Warsaw",
+  "country": "PL",
+  "elevation_ft": 366,
+  "iata": "WAW",
+  "icao": "EPWA",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      20.967222,
+      52.165833
+    ]
+  },
+  "name": "Warsaw Chopin Airport",
+  "state": "Masovian Voivodeship",
+  "timezone": "Europe/Warsaw"
+},
+{
+  "_id": "68a82909df0b41909d5a58cc",
+  "city": "Budapest",
+  "country": "HU",
+  "elevation_ft": 495,
+  "iata": "BUD",
+  "icao": "LHBP",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      19.255556,
+      47.433333
+    ]
+  },
+  "name": "Liszt Ferenc International Airport",
+  "state": "Budapest",
+  "timezone": "Europe/Budapest"
+},
+{
+  "_id": "68a82917df0b41909d5a58cd",
+  "city": "Budapest",
+  "country": "HU",
+  "elevation_ft": 495,
+  "iata": "BUD",
+  "icao": "LHBP",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      19.255556,
+      47.433333
+    ]
+  },
+  "name": "Liszt Ferenc International Airport",
+  "state": "Budapest",
+  "timezone": "Europe/Budapest"
+},
+{
+  "_id": "68a82917df0b41909d5a58ce",
+  "city": "Warsaw",
+  "country": "PL",
+  "elevation_ft": 366,
+  "iata": "WAW",
+  "icao": "EPWA",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      20.967222,
+      52.165833
+    ]
+  },
+  "name": "Warsaw Chopin Airport",
+  "state": "Masovian Voivodeship",
+  "timezone": "Europe/Warsaw"
+},
+{
+  "_id": "68a82917df0b41909d5a58cf",
+  "city": "Jeddah",
+  "country": "SA",
+  "elevation_ft": 49,
+  "iata": "JED",
+  "icao": "OEJN",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      39.155556,
+      21.679167
+    ]
+  },
+  "name": "King Abdulaziz International Airport",
+  "state": "Makkah",
+  "timezone": "Asia/Riyadh"
+},
+{
+  "_id": "68a82917df0b41909d5a58d0",
+  "city": "Vancouver",
+  "country": "CA",
+  "elevation_ft": 14,
+  "iata": "YVR",
+  "icao": "CYVR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -123.184444,
+      49.193889
+    ]
+  },
+  "name": "Vancouver International Airport",
+  "state": "British Columbia",
+  "timezone": "America/Vancouver"
+},
+{
+  "_id": "68a82917df0b41909d5a58d1",
+  "city": "Zurich",
+  "country": "CH",
+  "elevation_ft": 1416,
+  "iata": "ZRH",
+  "icao": "LSZH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      8.549167,
+      47.464722
+    ]
+  },
+  "name": "Zurich Airport",
+  "state": "Canton of Zurich",
+  "timezone": "Europe/Zurich"
+},
+{
+  "_id": "68a82917df0b41909d5a58d2",
+  "city": "Miami",
+  "country": "US",
+  "elevation_ft": 8,
+  "iata": "MIA",
+  "icao": "KMIA",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -80.290556,
+      25.793333
+    ]
+  },
+  "name": "Miami International Airport",
+  "state": "Florida",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a82917df0b41909d5a58d3",
+  "city": "Houston",
+  "country": "US",
+  "elevation_ft": 97,
+  "iata": "IAH",
+  "icao": "KIAH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -95.340003,
+      29.984444
+    ]
+  },
+  "name": "George Bush Intercontinental Airport",
+  "state": "Texas",
+  "timezone": "America/Chicago"
+},
+{
+  "_id": "68a82917df0b41909d5a58d4",
+  "city": "Newark",
+  "country": "US",
+  "elevation_ft": 18,
+  "iata": "EWR",
+  "icao": "KEWR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -74.175,
+      40.6925
+    ]
+  },
+  "name": "Newark Liberty International Airport",
+  "state": "New Jersey",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a82917df0b41909d5a58d5",
+  "city": "Osaka",
+  "country": "JP",
+  "elevation_ft": 20,
+  "iata": "KIX",
+  "icao": "RJBB",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      135.244167,
+      34.427778
+    ]
+  },
+  "name": "Kansai International Airport",
+  "state": "Osaka Prefecture",
+  "timezone": "Asia/Tokyo"
+},
+{
+  "_id": "68a82917df0b41909d5a58d6",
+  "city": "Moscow",
+  "country": "RU",
+  "elevation_ft": 625,
+  "iata": "SVO",
+  "icao": "UUEE",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      37.414667,
+      55.9725
+    ]
+  },
+  "name": "Moscow Sheremetyevo International Airport",
+  "state": "Moscow Oblast",
+  "timezone": "Europe/Moscow"
+},
+{
+  "_id": "68a82917df0b41909d5a58d7",
+  "city": "Toronto",
+  "country": "CA",
+  "elevation_ft": 569,
+  "iata": "YYZ",
+  "icao": "CYYZ",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -79.629167,
+      43.677222
+    ]
+  },
+  "name": "Toronto Pearson International Airport",
+  "state": "Ontario",
+  "timezone": "America/Toronto"
+},
+{
+  "_id": "68a82917df0b41909d5a58d8",
+  "city": "Mexico City",
+  "country": "MX",
+  "elevation_ft": 7316,
+  "iata": "MEX",
+  "icao": "MMMX",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -99.0725,
+      19.436389
+    ]
+  },
+  "name": "Mexico City International Airport",
+  "state": "Mexico City",
+  "timezone": "America/Mexico_City"
+},
+{
+  "_id": "68a82917df0b41909d5a58d9",
+  "city": "Madrid",
+  "country": "ES",
+  "elevation_ft": 2000,
+  "iata": "MAD",
+  "icao": "LEMD",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -3.5675,
+      40.471944
+    ]
+  },
+  "name": "Madrid–Barajas Airport",
+  "state": "Madrid",
+  "timezone": "Europe/Madrid"
+},
+{
+  "_id": "68a82917df0b41909d5a58da",
+  "city": "Denver",
+  "country": "US",
+  "elevation_ft": 5434,
+  "iata": "DEN",
+  "icao": "KDEN",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -104.673056,
+      39.861667
+    ]
+  },
+  "name": "Denver International Airport",
+  "state": "Colorado",
+  "timezone": "America/Denver"
+},
+{
+  "_id": "68a82917df0b41909d5a58db",
+  "city": "Istanbul",
+  "country": "TR",
+  "elevation_ft": 325,
+  "iata": "IST",
+  "icao": "LTFM",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      28.7499,
+      41.2619
+    ]
+  },
+  "name": "Istanbul Airport",
+  "state": "Istanbul",
+  "timezone": "Europe/Istanbul"
+},
+{
+  "_id": "68a82917df0b41909d5a58dc",
+  "city": "São Paulo",
+  "country": "BR",
+  "elevation_ft": 2461,
+  "iata": "GRU",
+  "icao": "SBGR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -46.473056,
+      -23.435556
+    ]
+  },
+  "name": "São Paulo-Guarulhos International Airport",
+  "state": "São Paulo",
+  "timezone": "America/Sao_Paulo"
+},
+{
+  "_id": "68a82917df0b41909d5a58dd",
+  "city": "Sydney",
+  "country": "AU",
+  "elevation_ft": 21,
+  "iata": "SYD",
+  "icao": "YSSY",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      151.175,
+      -33.946111
+    ]
+  },
+  "name": "Sydney Kingsford Smith Airport",
+  "state": "New South Wales",
+  "timezone": "Australia/Sydney"
+},
+{
+  "_id": "68a82917df0b41909d5a58de",
+  "city": "Frankfurt",
+  "country": "DE",
+  "elevation_ft": 364,
+  "iata": "FRA",
+  "icao": "EDDF",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      8.570556,
+      50.033333
+    ]
+  },
+  "name": "Frankfurt Airport",
+  "state": "Hesse",
+  "timezone": "Europe/Berlin"
+},
+{
+  "_id": "68a82917df0b41909d5a58df",
+  "city": "Seoul",
+  "country": "KR",
+  "elevation_ft": 23,
+  "iata": "ICN",
+  "icao": "RKSI",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      126.451111,
+      37.469167
+    ]
+  },
+  "name": "Incheon International Airport",
+  "state": "Incheon",
+  "timezone": "Asia/Seoul"
+},
+{
+  "_id": "68a82917df0b41909d5a58e0",
+  "city": "Amsterdam",
+  "country": "NL",
+  "elevation_ft": -11,
+  "iata": "AMS",
+  "icao": "EHAM",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      4.763889,
+      52.308056
+    ]
+  },
+  "name": "Amsterdam Airport Schiphol",
+  "state": "North Holland",
+  "timezone": "Europe/Amsterdam"
+},
+{
+  "_id": "68a82917df0b41909d5a58e1",
+  "city": "Shanghai",
+  "country": "CN",
+  "elevation_ft": 13,
+  "iata": "PVG",
+  "icao": "ZSPD",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      121.799722,
+      31.143333
+    ]
+  },
+  "name": "Shanghai Pudong International Airport",
+  "state": "Shanghai",
+  "timezone": "Asia/Shanghai"
+},
+{
+  "_id": "68a82917df0b41909d5a58e2",
+  "city": "Paris",
+  "country": "FR",
+  "elevation_ft": 392,
+  "iata": "CDG",
+  "icao": "LFPG",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      2.578125,
+      49.012778
+    ]
+  },
+  "name": "Paris Charles de Gaulle Airport",
+  "state": "Île-de-France",
+  "timezone": "Europe/Paris"
+},
+{
+  "_id": "68a82917df0b41909d5a58e3",
+  "city": "Singapore",
+  "country": "SG",
+  "elevation_ft": 22,
+  "iata": "SIN",
+  "icao": "WSSS",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      103.991667,
+      1.364444
+    ]
+  },
+  "name": "Singapore Changi Airport",
+  "state": "",
+  "timezone": "Asia/Singapore"
+},
+{
+  "_id": "68a82917df0b41909d5a58e4",
+  "city": "Dubai",
+  "country": "AE",
+  "elevation_ft": 62,
+  "iata": "DXB",
+  "icao": "OMDB",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      55.364444,
+      25.252778
+    ]
+  },
+  "name": "Dubai International Airport",
+  "state": "Dubai",
+  "timezone": "Asia/Dubai"
+},
+{
+  "_id": "68a82917df0b41909d5a58e5",
+  "city": "London",
+  "country": "GB",
+  "elevation_ft": 83,
+  "iata": "LHR",
+  "icao": "EGLL",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -0.461389,
+      51.4775
+    ]
+  },
+  "name": "London Heathrow Airport",
+  "state": "England",
+  "timezone": "Europe/London"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58e6",
+  "city": "Pristina",
+  "country": "XK",
+  "elevation_ft": 1788,
+  "iata": "PRN",
+  "icao": "BKPR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      21.050556,
+      42.572778
+    ]
+  },
+  "name": "Pristina International Airport",
+  "state": "Pristina District",
+  "timezone": "Europe/Belgrade"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58e7",
+  "city": "Dulles",
+  "country": "US",
+  "elevation_ft": 313,
+  "iata": "IAD",
+  "icao": "KIAD",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -77.457222,
+      38.953056
+    ]
+  },
+  "name": "Washington Dulles International Airport",
+  "state": "Virginia",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58e8",
+  "city": "Boston",
+  "country": "US",
+  "elevation_ft": 20,
+  "iata": "BOS",
+  "icao": "KBOS",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -71.004444,
+      42.364444
+    ]
+  },
+  "name": "Boston Logan International Airport",
+  "state": "Massachusetts",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58e9",
+  "city": "Barcelona",
+  "country": "ES",
+  "elevation_ft": 14,
+  "iata": "BCN",
+  "icao": "LEBL",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      2.078333,
+      41.2975
+    ]
+  },
+  "name": "Josep Tarradellas Barcelona-El Prat Airport",
+  "state": "Catalonia",
+  "timezone": "Europe/Madrid"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58ea",
+  "city": "Oslo",
+  "country": "NO",
+  "elevation_ft": 661,
+  "iata": "OSL",
+  "icao": "ENGM",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      11.100278,
+      60.193889
+    ]
+  },
+  "name": "Oslo Airport, Gardermoen",
+  "state": "Akershus",
+  "timezone": "Europe/Oslo"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58eb",
+  "city": "Helsinki",
+  "country": "FI",
+  "elevation_ft": 180,
+  "iata": "HEL",
+  "icao": "EFHK",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      24.963333,
+      60.317222
+    ]
+  },
+  "name": "Helsinki-Vantaa Airport",
+  "state": "Uusimaa",
+  "timezone": "Europe/Helsinki"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58ec",
+  "city": "Copenhagen",
+  "country": "DK",
+  "elevation_ft": 16,
+  "iata": "CPH",
+  "icao": "EKCH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      12.655833,
+      55.617917
+    ]
+  },
+  "name": "Copenhagen Airport, Kastrup",
+  "state": "Capital Region of Denmark",
+  "timezone": "Europe/Copenhagen"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58ed",
+  "city": "Dublin",
+  "country": "IE",
+  "elevation_ft": 279,
+  "iata": "DUB",
+  "icao": "EIDW",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -6.260833,
+      53.426389
+    ]
+  },
+  "name": "Dublin Airport",
+  "state": "County Dublin",
+  "timezone": "Europe/Dublin"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58ee",
+  "city": "Lisbon",
+  "country": "PT",
+  "elevation_ft": 374,
+  "iata": "LIS",
+  "icao": "LPPT",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -9.135278,
+      38.775556
+    ]
+  },
+  "name": "Lisbon Portela Airport",
+  "state": "Lisbon",
+  "timezone": "Europe/Lisbon"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58ef",
+  "city": "Vienna",
+  "country": "AT",
+  "elevation_ft": 600,
+  "iata": "VIE",
+  "icao": "LOWW",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      16.56,
+      48.110278
+    ]
+  },
+  "name": "Vienna International Airport",
+  "state": "Lower Austria",
+  "timezone": "Europe/Vienna"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f0",
+  "city": "San Francisco",
+  "country": "US",
+  "elevation_ft": 13,
+  "iata": "SFO",
+  "icao": "KSFO",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -122.375,
+      37.618889
+    ]
+  },
+  "name": "San Francisco International Airport",
+  "state": "California",
+  "timezone": "America/Los_Angeles"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f1",
+  "city": "Seattle",
+  "country": "US",
+  "elevation_ft": 433,
+  "iata": "SEA",
+  "icao": "KSEA",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -122.308889,
+      47.449722
+    ]
+  },
+  "name": "Seattle–Tacoma International Airport",
+  "state": "Washington",
+  "timezone": "America/Los_Angeles"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f2",
+  "city": "Las Vegas",
+  "country": "US",
+  "elevation_ft": 2181,
+  "iata": "LAS",
+  "icao": "KLAS",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -115.152222,
+      36.08
+    ]
+  },
+  "name": "Harry Reid International Airport",
+  "state": "Nevada",
+  "timezone": "America/Los_Angeles"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f3",
+  "city": "Orlando",
+  "country": "US",
+  "elevation_ft": 96,
+  "iata": "MCO",
+  "icao": "KMCO",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -81.308889,
+      28.429444
+    ]
+  },
+  "name": "Orlando International Airport",
+  "state": "Florida",
+  "timezone": "America/New_York"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f4",
+  "city": "Kuala Lumpur",
+  "country": "MY",
+  "elevation_ft": 71,
+  "iata": "KUL",
+  "icao": "WMKK",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      101.693056,
+      2.745556
+    ]
+  },
+  "name": "Kuala Lumpur International Airport",
+  "state": "Selangor",
+  "timezone": "Asia/Kuala_Lumpur"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f5",
+  "city": "Mexico City",
+  "country": "MX",
+  "elevation_ft": 7316,
+  "iata": "MEX",
+  "icao": "MMMX",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -99.0725,
+      19.436389
+    ]
+  },
+  "name": "Benito Juárez International Airport",
+  "state": "Mexico City",
+  "timezone": "America/Mexico_City"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f6",
+  "city": "Rome",
+  "country": "IT",
+  "elevation_ft": 13,
+  "iata": "FCO",
+  "icao": "LIRF",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      12.246111,
+      41.800278
+    ]
+  },
+  "name": "Leonardo da Vinci–Fiumicino Airport",
+  "state": "Lazio",
+  "timezone": "Europe/Rome"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f7",
+  "city": "Athens",
+  "country": "GR",
+  "elevation_ft": 334,
+  "iata": "ATH",
+  "icao": "LGAV",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      23.945833,
+      37.936389
+    ]
+  },
+  "name": "Athens International Airport",
+  "state": "Attica",
+  "timezone": "Europe/Athens"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f8",
+  "city": "Wrocław",
+  "country": "PL",
+  "elevation_ft": 404,
+  "iata": "WRO",
+  "icao": "EPWR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      16.885833,
+      51.102778
+    ]
+  },
+  "name": "Wrocław–Copernicus Airport",
+  "state": "Lower Silesian Voivodeship",
+  "timezone": "Europe/Warsaw"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58f9",
+  "city": "Prague",
+  "country": "CZ",
+  "elevation_ft": 1247,
+  "iata": "PRG",
+  "icao": "LKPR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      14.26,
+      50.100833
+    ]
+  },
+  "name": "Václav Havel Airport Prague",
+  "state": "Prague",
+  "timezone": "Europe/Prague"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58fa",
+  "city": "Budapest",
+  "country": "HU",
+  "elevation_ft": 495,
+  "iata": "BUD",
+  "icao": "LHBP",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      19.255556,
+      47.433333
+    ]
+  },
+  "name": "Budapest Ferenc Liszt International Airport",
+  "state": "Budapest",
+  "timezone": "Europe/Budapest"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58fb",
+  "city": "Warsaw",
+  "country": "PL",
+  "elevation_ft": 366,
+  "iata": "WAW",
+  "icao": "EPWA",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      20.967222,
+      52.165833
+    ]
+  },
+  "name": "Warsaw Chopin Airport",
+  "state": "Masovian Voivodeship",
+  "timezone": "Europe/Warsaw"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58fc",
+  "city": "Zurich",
+  "country": "CH",
+  "elevation_ft": 1416,
+  "iata": "ZRH",
+  "icao": "LSZH",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      8.549167,
+      47.464722
+    ]
+  },
+  "name": "Zürich Airport",
+  "state": "Canton of Zurich",
+  "timezone": "Europe/Zurich"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58fd",
+  "city": "Jeddah",
+  "country": "SA",
+  "elevation_ft": 49,
+  "iata": "JED",
+  "icao": "OEJN",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      39.155556,
+      21.679167
+    ]
+  },
+  "name": "King Abdulaziz International Airport",
+  "state": "Makkah",
+  "timezone": "Asia/Riyadh"
+},
+{
+  "_id": "68a8299cdf0b41909d5a58fe",
+  "city": "Vancouver",
+  "country": "CA",
+  "elevation_ft": 14,
+  "iata": "YVR",
+  "icao": "CYVR",
+  "loc": {
+    "type": "Point",
+    "coordinates": [
+      -123.184444,
+      49.193889
+    ]
+  },
+  "name": "Vancouver International Airport",
+  "state": "British Columbia",
+  "timezone": "America/Vancouver"
+}]
