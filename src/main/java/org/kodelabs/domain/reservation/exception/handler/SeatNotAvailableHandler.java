@@ -1,10 +1,11 @@
-package org.kodelabs.domain.reservation.exception;
+package org.kodelabs.domain.reservation.exception.handler;
 
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 import org.jboss.logging.Logger;
 import org.kodelabs.domain.common.exception.ErrorResponse;
+import org.kodelabs.domain.reservation.exception.SeatNotAvailableException;
 
 @Provider
 public class SeatNotAvailableHandler implements ExceptionMapper<SeatNotAvailableException> {
