@@ -30,7 +30,7 @@ public class MongoHelper {
 
     public static <T extends BaseEntity> Uni<Void> update(T entity, ReactiveMongoCollection<T> collection) {
         entity.updatedAt = Instant.now();
-        Bson filter = Filters.eq("_id", entity.getId());
+        Bson filter = Filters.eq("_id", entity.get_id());
 
         return collection.replaceOne(filter, entity)
                 .onItem().ignore().andContinueWithNull();
@@ -38,7 +38,7 @@ public class MongoHelper {
 
     public static <T extends BaseEntity> Uni<T> updateAndReturn(T entity, ReactiveMongoCollection<T> collection) {
         entity.updatedAt = Instant.now();
-        Bson filter = Filters.eq("_id", entity.getId());
+        Bson filter = Filters.eq("_id", entity.get_id());
 
         return collection.replaceOne(filter, entity)
                 .onItem().transform(updateResult -> entity);
