@@ -12,7 +12,7 @@ public class FlightMapper {
     public static FlightDTO fromEntity(FlightEntity flight) {
         FlightDTO dto = new FlightDTO();
 
-        dto.setId(flight.getId());
+        dto.setId(flight.get_id());
         dto.setPublishedFlightNumber(flight.getPublishedFlightNumber());
         dto.setOperatingFlightNumber(flight.getOperatingFlightNumber());
         dto.setFrom(flight.getFrom());
