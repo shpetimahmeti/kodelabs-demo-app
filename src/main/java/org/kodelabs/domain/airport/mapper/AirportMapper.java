@@ -8,7 +8,7 @@ public class AirportMapper {
     public static AirportDTO mapToDTO(AirportEntity entity) {
         AirportDTO dto = new AirportDTO();
 
-        dto.setId(entity.getId());
+        dto.setId(entity.get_id());
         dto.setName(entity.getName());
         dto.setIata(entity.getIata());
         dto.setIcao(entity.getIcao());
