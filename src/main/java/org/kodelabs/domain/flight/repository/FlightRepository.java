@@ -1,6 +1,8 @@
 package org.kodelabs.domain.flight.repository;
 
 import com.mongodb.client.model.*;
+import com.mongodb.client.result.UpdateResult;
+import com.mongodb.reactivestreams.client.ClientSession;
 import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
@@ -8,7 +10,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.kodelabs.domain.common.MongoConfig;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 
@@ -19,14 +20,10 @@ import java.util.List;
 public class FlightRepository {
 
     @Inject
-    MongoConfig mongoConfig;
-
-    private final ReactiveMongoCollection<FlightWithConnections> flightsWithConnectionsCollection;
+    ReactiveMongoCollection<FlightEntity> flightCollection;
 
     @Inject
-    public FlightRepository(MongoConfig mongoConfig) {
-        this.flightsWithConnectionsCollection = mongoConfig.getFlightCollection(FlightWithConnections.class);
-    }
+    ReactiveMongoCollection<FlightWithConnections> flightsWithConnectionsCollection;
 
     //TODO move to mongo config
     private final String FROM_IATA = "from.iata";
@@ -39,11 +36,20 @@ public class FlightRepository {
     private final String CONNECTION_VALUE = "$" + CONNECTIONS_FIELD;
     private final String CONNECTIONS_TO_IATA = "connections.to.iata";
 
-    public Uni<FlightEntity> findOneByObjectId(String id) {
-        ReactiveMongoCollection<FlightEntity> collection = mongoConfig.getFlightCollection();
+    public Uni<UpdateResult> reserveSeat(ClientSession session, String flightId, String seatNumber) {
+        Document filter = new Document("_id", flightId)
+                .append("seats", new Document("$elemMatch",
+                        new Document("seatNumber", seatNumber).append("available", true)));
 
+        Document update = new Document("$set", new Document("seats.$.available", false))
+                .append("$inc", new Document("availableSeatsCount", -1));
+
+        return flightCollection.updateOne(session, filter, update);
+    }
+
+    public Uni<FlightEntity> findOneByObjectId(String id) {
         //TODO update exception type, and implement exception handler
-        return Multi.createFrom().publisher(collection.find(Filters.eq("_id", id)))
+        return Multi.createFrom().publisher(flightCollection.find(Filters.eq("_id", id)))
                 .collect().first()
                 .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
     }
