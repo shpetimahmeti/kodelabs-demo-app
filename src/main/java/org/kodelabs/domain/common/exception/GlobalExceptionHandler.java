@@ -19,6 +19,4 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
                 .entity(new ErrorResponse("Unexpected error", 500))
                 .build();
     }
-
-    record ErrorResponse(String message, int code) {}
 }
