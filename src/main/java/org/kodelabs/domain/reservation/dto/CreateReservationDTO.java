@@ -10,6 +10,6 @@ public class CreateReservationDTO {
     @NotBlank(message = "Flight ID is required")
     public String flightId;
 
-    @Pattern(regexp = "^[1-9][A-F]$", message = "Seat number must be valid (e.g., 1A, 2B)")
+    @Pattern(regexp = "^[1-9][0-9]*[A-F]$", message = "Seat number must be valid (e.g., 1A, 2B)")
     public String seatNumber;
 }
