@@ -14,29 +14,30 @@ import java.util.List;
 
 public abstract class BaseRepository<T, F extends PaginationFacetResult<T>> {
 
+    protected final ReactiveMongoCollection<T> collection;
+    protected final Class<F> facetResultClass;
+
+    protected BaseRepository() {
+        this.facetResultClass = null;
+        this.collection = null;
+    }
+
+    protected BaseRepository(ReactiveMongoCollection<T> collection, Class<F> facetResultClass) {
+        this.collection = collection;
+        this.facetResultClass = facetResultClass;
+    }
 
     protected Uni<F> loadPaginationFacetResult(
-            ReactiveMongoCollection<T> collection,
-            Class<F> facetResultClass,
             int page,
             int size,
             String sortField,
             boolean ascending
     ) {
-        if (page < 0) {
-            return Uni.createFrom().failure(new IllegalArgumentException("page must be >= 0"));
-        }
-        if (size <= 0) {
-            return Uni.createFrom().failure(new IllegalArgumentException("size must be > 0"));
-        }
-
-        int skip = page * size;
-
         List<Bson> pipeline = List.of(
                 Aggregates.facet(
                         new Facet("items",
                                 Aggregates.sort(ascending ? Sorts.ascending(sortField) : Sorts.descending(sortField)),
-                                Aggregates.skip(skip),
+                                Aggregates.skip(page * size),
                                 Aggregates.limit(size)
                         ),
                         new Facet("totalCount",

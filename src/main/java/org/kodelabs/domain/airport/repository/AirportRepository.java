@@ -16,8 +16,13 @@ import org.kodelabs.domain.common.repository.BaseRepository;
 
         private final String NAME_FIELD = "name";
 
-        @Inject
         ReactiveMongoCollection<AirportEntity> airportCollection;
+
+        @Inject
+        public AirportRepository(ReactiveMongoCollection<AirportEntity> airportCollection) {
+            super(airportCollection, AirportPaginationFacetResult.class);
+            this.airportCollection = airportCollection;
+        }
 
         public Uni<AirportEntity> findOneByIata(String iata) {
             return Multi.createFrom().publisher(airportCollection.find(Filters.eq("iata", iata)))
@@ -27,8 +32,6 @@ import org.kodelabs.domain.common.repository.BaseRepository;
 
         public Uni<AirportPaginationFacetResult> findAirportsWithPagination(int page, int size, boolean ascending) {
             return loadPaginationFacetResult(
-                    airportCollection,
-                    AirportPaginationFacetResult.class,
                     page, size,
                     NAME_FIELD,
                     ascending);
