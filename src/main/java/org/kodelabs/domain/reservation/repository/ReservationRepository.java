@@ -9,6 +9,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 
+import static org.kodelabs.domain.reservation.mongo.ReservationFields.ID;
+
 @ApplicationScoped
 public class ReservationRepository {
 
@@ -20,6 +22,6 @@ public class ReservationRepository {
     }
 
     public Uni<ReservationEntity> findByObjectId(String id) {
-        return reservationCollection.find(Filters.eq("_id", id)).collect().first();
+        return reservationCollection.find(Filters.eq(ID, id)).collect().first();
     }
 }
