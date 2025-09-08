@@ -9,6 +9,8 @@ import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.service.ReservationService;
 
+import java.util.List;
+
 @Path("/reservations")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -25,6 +27,12 @@ public class ReservationResource {
 
     @POST
     public Uni<ReservationEntity> crateReservation(@Valid CreateReservationDTO reservationDTO) {
-        return reservationService.createReservationTemp(reservationDTO);
+        return reservationService.createReservation(reservationDTO);
+    }
+
+    @GET
+    @Path("/users/{userId}")
+    public Uni<List<ReservationEntity>> findByUserId(@PathParam("userId") String userId) {
+        return reservationService.findByUserId(userId);
     }
 }

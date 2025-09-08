@@ -13,6 +13,7 @@ import org.kodelabs.domain.reservation.mapper.ReservationMapper;
 import org.kodelabs.domain.reservation.repository.ReservationRepository;
 
 import java.time.Instant;
+import java.util.List;
 
 @ApplicationScoped
 public class ReservationService {
@@ -31,7 +32,11 @@ public class ReservationService {
                 .onItem().ifNull().failWith(new ReservationNotFoundException(id));
     }
 
-    public Uni<ReservationEntity> createReservationTemp(CreateReservationDTO reservationDTO) {
+    public Uni<List<ReservationEntity>> findByUserId(String userId) {
+        return reservationRepository.findByUserId(userId).collect().asList();
+    }
+
+    public Uni<ReservationEntity> createReservation(CreateReservationDTO reservationDTO) {
         return transactionHelper.inTransaction((session -> {
             ReservationEntity entity = ReservationMapper.toEntity(reservationDTO);
 
