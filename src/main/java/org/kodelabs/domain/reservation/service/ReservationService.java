@@ -12,6 +12,8 @@ import org.kodelabs.domain.reservation.exception.SeatNotAvailableException;
 import org.kodelabs.domain.reservation.mapper.ReservationMapper;
 import org.kodelabs.domain.reservation.repository.ReservationRepository;
 
+import java.time.Instant;
+
 @ApplicationScoped
 public class ReservationService {
 
@@ -41,6 +43,9 @@ public class ReservationService {
                         }
 
                         entity.generateId();
+                        entity.setCreatedAt(Instant.now());
+                        entity.setUpdatedAt(Instant.now());
+
                         return reservationRepository.insertReservation(session, entity).replaceWith(entity);
                     });
         }));
