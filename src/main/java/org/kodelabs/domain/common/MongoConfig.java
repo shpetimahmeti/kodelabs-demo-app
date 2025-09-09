@@ -8,7 +8,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Produces;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.kodelabs.domain.airport.dto.AirportPaginationFacetResult;
 import org.kodelabs.domain.airport.entity.AirportEntity;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
@@ -40,12 +39,6 @@ public class MongoConfig {
     @ApplicationScoped
     public ReactiveMongoCollection<AirportEntity> airportCollection() {
         return getCollection(airportCollection, AirportEntity.class);
-    }
-
-    @Produces
-    @ApplicationScoped
-    public ReactiveMongoCollection<AirportPaginationFacetResult> airportPaginationCollection() {
-        return getCollection(airportCollection, AirportPaginationFacetResult.class);
     }
 
     //FLIGHT
