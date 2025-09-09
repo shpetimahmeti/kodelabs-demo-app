@@ -27,9 +27,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public abstract class BaseRepository<T> {
-
     protected ReactiveMongoCollection<T> collection;
-    protected Class<T> entityClass;
 
     protected CodecRegistry pojoRegistry;
     protected Codec<T> codec;
@@ -40,7 +38,6 @@ public abstract class BaseRepository<T> {
 
     protected BaseRepository(MongoRegistry mongoRegistry, Class<T> entityClass) {
         this.collection = mongoRegistry.getCollection(entityClass);
-        this.entityClass = entityClass;
 
         this.pojoRegistry = fromRegistries(
                 collection.getCodecRegistry(),
