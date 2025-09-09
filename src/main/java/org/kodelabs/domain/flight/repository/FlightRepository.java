@@ -3,13 +3,14 @@ package org.kodelabs.domain.flight.repository;
 import com.mongodb.client.model.*;
 import com.mongodb.client.result.UpdateResult;
 import com.mongodb.reactivestreams.client.ClientSession;
-import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.kodelabs.domain.common.MongoConfig;
+import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 
@@ -17,10 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
-public class FlightRepository {
-
-    @Inject
-    ReactiveMongoCollection<FlightEntity> flightCollection;
+public class FlightRepository extends BaseRepository<FlightEntity> {
 
     //TODO move to mongo config
     private final String FROM_IATA = "from.iata";
@@ -33,6 +31,11 @@ public class FlightRepository {
     private final String CONNECTION_VALUE = "$" + CONNECTIONS_FIELD;
     private final String CONNECTIONS_TO_IATA = "connections.to.iata";
 
+    @Inject
+    public FlightRepository(MongoConfig mongoConfig) {
+        super(mongoConfig, FlightEntity.class);
+    }
+
     public Uni<UpdateResult> reserveSeat(ClientSession session, String flightId, String seatNumber) {
         Document filter = new Document("_id", flightId)
                 .append("seats", new Document("$elemMatch",
@@ -41,12 +44,12 @@ public class FlightRepository {
         Document update = new Document("$set", new Document("seats.$.available", false))
                 .append("$inc", new Document("availableSeatsCount", -1));
 
-        return flightCollection.updateOne(session, filter, update);
+        return collection.updateOne(session, filter, update);
     }
 
     public Uni<FlightEntity> findOneByObjectId(String id) {
         //TODO update exception type, and implement exception handler
-        return Multi.createFrom().publisher(flightCollection.find(Filters.eq("_id", id)))
+        return Multi.createFrom().publisher(collection.find(Filters.eq("_id", id)))
                 .collect().first()
                 .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
     }
@@ -61,7 +64,7 @@ public class FlightRepository {
                 departureDateMin,
                 departureDateMax);
 
-        return flightCollection.withDocumentClass(FlightWithConnections.class).aggregate(pipeline);
+        return collection.withDocumentClass(FlightWithConnections.class).aggregate(pipeline);
     }
 
     private List<Bson> buildThePipeline(String originIata,

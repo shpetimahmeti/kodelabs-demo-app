@@ -6,74 +6,49 @@ import io.quarkus.mongodb.reactive.ReactiveMongoClient;
 import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Produces;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.kodelabs.domain.airport.entity.AirportEntity;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ApplicationScoped
 public class MongoConfig {
 
-    @Inject
-    ReactiveMongoClient client;
+    private final Map<Class<?>, ReactiveMongoCollection<?>> collections = new HashMap<>();
+    private final Map<Class<?>, MongoCollection<?>> nonReactiveCollections = new HashMap<>();
 
-    @Inject
+    ReactiveMongoClient client;
     MongoClient nonReactiveClient;
 
-    @ConfigProperty(name = "quarkus.mongodb.database")
-    String database;
+    @Inject
+    public MongoConfig(ReactiveMongoClient client,
+                       MongoClient nonReactiveClient,
+                       @ConfigProperty(name = "quarkus.mongodb.database") String databaseName,
+                       @ConfigProperty(name = "app.mongodb.collections.airport") String airportCollectionName,
+                       @ConfigProperty(name = "app.mongodb.collections.flight") String flightCollectionName,
+                       @ConfigProperty(name = "app.mongodb.collections.reservation") String reservationCollectionName) {
 
-    @ConfigProperty(name = "app.mongodb.collections.airport")
-    String airportCollection;
+        this.client = client;
+        this.nonReactiveClient = nonReactiveClient;
 
-    @ConfigProperty(name = "app.mongodb.collections.flight")
-    String flightCollection;
+        collections.put(AirportEntity.class, client.getDatabase(databaseName).getCollection(airportCollectionName, AirportEntity.class));
+        collections.put(FlightEntity.class, client.getDatabase(databaseName).getCollection(flightCollectionName, FlightEntity.class));
+        collections.put(ReservationEntity.class, client.getDatabase(databaseName).getCollection(reservationCollectionName, ReservationEntity.class));
 
-    @ConfigProperty(name = "app.mongodb.collections.reservation")
-    String reservationCollection;
-
-    //AIRPORT
-    @Produces
-    @ApplicationScoped
-    public ReactiveMongoCollection<AirportEntity> airportCollection() {
-        return getCollection(airportCollection, AirportEntity.class);
+        nonReactiveCollections.put(AirportEntity.class, nonReactiveClient.getDatabase(databaseName).getCollection(airportCollectionName, AirportEntity.class));
+        nonReactiveCollections.put(FlightEntity.class, nonReactiveClient.getDatabase(databaseName).getCollection(flightCollectionName, FlightEntity.class));
     }
 
-    //FLIGHT
-    @Produces
-    @ApplicationScoped
-    public ReactiveMongoCollection<FlightEntity> flightCollection() {
-        return getCollection(flightCollection, FlightEntity.class);
+    @SuppressWarnings("unchecked")
+    public <T> ReactiveMongoCollection<T> getCollection(Class<T> entityClass) {
+        return (ReactiveMongoCollection<T>) collections.get(entityClass);
     }
 
-    //RESERVATION
-    @Produces
-    @ApplicationScoped
-    public ReactiveMongoCollection<ReservationEntity> reservationCollection() {
-        return getCollection(reservationCollection, ReservationEntity.class);
-    }
-
-    //NON REACTIVE --------------------------------------------
-    @Produces
-    @ApplicationScoped
-    public MongoCollection<FlightEntity> nonReactiveFlightCollection() {
-        return getNonReactiveCollection(flightCollection, FlightEntity.class);
-    }
-
-    @Produces
-    @ApplicationScoped
-    public MongoCollection<AirportEntity> nonReactiveAirportCollection() {
-        return getNonReactiveCollection(airportCollection, AirportEntity.class);
-    }
-
-    private <T> ReactiveMongoCollection<T> getCollection(String collectionName, Class<T> entityClass) {
-        return client.getDatabase(database).getCollection(collectionName, entityClass);
-    }
-
-    private <T> MongoCollection<T> getNonReactiveCollection(String collectionName,
-                                                           Class<T> entityClass) {
-        return nonReactiveClient.getDatabase(database)
-                .getCollection(collectionName, entityClass);
+    @SuppressWarnings("unchecked")
+    public <T> MongoCollection<T> getNonReactiveCollection(Class<T> entityClass) {
+        return (MongoCollection<T>) nonReactiveCollections.get(entityClass);
     }
 }

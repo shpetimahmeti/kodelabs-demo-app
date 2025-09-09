@@ -6,7 +6,6 @@ import com.mongodb.client.model.Sorts;
 import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
-import jakarta.inject.Inject;
 import org.bson.BsonDocument;
 import org.bson.BsonDocumentReader;
 import org.bson.Document;
@@ -15,6 +14,7 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
+import org.kodelabs.domain.common.MongoConfig;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 
 import java.util.ArrayList;
@@ -38,9 +38,9 @@ public abstract class BaseRepository<T> {
     protected BaseRepository() {
     }
 
-    protected BaseRepository(ReactiveMongoCollection<T> collection) {
-        this.collection = collection;
-        this.entityClass = this.collection.getDocumentClass();
+    protected BaseRepository(MongoConfig mongoConfig, Class<T> entityClass) {
+        this.collection = mongoConfig.getCollection(entityClass);
+        this.entityClass = entityClass;
 
         this.pojoRegistry = fromRegistries(
                 collection.getCodecRegistry(),

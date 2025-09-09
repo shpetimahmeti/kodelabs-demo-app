@@ -1,13 +1,13 @@
 package org.kodelabs.domain.airport.repository;
 
 import com.mongodb.client.model.Filters;
-import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
+import jakarta.inject.Inject;
 import org.kodelabs.domain.airport.entity.AirportEntity;
+import org.kodelabs.domain.common.MongoConfig;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 
@@ -16,16 +16,13 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
 
     private final String NAME_FIELD = "name";
 
-    ReactiveMongoCollection<AirportEntity> airportCollection;
-
     @Inject
-    public AirportRepository(ReactiveMongoCollection<AirportEntity> airportCollection) {
-        super(airportCollection);
-        this.airportCollection = airportCollection;
+    public AirportRepository(MongoConfig mongoConfig) {
+        super(mongoConfig, AirportEntity.class);
     }
 
     public Uni<AirportEntity> findOneByIata(String iata) {
-        return Multi.createFrom().publisher(airportCollection.find(Filters.eq("iata", iata)))
+        return Multi.createFrom().publisher(collection.find(Filters.eq("iata", iata)))
                 .collect().first()
                 .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
     }
