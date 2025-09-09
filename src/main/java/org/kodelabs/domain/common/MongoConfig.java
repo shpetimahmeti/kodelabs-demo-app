@@ -9,7 +9,6 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Produces;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.kodelabs.domain.airport.entity.AirportEntity;
-import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 
@@ -42,12 +41,6 @@ public class MongoConfig {
     }
 
     //FLIGHT
-    @Produces
-    @ApplicationScoped
-    public ReactiveMongoCollection<FlightWithConnections> flightWithConnectionsCollection() {
-        return getCollection(flightCollection, FlightWithConnections.class);
-    }
-
     @Produces
     @ApplicationScoped
     public ReactiveMongoCollection<FlightEntity> flightCollection() {

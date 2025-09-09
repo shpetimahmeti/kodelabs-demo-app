@@ -22,9 +22,6 @@ public class FlightRepository {
     @Inject
     ReactiveMongoCollection<FlightEntity> flightCollection;
 
-    @Inject
-    ReactiveMongoCollection<FlightWithConnections> flightsWithConnectionsCollection;
-
     //TODO move to mongo config
     private final String FROM_IATA = "from.iata";
     private final String TO_IATA = "to.iata";
@@ -64,7 +61,7 @@ public class FlightRepository {
                 departureDateMin,
                 departureDateMax);
 
-        return flightsWithConnectionsCollection.aggregate(pipeline);
+        return flightCollection.withDocumentClass(FlightWithConnections.class).aggregate(pipeline);
     }
 
     private List<Bson> buildThePipeline(String originIata,
