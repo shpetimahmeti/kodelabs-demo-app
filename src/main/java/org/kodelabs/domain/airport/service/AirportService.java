@@ -3,6 +3,7 @@ package org.kodelabs.domain.airport.service;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.kodelabs.domain.airport.exception.AirportNotFoundException;
 import org.kodelabs.domain.airport.repository.AirportRepository;
 import org.kodelabs.domain.airport.dto.AirportDTO;
 import org.kodelabs.domain.airport.mapper.AirportMapper;
@@ -16,7 +17,9 @@ public class AirportService {
     AirportRepository repository;
 
     public Uni<AirportDTO> findOneByIata(String iata) {
-        return repository.findOneByIata(iata).onItem().transform(AirportMapper::mapToDTO);
+        return repository.findOneByIata(iata)
+                .onItem().ifNull().failWith(() -> new AirportNotFoundException(iata))
+                .onItem().transform(AirportMapper::mapToDTO);
     }
 
     public Uni<PaginatedResponse<AirportDTO>> findAll(int page, int size, boolean ascending) {

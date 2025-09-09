@@ -23,9 +23,7 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
     }
 
     public Uni<AirportEntity> findOneByIata(String iata) {
-        return Multi.createFrom().publisher(collection.find(Filters.eq(IATA, iata)))
-                .collect().first()
-                .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
+        return Multi.createFrom().publisher(collection.find(Filters.eq(IATA, iata))).collect().first();
     }
 
     public Uni<PaginationFacetResult<AirportEntity>> findAirportsWithPagination(int page, int size, boolean ascending) {
