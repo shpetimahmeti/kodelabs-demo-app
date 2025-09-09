@@ -20,7 +20,7 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
 
     @Inject
     public AirportRepository(ReactiveMongoCollection<AirportEntity> airportCollection) {
-        super(airportCollection, AirportEntity.class);
+        super(airportCollection);
         this.airportCollection = airportCollection;
     }
 

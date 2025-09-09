@@ -6,6 +6,7 @@ import com.mongodb.client.model.Sorts;
 import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
+import jakarta.inject.Inject;
 import org.bson.BsonDocument;
 import org.bson.BsonDocumentReader;
 import org.bson.Document;
@@ -27,7 +28,6 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public abstract class BaseRepository<T> {
 
-    //Inject base entity collection
     protected ReactiveMongoCollection<T> collection;
     protected Class<T> entityClass;
 
@@ -38,15 +38,15 @@ public abstract class BaseRepository<T> {
     protected BaseRepository() {
     }
 
-    protected BaseRepository(ReactiveMongoCollection<T> collection, Class<T> entityClass) {
+    protected BaseRepository(ReactiveMongoCollection<T> collection) {
         this.collection = collection;
-        this.entityClass = entityClass;
+        this.entityClass = this.collection.getDocumentClass();
 
         this.pojoRegistry = fromRegistries(
                 collection.getCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build())
         );
-        this.codec = pojoRegistry.get(entityClass);
+        this.codec = pojoRegistry.get(collection.getDocumentClass());
         this.codecMapper = this::mapWithCodec;
     }
 

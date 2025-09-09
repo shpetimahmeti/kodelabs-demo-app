@@ -21,7 +21,7 @@ public class ReservationRepository extends BaseRepository<ReservationEntity> {
 
     @Inject
     public ReservationRepository(ReactiveMongoCollection<ReservationEntity> reservationCollection) {
-        super(reservationCollection, ReservationEntity.class);
+        super(reservationCollection);
         this.reservationCollection = reservationCollection;
     }
 
