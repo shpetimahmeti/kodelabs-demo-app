@@ -7,33 +7,33 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import org.kodelabs.domain.airport.dto.AirportPaginationFacetResult;
 import org.kodelabs.domain.airport.entity.AirportEntity;
+import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 
-    @ApplicationScoped
-    public class AirportRepository extends BaseRepository<AirportEntity, AirportPaginationFacetResult> {
+@ApplicationScoped
+public class AirportRepository extends BaseRepository<AirportEntity> {
 
-        private final String NAME_FIELD = "name";
+    private final String NAME_FIELD = "name";
 
-        ReactiveMongoCollection<AirportEntity> airportCollection;
+    ReactiveMongoCollection<AirportEntity> airportCollection;
 
-        @Inject
-        public AirportRepository(ReactiveMongoCollection<AirportEntity> airportCollection) {
-            super(airportCollection, AirportPaginationFacetResult.class);
-            this.airportCollection = airportCollection;
-        }
-
-        public Uni<AirportEntity> findOneByIata(String iata) {
-            return Multi.createFrom().publisher(airportCollection.find(Filters.eq("iata", iata)))
-                    .collect().first()
-                    .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
-        }
-
-        public Uni<AirportPaginationFacetResult> findAirportsWithPagination(int page, int size, boolean ascending) {
-            return loadPaginationFacetResult(
-                    page, size,
-                    NAME_FIELD,
-                    ascending);
-        }
+    @Inject
+    public AirportRepository(ReactiveMongoCollection<AirportEntity> airportCollection) {
+        super(airportCollection, AirportEntity.class);
+        this.airportCollection = airportCollection;
     }
+
+    public Uni<AirportEntity> findOneByIata(String iata) {
+        return Multi.createFrom().publisher(airportCollection.find(Filters.eq("iata", iata)))
+                .collect().first()
+                .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
+    }
+
+    public Uni<PaginationFacetResult<AirportEntity>> findAirportsWithPagination(int page, int size, boolean ascending) {
+        return loadPaginationFacetResult(
+                page, size,
+                NAME_FIELD,
+                ascending);
+    }
+}
