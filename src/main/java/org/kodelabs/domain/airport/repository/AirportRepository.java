@@ -11,10 +11,11 @@ import org.kodelabs.domain.common.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 
+import static org.kodelabs.domain.common.Fields.AirportFields.IATA;
+import static org.kodelabs.domain.common.Fields.AirportFields.NAME;
+
 @ApplicationScoped
 public class AirportRepository extends BaseRepository<AirportEntity> {
-
-    private final String NAME_FIELD = "name";
 
     @Inject
     public AirportRepository(MongoRegistry mongoRegistry) {
@@ -22,7 +23,7 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
     }
 
     public Uni<AirportEntity> findOneByIata(String iata) {
-        return Multi.createFrom().publisher(collection.find(Filters.eq("iata", iata)))
+        return Multi.createFrom().publisher(collection.find(Filters.eq(IATA, iata)))
                 .collect().first()
                 .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
     }
@@ -30,7 +31,7 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
     public Uni<PaginationFacetResult<AirportEntity>> findAirportsWithPagination(int page, int size, boolean ascending) {
         return loadPaginationFacetResult(
                 page, size,
-                NAME_FIELD,
+                NAME,
                 ascending);
     }
 }

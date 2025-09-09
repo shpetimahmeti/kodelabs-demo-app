@@ -17,19 +17,18 @@ import org.kodelabs.domain.flight.entity.FlightEntity;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTIONS_FIELD;
+import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTIONS_TO_IATA;
+import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTION_VALUE;
+import static org.kodelabs.domain.common.Fields.FlightFields.DEPARTURE_TIME;
+import static org.kodelabs.domain.common.Fields.FlightFields.FLIGHT_COLLECTION_NAME;
+import static org.kodelabs.domain.common.Fields.FlightFields.FROM_IATA;
+import static org.kodelabs.domain.common.Fields.FlightFields.TO_IATA;
+import static org.kodelabs.domain.common.Fields.FlightFields.TO_IATA_START_WITH_VALUE;
+import static org.kodelabs.domain.common.Fields.ID;
+
 @ApplicationScoped
 public class FlightRepository extends BaseRepository<FlightEntity> {
-
-    //TODO move to mongo config
-    private final String FROM_IATA = "from.iata";
-    private final String TO_IATA = "to.iata";
-    private final String TO_IATA_START_WITH_VALUE = "$" + TO_IATA;
-    private final String DEPARTURE_TIME = "departureTime";
-    private final String FLIGHT_COLLECTION_NAME = "flights";
-
-    private final String CONNECTIONS_FIELD = "connections";
-    private final String CONNECTION_VALUE = "$" + CONNECTIONS_FIELD;
-    private final String CONNECTIONS_TO_IATA = "connections.to.iata";
 
     @Inject
     public FlightRepository(MongoRegistry mongoRegistry) {
@@ -37,7 +36,7 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
     }
 
     public Uni<UpdateResult> reserveSeat(ClientSession session, String flightId, String seatNumber) {
-        Document filter = new Document("_id", flightId)
+        Document filter = new Document(ID, flightId)
                 .append("seats", new Document("$elemMatch",
                         new Document("seatNumber", seatNumber).append("available", true)));
 
@@ -49,7 +48,7 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
 
     public Uni<FlightEntity> findOneByObjectId(String id) {
         //TODO update exception type, and implement exception handler
-        return Multi.createFrom().publisher(collection.find(Filters.eq("_id", id)))
+        return Multi.createFrom().publisher(collection.find(Filters.eq(ID, id)))
                 .collect().first()
                 .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
     }

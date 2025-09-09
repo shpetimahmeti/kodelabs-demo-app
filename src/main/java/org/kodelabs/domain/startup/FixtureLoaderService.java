@@ -14,8 +14,10 @@ import org.kodelabs.domain.flight.entity.FlightEntity;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.*;
+import java.time.Instant;
 import java.util.List;
+
+import static org.kodelabs.domain.common.Fields.ID;
 
 @ApplicationScoped
 public class FixtureLoaderService {
@@ -60,7 +62,7 @@ public class FixtureLoaderService {
             flight.setCreatedAt(Instant.now());
             flight.setUpdatedAt(Instant.now());
 
-            if (flightCollection.find(new org.bson.Document("_id", flight.get_id())).first() == null) {
+            if (flightCollection.find(new org.bson.Document(ID, flight.get_id())).first() == null) {
                 flightCollection.insertOne(flight);
                 System.out.println("Inserted flight " + flight.get_id());
             } else {
@@ -85,7 +87,7 @@ public class FixtureLoaderService {
             airport.createdAt = Instant.now();
             airport.updatedAt = Instant.now();
 
-            if (airportCollection.find(new org.bson.Document("_id", airport.get_id())).first() == null) {
+            if (airportCollection.find(new org.bson.Document(ID, airport.get_id())).first() == null) {
                 airportCollection.insertOne(airport);
                 System.out.println("Inserted airport " + airport.get_id());
             } else {

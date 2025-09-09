@@ -11,8 +11,8 @@ import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 
-import static org.kodelabs.domain.reservation.db.ReservationFields.ID;
-import static org.kodelabs.domain.reservation.db.ReservationFields.USER_ID;
+import static org.kodelabs.domain.common.Fields.ID;
+import static org.kodelabs.domain.common.Fields.ReservationFields.USER_ID;
 
 @ApplicationScoped
 public class ReservationRepository extends BaseRepository<ReservationEntity> {
