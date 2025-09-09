@@ -1,6 +1,7 @@
 package org.kodelabs.domain.reservation.mapper;
 
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
+import org.kodelabs.domain.reservation.dto.ReservationDTO;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 
 public class ReservationMapper {
@@ -11,6 +12,15 @@ public class ReservationMapper {
         entity.setSeatNumber(dto.seatNumber);
         entity.setUserId(dto.userId);
 
-        return  entity;
+        return entity;
+    }
+
+    public static ReservationDTO toDto(ReservationEntity entity) {
+        ReservationDTO dto = new ReservationDTO();
+        dto.setFlightId(entity.getFlightId());
+        dto.setSeatNumber(entity.getSeatNumber());
+        dto.setUserId(entity.getUserId());
+
+        return dto;
     }
 }
