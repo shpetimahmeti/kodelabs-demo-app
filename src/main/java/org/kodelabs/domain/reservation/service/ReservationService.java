@@ -3,9 +3,12 @@ package org.kodelabs.domain.reservation.service;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.kodelabs.domain.common.PaginatedResponse;
+import org.kodelabs.domain.common.pagination.PaginationMapper;
 import org.kodelabs.domain.common.transaction.TransactionHelper;
 import org.kodelabs.domain.flight.repository.FlightRepository;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
+import org.kodelabs.domain.reservation.dto.ReservationDTO;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.exception.ReservationNotFoundException;
 import org.kodelabs.domain.reservation.exception.SeatNotAvailableException;
@@ -32,8 +35,10 @@ public class ReservationService {
                 .onItem().ifNull().failWith(new ReservationNotFoundException(id));
     }
 
-    public Uni<List<ReservationEntity>> findByUserId(String userId) {
-        return reservationRepository.findByUserId(userId).collect().asList();
+    public Uni<PaginatedResponse<ReservationDTO>> findByUserId(String userId, int page, int size, boolean ascending) {
+        return reservationRepository.findByUserId(userId, page, size, ascending)
+                .map(result ->
+                        PaginationMapper.toPaginatedResponse(result, page, size, ReservationMapper::toDto));
     }
 
     public Uni<ReservationEntity> createReservation(CreateReservationDTO reservationDTO) {

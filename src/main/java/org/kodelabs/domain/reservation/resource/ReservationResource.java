@@ -5,11 +5,12 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.kodelabs.domain.common.PaginatedResponse;
+import org.kodelabs.domain.common.pagination.dto.PaginationQueryParams;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
+import org.kodelabs.domain.reservation.dto.ReservationDTO;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.service.ReservationService;
-
-import java.util.List;
 
 @Path("/reservations")
 @Produces(MediaType.APPLICATION_JSON)
@@ -32,7 +33,8 @@ public class ReservationResource {
 
     @GET
     @Path("/users/{userId}")
-    public Uni<List<ReservationEntity>> findByUserId(@PathParam("userId") String userId) {
-        return reservationService.findByUserId(userId);
+    public Uni<PaginatedResponse<ReservationDTO>> findByUserId(@PathParam("userId") String userId,
+                                                               @Valid @BeanParam PaginationQueryParams params) {
+        return reservationService.findByUserId(userId, params.page, params.size, params.ascending);
     }
 }
