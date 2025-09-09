@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ApplicationScoped
-public class MongoConfig {
+public class MongoRegistry {
 
     private final Map<Class<?>, ReactiveMongoCollection<?>> collections = new HashMap<>();
     private final Map<Class<?>, MongoCollection<?>> nonReactiveCollections = new HashMap<>();
@@ -24,12 +24,12 @@ public class MongoConfig {
     MongoClient nonReactiveClient;
 
     @Inject
-    public MongoConfig(ReactiveMongoClient client,
-                       MongoClient nonReactiveClient,
-                       @ConfigProperty(name = "quarkus.mongodb.database") String databaseName,
-                       @ConfigProperty(name = "app.mongodb.collections.airport") String airportCollectionName,
-                       @ConfigProperty(name = "app.mongodb.collections.flight") String flightCollectionName,
-                       @ConfigProperty(name = "app.mongodb.collections.reservation") String reservationCollectionName) {
+    public MongoRegistry(ReactiveMongoClient client,
+                         MongoClient nonReactiveClient,
+                         @ConfigProperty(name = "quarkus.mongodb.database") String databaseName,
+                         @ConfigProperty(name = "app.mongodb.collections.airport") String airportCollectionName,
+                         @ConfigProperty(name = "app.mongodb.collections.flight") String flightCollectionName,
+                         @ConfigProperty(name = "app.mongodb.collections.reservation") String reservationCollectionName) {
 
         this.client = client;
         this.nonReactiveClient = nonReactiveClient;

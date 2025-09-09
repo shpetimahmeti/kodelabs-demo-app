@@ -9,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import org.kodelabs.domain.airport.entity.AirportEntity;
-import org.kodelabs.domain.common.MongoConfig;
+import org.kodelabs.domain.common.MongoRegistry;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 
 import java.io.IOException;
@@ -24,14 +24,14 @@ public class FixtureLoaderService {
     ObjectMapper objectMapper;
 
     @Inject
-    MongoConfig mongoConfig;
+    MongoRegistry mongoRegistry;
 
     MongoCollection<FlightEntity> flightCollection;
     MongoCollection<AirportEntity> airportCollection;
 
     public void onStart(@Observes StartupEvent ev) {
-        this.flightCollection = mongoConfig.getNonReactiveCollection(FlightEntity.class);
-        this.airportCollection = mongoConfig.getNonReactiveCollection(AirportEntity.class);
+        this.flightCollection = mongoRegistry.getNonReactiveCollection(FlightEntity.class);
+        this.airportCollection = mongoRegistry.getNonReactiveCollection(AirportEntity.class);
 
         try (InputStream flightIs = getClass().getResourceAsStream("/fixtures/flights.json");
              InputStream airportsIs = getClass().getResourceAsStream("/fixtures/airports.json");

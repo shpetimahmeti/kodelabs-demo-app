@@ -6,7 +6,7 @@ import com.mongodb.reactivestreams.client.ClientSession;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.kodelabs.domain.common.MongoConfig;
+import org.kodelabs.domain.common.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
@@ -18,8 +18,8 @@ import static org.kodelabs.domain.reservation.db.ReservationFields.USER_ID;
 public class ReservationRepository extends BaseRepository<ReservationEntity> {
 
     @Inject
-    public ReservationRepository(MongoConfig mongoConfig) {
-        super(mongoConfig, ReservationEntity.class);
+    public ReservationRepository(MongoRegistry mongoRegistry) {
+        super(mongoRegistry, ReservationEntity.class);
     }
 
     public Uni<InsertOneResult> insertReservation(ClientSession session, ReservationEntity entity) {

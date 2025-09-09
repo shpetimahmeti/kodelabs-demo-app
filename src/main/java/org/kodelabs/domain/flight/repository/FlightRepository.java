@@ -9,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.kodelabs.domain.common.MongoConfig;
+import org.kodelabs.domain.common.MongoRegistry;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
@@ -32,8 +32,8 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
     private final String CONNECTIONS_TO_IATA = "connections.to.iata";
 
     @Inject
-    public FlightRepository(MongoConfig mongoConfig) {
-        super(mongoConfig, FlightEntity.class);
+    public FlightRepository(MongoRegistry mongoRegistry) {
+        super(mongoRegistry, FlightEntity.class);
     }
 
     public Uni<UpdateResult> reserveSeat(ClientSession session, String flightId, String seatNumber) {

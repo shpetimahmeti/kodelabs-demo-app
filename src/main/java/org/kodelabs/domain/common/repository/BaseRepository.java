@@ -14,7 +14,7 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
-import org.kodelabs.domain.common.MongoConfig;
+import org.kodelabs.domain.common.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 
 import java.util.ArrayList;
@@ -38,8 +38,8 @@ public abstract class BaseRepository<T> {
     protected BaseRepository() {
     }
 
-    protected BaseRepository(MongoConfig mongoConfig, Class<T> entityClass) {
-        this.collection = mongoConfig.getCollection(entityClass);
+    protected BaseRepository(MongoRegistry mongoRegistry, Class<T> entityClass) {
+        this.collection = mongoRegistry.getCollection(entityClass);
         this.entityClass = entityClass;
 
         this.pojoRegistry = fromRegistries(

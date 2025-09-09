@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import jakarta.inject.Inject;
 import org.kodelabs.domain.airport.entity.AirportEntity;
-import org.kodelabs.domain.common.MongoConfig;
+import org.kodelabs.domain.common.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 
@@ -17,8 +17,8 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
     private final String NAME_FIELD = "name";
 
     @Inject
-    public AirportRepository(MongoConfig mongoConfig) {
-        super(mongoConfig, AirportEntity.class);
+    public AirportRepository(MongoRegistry mongoRegistry) {
+        super(mongoRegistry, AirportEntity.class);
     }
 
     public Uni<AirportEntity> findOneByIata(String iata) {
