@@ -16,6 +16,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -26,6 +27,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 public abstract class BaseRepository<T> {
 
+    //Inject base entity collection
     protected ReactiveMongoCollection<T> collection;
     protected Class<T> entityClass;
 
@@ -54,14 +56,33 @@ public abstract class BaseRepository<T> {
             String sortField,
             boolean ascending
     ) {
+        return loadPaginationFacetResult(null, page, size, sortField, ascending);
+    }
+
+    protected Uni<PaginationFacetResult<T>> loadPaginationFacetResult(
+            Bson matchFilter,
+            int page,
+            int size,
+            String sortField,
+            boolean ascending
+    ) {
+        List<Bson> itemsPipeline = new ArrayList<>();
+        List<Bson> totalCountPipeline = new ArrayList<>();
+
+        if (matchFilter != null) {
+            itemsPipeline.add(Aggregates.match(matchFilter));
+            totalCountPipeline.add(Aggregates.match(matchFilter));
+        }
+
+        itemsPipeline.add(Aggregates.sort(ascending ? Sorts.ascending(sortField) : Sorts.descending(sortField)));
+        itemsPipeline.add(Aggregates.skip(page * size));
+        itemsPipeline.add(Aggregates.limit(size));
+        totalCountPipeline.add(Aggregates.count("count"));
+
         List<Bson> pipeline = List.of(
                 Aggregates.facet(
-                        new Facet("items",
-                                Aggregates.sort(ascending ? Sorts.ascending(sortField) : Sorts.descending(sortField)),
-                                Aggregates.skip(page * size),
-                                Aggregates.limit(size)
-                        ),
-                        new Facet("totalCount", Aggregates.count("count"))
+                        new Facet("items", itemsPipeline),
+                        new Facet("totalCount", totalCountPipeline)
                 ),
                 Aggregates.project(
                         new Document("items", 1)
