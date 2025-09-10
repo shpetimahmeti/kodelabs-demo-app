@@ -27,7 +27,7 @@ public class FlightService {
     public Uni<FlightDTO> findOneByObjectId(String objectId) {
         return repository.findOneByObjectId(objectId)
                 .onItem().ifNull().failWith(() -> new FlightNotFoundException(objectId))
-                .onItem().transform(FlightMapper::fromEntity);
+                .onItem().transform(FlightMapper::toDto);
     }
 
     public Multi<FlightRouteResponse> findConnectionsFromOriginToDestination(String originIata,

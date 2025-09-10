@@ -19,12 +19,12 @@ public class AirportService {
     public Uni<AirportDTO> findOneByIata(String iata) {
         return repository.findOneByIata(iata)
                 .onItem().ifNull().failWith(() -> new AirportNotFoundException(iata))
-                .onItem().transform(AirportMapper::mapToDTO);
+                .onItem().transform(AirportMapper::toDto);
     }
 
     public Uni<PaginatedResponse<AirportDTO>> findAll(int page, int size, boolean ascending) {
         return repository.findAirportsWithPagination(page, size, ascending)
-                .map(result -> PaginationMapper.toPaginatedResponse(result, page, size, AirportMapper::mapToDTO));
+                .map(result -> PaginationMapper.toPaginatedResponse(result, page, size, AirportMapper::toDto));
     }
 }
 

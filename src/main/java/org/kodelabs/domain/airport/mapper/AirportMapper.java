@@ -5,7 +5,7 @@ import org.kodelabs.domain.airport.dto.AirportDTO;
 
 public class AirportMapper {
 
-    public static AirportDTO mapToDTO(AirportEntity entity) {
+    public static AirportDTO toDto(AirportEntity entity) {
         AirportDTO dto = new AirportDTO();
 
         dto.setId(entity.get_id());

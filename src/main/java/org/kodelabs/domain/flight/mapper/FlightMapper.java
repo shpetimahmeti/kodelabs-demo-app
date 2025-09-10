@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FlightMapper {
 
-    public static FlightDTO fromEntity(FlightEntity flight) {
+    public static FlightDTO toDto(FlightEntity flight) {
         FlightDTO dto = new FlightDTO();
 
         dto.setId(flight.get_id());
@@ -48,7 +48,7 @@ public class FlightMapper {
         response.setStops(flights.size() - 1);
 
         int totalPrice = 0;
-        response.setLegs(flights.stream().map(FlightMapper::fromEntity).toList());
+        response.setLegs(flights.stream().map(FlightMapper::toDto).toList());
 
         for (FlightEntity flight : flights) {
             totalPrice += flight.getPrice();
