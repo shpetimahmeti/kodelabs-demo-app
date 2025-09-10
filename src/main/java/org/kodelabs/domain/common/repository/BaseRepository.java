@@ -32,6 +32,10 @@ import java.util.stream.Collectors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.TOTAL_COUNT_SUBFIELD;
+import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.ITEMS;
+import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.TOTAL_COUNT;
+import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.TOTAL_COUNT_VALUE;
 import static org.kodelabs.domain.common.util.Fields.UPDATED_AT;
 
 public abstract class BaseRepository<T extends BaseEntity> {
@@ -118,16 +122,16 @@ public abstract class BaseRepository<T extends BaseEntity> {
         itemsPipeline.add(Aggregates.sort(ascending ? Sorts.ascending(sortField) : Sorts.descending(sortField)));
         itemsPipeline.add(Aggregates.skip(page * size));
         itemsPipeline.add(Aggregates.limit(size));
-        totalCountPipeline.add(Aggregates.count("count"));
+        totalCountPipeline.add(Aggregates.count(TOTAL_COUNT_SUBFIELD));
 
         List<Bson> pipeline = List.of(
                 Aggregates.facet(
-                        new Facet("items", itemsPipeline),
-                        new Facet("totalCount", totalCountPipeline)
+                        new Facet(ITEMS, itemsPipeline),
+                        new Facet(TOTAL_COUNT, totalCountPipeline)
                 ),
                 Aggregates.project(
-                        new Document("items", 1)
-                                .append("totalCount", new Document("$arrayElemAt", List.of("$totalCount.count", 0)))
+                        new Document(ITEMS, 1)
+                                .append(TOTAL_COUNT, new Document("$arrayElemAt", List.of(TOTAL_COUNT_VALUE, 0)))
                 )
         );
 
@@ -135,14 +139,14 @@ public abstract class BaseRepository<T extends BaseEntity> {
                 .publisher(collection.withDocumentClass(Document.class).aggregate(pipeline));
 
         return agg.collect().first()
-                .onItem().ifNull().continueWith(new Document("items", Collections.emptyList()).append("totalCount", 0))
+                .onItem().ifNull().continueWith(new Document(ITEMS, Collections.emptyList()).append(TOTAL_COUNT, 0))
                 .onItem().transform(doc -> {
-                    List<Document> docs = doc.getList("items", Document.class, Collections.emptyList());
+                    List<Document> docs = doc.getList(ITEMS, Document.class, Collections.emptyList());
                     List<T> items = docs.stream().map(this::mapWithCodec).collect(Collectors.toList());
 
                     PaginationFacetResult<T> result = new PaginationFacetResult<>();
                     result.setItems(items);
-                    result.setTotalCount(extractCount(doc, "totalCount"));
+                    result.setTotalCount(extractCount(doc, TOTAL_COUNT));
                     return result;
                 });
     }
@@ -163,9 +167,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
 
     private T mapWithCodec(Document doc) {
         Document copy = new Document(doc);
-        if (copy.containsKey("id") && !copy.containsKey("_id")) {
-            copy.put("_id", copy.get("id"));
-        }
+
         BsonDocument bsonDocument = copy.toBsonDocument(BsonDocument.class, pojoRegistry);
         try (BsonDocumentReader reader = new BsonDocumentReader(bsonDocument)) {
             return codec.decode(reader, DecoderContext.builder().build());

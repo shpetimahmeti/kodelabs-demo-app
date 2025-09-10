@@ -25,4 +25,11 @@ public class Fields {
         public static final String NAME = "name";
         public static final String IATA = "iata";
     }
+
+    public static class AggregationFacetResultFields {
+        public static final String ITEMS = "items";
+        public static final String TOTAL_COUNT = "totalCount";
+        public static final String TOTAL_COUNT_SUBFIELD = "count";
+        public static final String TOTAL_COUNT_VALUE = "$" + TOTAL_COUNT + "." + TOTAL_COUNT_SUBFIELD;
+    }
 }
