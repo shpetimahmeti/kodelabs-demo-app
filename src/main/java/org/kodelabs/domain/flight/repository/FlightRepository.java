@@ -47,10 +47,7 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
     }
 
     public Uni<FlightEntity> findOneByObjectId(String id) {
-        //TODO update exception type, and implement exception handler
-        return Multi.createFrom().publisher(collection.find(Filters.eq(ID, id)))
-                .collect().first()
-                .onItem().ifNull().failWith(() -> new RuntimeException("Not found"));
+        return collection.find(Filters.eq(ID, id)).collect().first();
     }
 
     public Multi<FlightWithConnections> findConnectionsFromOriginToDestination(String originIata,

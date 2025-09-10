@@ -8,6 +8,7 @@ import org.kodelabs.domain.flight.dto.FlightDTO;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
+import org.kodelabs.domain.flight.exception.FlightNotFoundException;
 import org.kodelabs.domain.flight.mapper.FlightMapper;
 import org.kodelabs.domain.flight.repository.FlightRepository;
 
@@ -24,7 +25,9 @@ public class FlightService {
     FlightRepository repository;
 
     public Uni<FlightDTO> findOneByObjectId(String objectId) {
-        return repository.findOneByObjectId(objectId).onItem().transform(FlightMapper::fromEntity);
+        return repository.findOneByObjectId(objectId)
+                .onItem().ifNull().failWith(() -> new FlightNotFoundException(objectId))
+                .onItem().transform(FlightMapper::fromEntity);
     }
 
     public Multi<FlightRouteResponse> findConnectionsFromOriginToDestination(String originIata,
