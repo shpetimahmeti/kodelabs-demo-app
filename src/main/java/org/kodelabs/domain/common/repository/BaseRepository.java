@@ -1,10 +1,12 @@
 package org.kodelabs.domain.common.repository;
 
-import com.mongodb.client.result.InsertOneResult;
-import com.mongodb.reactivestreams.client.ClientSession;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Facet;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
+import com.mongodb.reactivestreams.client.ClientSession;
 import io.quarkus.mongodb.reactive.ReactiveMongoCollection;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
@@ -28,16 +30,16 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static org.kodelabs.domain.common.Fields.UPDATED_AT;
 
 public abstract class BaseRepository<T extends BaseEntity> {
-    protected ReactiveMongoCollection<T> collection;
 
-    protected CodecRegistry pojoRegistry;
-    protected Codec<T> codec;
-    protected Function<Document, T> codecMapper;
+    private CodecRegistry pojoRegistry;
+    private Codec<T> codec;
+    private Function<Document, T> codecMapper;
+    private ReactiveMongoCollection<T> collection;
 
     protected BaseRepository() {
     }
@@ -51,6 +53,19 @@ public abstract class BaseRepository<T extends BaseEntity> {
         );
         this.codec = pojoRegistry.get(collection.getDocumentClass());
         this.codecMapper = this::mapWithCodec;
+    }
+
+    public Uni<UpdateResult> updateOne(ClientSession session, Bson filter, Bson update) {
+        Bson updateWithTimestamp = Updates.combine(update, Updates.set(UPDATED_AT, Instant.now()));
+        return collection.updateOne(session, filter, updateWithTimestamp);
+    }
+
+    public Multi<T> find(Bson filter) {
+        return collection.find(filter);
+    }
+
+    public <K> Multi<K> withDocumentClass(Class<K> documentClass, List<Bson> pipeline) {
+        return collection.withDocumentClass(documentClass).aggregate(pipeline);
     }
 
     public Uni<InsertOneResult> insertOne(T entity) {

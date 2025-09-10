@@ -21,7 +21,7 @@ public class ReservationRepository extends BaseRepository<ReservationEntity> {
     }
 
     public Uni<ReservationEntity> findByObjectId(String id) {
-        return collection.find(Filters.eq(ID, id)).collect().first();
+        return find(Filters.eq(ID, id)).collect().first();
     }
 
     public Uni<PaginationFacetResult<ReservationEntity>> findByUserId(String userId, int page, int size, boolean ascending) {

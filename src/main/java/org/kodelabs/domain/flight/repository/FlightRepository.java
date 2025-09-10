@@ -1,6 +1,10 @@
 package org.kodelabs.domain.flight.repository;
 
-import com.mongodb.client.model.*;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Field;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.GraphLookupOptions;
+import com.mongodb.client.model.Sorts;
 import com.mongodb.client.result.UpdateResult;
 import com.mongodb.reactivestreams.client.ClientSession;
 import io.smallrye.mutiny.Multi;
@@ -14,10 +18,12 @@ import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.inc;
+import static com.mongodb.client.model.Updates.set;
 import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTIONS_FIELD;
 import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTIONS_TO_IATA;
 import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTION_VALUE;
@@ -41,18 +47,16 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
                 .append("seats", new Document("$elemMatch",
                         new Document("seatNumber", seatNumber).append("available", true)));
 
-        Document set = new Document("seats.$.available", false)
-                .append("updatedAt", Instant.now());
+        Bson update = combine(
+                set("seats.$.available", false),
+                inc("availableSeatsCount", -1)
+        );
 
-        Document update = new Document("$set", set)
-                .append("$inc", new Document("availableSeatsCount", -1));
-
-        //TODO do not directly call the collection
-        return collection.updateOne(session, filter, update);
+        return updateOne(session, filter, update);
     }
 
     public Uni<FlightEntity> findOneByObjectId(String id) {
-        return collection.find(Filters.eq(ID, id)).collect().first();
+        return find(Filters.eq(ID, id)).collect().first();
     }
 
     public Multi<FlightWithConnections> findConnectionsFromOriginToDestination(String originIata,
@@ -65,7 +69,8 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
                 departureDateMin,
                 departureDateMax);
 
-        return collection.withDocumentClass(FlightWithConnections.class).aggregate(pipeline);
+
+        return withDocumentClass(FlightWithConnections.class, pipeline);
     }
 
     private List<Bson> buildThePipeline(String originIata,

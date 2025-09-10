@@ -22,7 +22,7 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
     }
 
     public Uni<AirportEntity> findOneByIata(String iata) {
-        return collection.find(Filters.eq(IATA, iata)).collect().first();
+        return find(Filters.eq(IATA, iata)).collect().first();
     }
 
     public Uni<PaginationFacetResult<AirportEntity>> findAirportsWithPagination(int page, int size, boolean ascending) {
