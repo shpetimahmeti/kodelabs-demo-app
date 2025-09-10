@@ -15,9 +15,6 @@ import org.kodelabs.domain.reservation.exception.SeatNotAvailableException;
 import org.kodelabs.domain.reservation.mapper.ReservationMapper;
 import org.kodelabs.domain.reservation.repository.ReservationRepository;
 
-import java.time.Instant;
-import java.util.List;
-
 @ApplicationScoped
 public class ReservationService {
 
@@ -52,11 +49,7 @@ public class ReservationService {
                             return Uni.createFrom().failure(new SeatNotAvailableException(entity.getSeatNumber()));
                         }
 
-                        entity.generateId();
-                        entity.setCreatedAt(Instant.now());
-                        entity.setUpdatedAt(Instant.now());
-
-                        return reservationRepository.insertReservation(session, entity).replaceWith(entity);
+                        return reservationRepository.insertOne(session, entity).replaceWith(entity);
                     });
         }));
     }

@@ -1,8 +1,6 @@
 package org.kodelabs.domain.reservation.repository;
 
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.result.InsertOneResult;
-import com.mongodb.reactivestreams.client.ClientSession;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,10 +18,6 @@ public class ReservationRepository extends BaseRepository<ReservationEntity> {
     @Inject
     public ReservationRepository(MongoRegistry mongoRegistry) {
         super(mongoRegistry, ReservationEntity.class);
-    }
-
-    public Uni<InsertOneResult> insertReservation(ClientSession session, ReservationEntity entity) {
-        return collection.insertOne(session, entity);
     }
 
     public Uni<ReservationEntity> findByObjectId(String id) {

@@ -14,6 +14,7 @@ import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -40,9 +41,13 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
                 .append("seats", new Document("$elemMatch",
                         new Document("seatNumber", seatNumber).append("available", true)));
 
-        Document update = new Document("$set", new Document("seats.$.available", false))
+        Document set = new Document("seats.$.available", false)
+                .append("updatedAt", Instant.now());
+
+        Document update = new Document("$set", set)
                 .append("$inc", new Document("availableSeatsCount", -1));
 
+        //TODO do not directly call the collection
         return collection.updateOne(session, filter, update);
     }
 

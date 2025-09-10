@@ -1,5 +1,7 @@
 package org.kodelabs.domain.common.repository;
 
+import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.reactivestreams.client.ClientSession;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Facet;
 import com.mongodb.client.model.Sorts;
@@ -14,19 +16,23 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
+import org.kodelabs.domain.common.BaseEntity;
 import org.kodelabs.domain.common.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
-public abstract class BaseRepository<T> {
+public abstract class BaseRepository<T extends BaseEntity> {
     protected ReactiveMongoCollection<T> collection;
 
     protected CodecRegistry pojoRegistry;
@@ -45,6 +51,25 @@ public abstract class BaseRepository<T> {
         );
         this.codec = pojoRegistry.get(collection.getDocumentClass());
         this.codecMapper = this::mapWithCodec;
+    }
+
+    public Uni<InsertOneResult> insertOne(T entity) {
+        return insertOne(null, entity);
+    }
+
+    public Uni<InsertOneResult> insertOne(ClientSession session, T entity) {
+        Objects.requireNonNull(entity, "entity");
+
+        Instant now = Instant.now();
+        entity.generateId();
+        entity.setCreatedAt(now);
+        entity.setUpdatedAt(now);
+
+        if (session == null) {
+            return collection.insertOne(entity);
+        }
+
+        return collection.insertOne(session, entity);
     }
 
     protected Uni<PaginationFacetResult<T>> loadPaginationFacetResult(
