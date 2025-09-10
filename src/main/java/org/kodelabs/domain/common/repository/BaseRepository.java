@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -38,7 +37,6 @@ public abstract class BaseRepository<T extends BaseEntity> {
 
     private CodecRegistry pojoRegistry;
     private Codec<T> codec;
-    private Function<Document, T> codecMapper;
     private ReactiveMongoCollection<T> collection;
 
     protected BaseRepository() {
@@ -51,8 +49,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
                 collection.getCodecRegistry(),
                 fromProviders(PojoCodecProvider.builder().automatic(true).build())
         );
-        this.codec = pojoRegistry.get(collection.getDocumentClass());
-        this.codecMapper = this::mapWithCodec;
+        this.codec = pojoRegistry.get(entityClass);
     }
 
     public Uni<UpdateResult> updateOne(ClientSession session, Bson filter, Bson update) {
@@ -134,7 +131,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
                 .onItem().ifNull().continueWith(new Document("items", Collections.emptyList()).append("totalCount", 0))
                 .onItem().transform(doc -> {
                     List<Document> docs = doc.getList("items", Document.class, Collections.emptyList());
-                    List<T> items = docs.stream().map(codecMapper).collect(Collectors.toList());
+                    List<T> items = docs.stream().map(this::mapWithCodec).collect(Collectors.toList());
 
                     PaginationFacetResult<T> result = new PaginationFacetResult<>();
                     result.setItems(items);
