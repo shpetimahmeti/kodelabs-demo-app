@@ -3,6 +3,7 @@ package org.kodelabs.domain.common;
 public class Fields {
 
     public static final String ID = "_id";
+    public static final String UPDATED_AT = "updatedAt";
 
     public static class FlightFields {
         public static final String FROM_IATA = "from.iata";
