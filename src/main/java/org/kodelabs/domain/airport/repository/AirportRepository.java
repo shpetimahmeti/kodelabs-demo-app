@@ -1,7 +1,6 @@
 package org.kodelabs.domain.airport.repository;
 
 import com.mongodb.client.model.Filters;
-import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -23,7 +22,7 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
     }
 
     public Uni<AirportEntity> findOneByIata(String iata) {
-        return Multi.createFrom().publisher(collection.find(Filters.eq(IATA, iata))).collect().first();
+        return collection.find(Filters.eq(IATA, iata)).collect().first();
     }
 
     public Uni<PaginationFacetResult<AirportEntity>> findAirportsWithPagination(int page, int size, boolean ascending) {
