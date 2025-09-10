@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common;
+package org.kodelabs.domain.common.util;
 
 public class Fields {
 

@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common;
+package org.kodelabs.domain.common.mongo;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;

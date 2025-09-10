@@ -4,13 +4,13 @@ import com.mongodb.client.model.Filters;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.kodelabs.domain.common.MongoRegistry;
+import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 
-import static org.kodelabs.domain.common.Fields.ID;
-import static org.kodelabs.domain.common.Fields.ReservationFields.USER_ID;
+import static org.kodelabs.domain.common.util.Fields.ID;
+import static org.kodelabs.domain.common.util.Fields.ReservationFields.USER_ID;
 
 @ApplicationScoped
 public class ReservationRepository extends BaseRepository<ReservationEntity> {

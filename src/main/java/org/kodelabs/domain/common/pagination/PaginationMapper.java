@@ -1,6 +1,6 @@
 package org.kodelabs.domain.common.pagination;
 
-import org.kodelabs.domain.common.PaginatedResponse;
+import org.kodelabs.domain.common.dto.PaginatedResponse;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 
 import java.util.List;

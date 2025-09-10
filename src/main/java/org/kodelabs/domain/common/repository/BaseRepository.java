@@ -19,7 +19,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.kodelabs.domain.common.entity.BaseEntity;
-import org.kodelabs.domain.common.MongoRegistry;
+import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 
 import java.time.Instant;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-import static org.kodelabs.domain.common.Fields.UPDATED_AT;
+import static org.kodelabs.domain.common.util.Fields.UPDATED_AT;
 
 public abstract class BaseRepository<T extends BaseEntity> {
 

@@ -3,9 +3,9 @@ package org.kodelabs.domain.reservation.service;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.kodelabs.domain.common.PaginatedResponse;
+import org.kodelabs.domain.common.dto.PaginatedResponse;
 import org.kodelabs.domain.common.pagination.PaginationMapper;
-import org.kodelabs.domain.common.transaction.TransactionHelper;
+import org.kodelabs.domain.common.transaction.TransactionService;
 import org.kodelabs.domain.flight.repository.FlightRepository;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationDTO;
@@ -25,7 +25,7 @@ public class ReservationService {
     FlightRepository flightRepository;
 
     @Inject
-    TransactionHelper transactionHelper;
+    TransactionService transactionService;
 
     public Uni<ReservationEntity> findByObjectId(String id) {
         return reservationRepository.findByObjectId(id)
@@ -39,7 +39,7 @@ public class ReservationService {
     }
 
     public Uni<ReservationEntity> createReservation(CreateReservationDTO reservationDTO) {
-        return transactionHelper.inTransaction((session -> {
+        return transactionService.inTransaction((session -> {
             ReservationEntity entity = ReservationMapper.toEntity(reservationDTO);
 
             return flightRepository

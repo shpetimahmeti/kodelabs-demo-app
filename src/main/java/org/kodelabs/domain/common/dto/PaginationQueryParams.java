@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common.pagination.dto;
+package org.kodelabs.domain.common.dto;
 
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.QueryParam;

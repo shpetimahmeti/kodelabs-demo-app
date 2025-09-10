@@ -7,7 +7,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.airport.dto.AirportDTO;
 import org.kodelabs.domain.airport.service.AirportService;
-import org.kodelabs.domain.common.PaginatedResponse;
+import org.kodelabs.domain.common.dto.PaginatedResponse;
 
 @Path("/airports")
 @Produces(MediaType.APPLICATION_JSON)

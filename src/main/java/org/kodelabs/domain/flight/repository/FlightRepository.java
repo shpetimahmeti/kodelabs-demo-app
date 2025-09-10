@@ -13,7 +13,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.kodelabs.domain.common.MongoRegistry;
+import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
@@ -24,15 +24,15 @@ import java.util.List;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.inc;
 import static com.mongodb.client.model.Updates.set;
-import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTIONS_FIELD;
-import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTIONS_TO_IATA;
-import static org.kodelabs.domain.common.Fields.FlightFields.CONNECTION_VALUE;
-import static org.kodelabs.domain.common.Fields.FlightFields.DEPARTURE_TIME;
-import static org.kodelabs.domain.common.Fields.FlightFields.FLIGHT_COLLECTION_NAME;
-import static org.kodelabs.domain.common.Fields.FlightFields.FROM_IATA;
-import static org.kodelabs.domain.common.Fields.FlightFields.TO_IATA;
-import static org.kodelabs.domain.common.Fields.FlightFields.TO_IATA_START_WITH_VALUE;
-import static org.kodelabs.domain.common.Fields.ID;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS_FIELD;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS_TO_IATA;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTION_VALUE;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.DEPARTURE_TIME;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.FLIGHT_COLLECTION_NAME;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.FROM_IATA;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.TO_IATA;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.TO_IATA_START_WITH_VALUE;
+import static org.kodelabs.domain.common.util.Fields.ID;
 
 @ApplicationScoped
 public class FlightRepository extends BaseRepository<FlightEntity> {

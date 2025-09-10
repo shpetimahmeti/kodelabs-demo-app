@@ -7,7 +7,7 @@ import org.kodelabs.domain.airport.exception.AirportNotFoundException;
 import org.kodelabs.domain.airport.repository.AirportRepository;
 import org.kodelabs.domain.airport.dto.AirportDTO;
 import org.kodelabs.domain.airport.mapper.AirportMapper;
-import org.kodelabs.domain.common.PaginatedResponse;
+import org.kodelabs.domain.common.dto.PaginatedResponse;
 import org.kodelabs.domain.common.pagination.PaginationMapper;
 
 @ApplicationScoped

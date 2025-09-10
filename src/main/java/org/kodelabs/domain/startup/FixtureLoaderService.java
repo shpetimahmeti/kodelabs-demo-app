@@ -9,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import org.kodelabs.domain.airport.entity.AirportEntity;
-import org.kodelabs.domain.common.MongoRegistry;
+import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.util.List;
 
-import static org.kodelabs.domain.common.Fields.ID;
+import static org.kodelabs.domain.common.util.Fields.ID;
 
 @ApplicationScoped
 public class FixtureLoaderService {

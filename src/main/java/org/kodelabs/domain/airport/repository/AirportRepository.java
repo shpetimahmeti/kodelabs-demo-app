@@ -6,12 +6,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import jakarta.inject.Inject;
 import org.kodelabs.domain.airport.entity.AirportEntity;
-import org.kodelabs.domain.common.MongoRegistry;
+import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 
-import static org.kodelabs.domain.common.Fields.AirportFields.IATA;
-import static org.kodelabs.domain.common.Fields.AirportFields.NAME;
+import static org.kodelabs.domain.common.util.Fields.AirportFields.IATA;
+import static org.kodelabs.domain.common.util.Fields.AirportFields.NAME;
 
 @ApplicationScoped
 public class AirportRepository extends BaseRepository<AirportEntity> {

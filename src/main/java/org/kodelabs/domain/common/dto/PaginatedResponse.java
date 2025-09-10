@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common;
+package org.kodelabs.domain.common.dto;
 
 import java.util.List;
 

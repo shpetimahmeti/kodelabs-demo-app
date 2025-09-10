@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import mutiny.zero.flow.adapters.AdaptersToFlow;
 
 @ApplicationScoped
-public class TransactionHelper {
+public class TransactionService {
 
     @Inject
     ReactiveMongoClient mongoClient;
