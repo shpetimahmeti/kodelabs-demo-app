@@ -18,7 +18,7 @@ import org.bson.codecs.DecoderContext;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
-import org.kodelabs.domain.common.BaseEntity;
+import org.kodelabs.domain.common.entity.BaseEntity;
 import org.kodelabs.domain.common.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 

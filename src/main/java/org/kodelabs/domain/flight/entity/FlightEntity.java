@@ -1,6 +1,6 @@
 package org.kodelabs.domain.flight.entity;
 
-import org.kodelabs.domain.common.BaseEntity;
+import org.kodelabs.domain.common.entity.BaseEntity;
 import org.kodelabs.domain.flight.model.Place;
 import org.kodelabs.domain.flight.model.Seat;
 

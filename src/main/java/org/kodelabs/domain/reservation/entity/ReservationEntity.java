@@ -1,6 +1,6 @@
 package org.kodelabs.domain.reservation.entity;
 
-import org.kodelabs.domain.common.BaseEntity;
+import org.kodelabs.domain.common.entity.BaseEntity;
 
 public class ReservationEntity extends BaseEntity {
     private String userId;

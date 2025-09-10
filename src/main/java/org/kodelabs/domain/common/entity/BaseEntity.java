@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common;
+package org.kodelabs.domain.common.entity;
 
 import org.bson.types.ObjectId;
 
