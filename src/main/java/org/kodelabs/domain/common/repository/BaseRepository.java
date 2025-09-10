@@ -2,6 +2,7 @@ package org.kodelabs.domain.common.repository;
 
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Facet;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.InsertOneResult;
@@ -55,6 +56,12 @@ public abstract class BaseRepository<T extends BaseEntity> {
     public Uni<UpdateResult> updateOne(ClientSession session, Bson filter, Bson update) {
         Bson updateWithTimestamp = Updates.combine(update, Updates.set(UPDATED_AT, Instant.now()));
         return collection.updateOne(session, filter, updateWithTimestamp);
+    }
+
+    public Uni<T> findOneAndUpdateWithOptions(Bson filter, Bson update, FindOneAndUpdateOptions options) {
+        Bson updateWithTimestamp = Updates.combine(update, Updates.set(UPDATED_AT, Instant.now()));
+
+        return collection.findOneAndUpdate(filter, updateWithTimestamp, options);
     }
 
     public Multi<T> find(Bson filter) {

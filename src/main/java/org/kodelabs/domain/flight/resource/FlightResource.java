@@ -6,11 +6,13 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
+import org.kodelabs.domain.flight.dto.UpdateFlightStatusRequest;
 import org.kodelabs.domain.flight.service.FlightService;
 import org.kodelabs.domain.flight.dto.FlightDTO;
 import org.kodelabs.domain.flight.dto.RouteSearchParams;
@@ -42,8 +44,11 @@ public class FlightResource {
                 params.getDepartureDate().plusDays(1)).collect().asList();
     }
 
-    //TODO implement find by object id and departure date
-    //TODO implement to search by multiple object ids
+    @PUT
+    @Path("/{id}/status")
+    public Uni<FlightDTO> updateFlightStatus(@PathParam("id") String id, @Valid UpdateFlightStatusRequest request) {
+        return flightService.updateFlightStatus(id, request);
+    }
 }
 
 

@@ -7,10 +7,13 @@ import jakarta.inject.Inject;
 import org.kodelabs.domain.flight.dto.FlightDTO;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
+import org.kodelabs.domain.flight.dto.UpdateFlightStatusRequest;
 import org.kodelabs.domain.flight.entity.FlightEntity;
+import org.kodelabs.domain.flight.enums.FlightStatus;
 import org.kodelabs.domain.flight.exception.FlightNotFoundException;
 import org.kodelabs.domain.flight.mapper.FlightMapper;
 import org.kodelabs.domain.flight.repository.FlightRepository;
+import org.kodelabs.domain.flight.validation.FlightStatusValidator;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,6 +31,25 @@ public class FlightService {
         return repository.findOneByObjectId(objectId)
                 .onItem().ifNull().failWith(() -> new FlightNotFoundException(objectId))
                 .onItem().transform(FlightMapper::toDto);
+    }
+
+    public Uni<FlightDTO> updateFlightStatus(String id, UpdateFlightStatusRequest request) {
+
+        return findOneByObjectId(id)
+                .onItem().ifNull().failWith(() -> new FlightNotFoundException(id))
+                .flatMap(existingFlight -> {
+
+                    //NOTE potential concurrency issues
+                    FlightStatusValidator.validateTransitionAndTimes(FlightStatus.valueOf(existingFlight.getStatus().toUpperCase()), request);
+
+                    return repository.updateFlightStatus(
+                                    id,
+                                    request.getStatus(),
+                                    request.getNewArrivalTime(),
+                                    request.getNewDepartureTime())
+                            .onItem().ifNull().failWith(() -> new FlightNotFoundException(id));
+                })
+                .map(FlightMapper::toDto);
     }
 
     public Multi<FlightRouteResponse> findConnectionsFromOriginToDestination(String originIata,

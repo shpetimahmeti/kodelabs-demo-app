@@ -3,8 +3,11 @@ package org.kodelabs.domain.flight.repository;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Field;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.GraphLookupOptions;
+import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import com.mongodb.reactivestreams.client.ClientSession;
 import io.smallrye.mutiny.Multi;
@@ -17,8 +20,11 @@ import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
+import org.kodelabs.domain.flight.enums.FlightStatus;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Updates.combine;
@@ -53,6 +59,23 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
         );
 
         return updateOne(session, filter, update);
+    }
+
+    public Uni<FlightEntity> updateFlightStatus(String flightId,
+                                                FlightStatus flightStatus,
+                                                Instant newArrivalTime,
+                                                Instant newDepartureTime) {
+        List<Bson> updates = new ArrayList<>();
+        updates.add(set("status", flightStatus.toValue()));
+
+        if (newDepartureTime != null && newArrivalTime != null) {
+            updates.add(set("arrivalTime", newArrivalTime));
+            updates.add(set("departureTime", newDepartureTime));
+        }
+
+        FindOneAndUpdateOptions options = new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER);
+
+        return findOneAndUpdateWithOptions(Filters.eq(ID, flightId), Updates.combine(updates), options);
     }
 
     public Uni<FlightEntity> findOneByObjectId(String id) {
