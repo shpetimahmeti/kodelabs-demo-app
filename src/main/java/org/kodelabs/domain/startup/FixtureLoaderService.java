@@ -41,8 +41,8 @@ public class FixtureLoaderService {
             populateFlights(flightIs);
             populateAirportCollection(airportsIs);
 
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to load json file", e);
+        } catch (Exception ex) {
+            throw new RuntimeException("Failed to load json file", ex);
         }
     }
 

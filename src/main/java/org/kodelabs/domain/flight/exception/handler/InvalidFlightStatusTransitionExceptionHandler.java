@@ -13,12 +13,12 @@ public class InvalidFlightStatusTransitionExceptionHandler implements ExceptionM
     private static final Logger LOG = Logger.getLogger(InvalidFlightStatusTransitionExceptionHandler.class);
 
     @Override
-    public Response toResponse(InvalidFlightStatusTransitionException exception) {
+    public Response toResponse(InvalidFlightStatusTransitionException ex) {
 
-        LOG.error("Exception: ", exception);
+        LOG.error("Exception: ", ex);
 
         ErrorResponse errorResponse = new ErrorResponse(
-                "Invalid status transition to: " + exception.getToStatus(),
+                "Invalid status transition to: " + ex.getToStatus(),
                 409
         );
         return Response.status(Response.Status.CONFLICT)

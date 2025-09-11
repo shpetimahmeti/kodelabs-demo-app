@@ -18,9 +18,9 @@ public class FlightStatusUpdateValidator implements ConstraintValidator<ValidFli
         try {
             validateTimesValuesPresenceForDelayedFlights(request);
             return true;
-        } catch (Exception e) {
+        } catch (Exception ex) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(e.getMessage())
+            context.buildConstraintViolationWithTemplate(ex.getMessage())
                     .addConstraintViolation();
             return false;
         }
