@@ -32,11 +32,12 @@ import java.util.stream.Collectors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.TOTAL_COUNT_SUBFIELD;
+import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.__COUNT;
 import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.ITEMS;
 import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.TOTAL_COUNT;
-import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.TOTAL_COUNT_VALUE;
+import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.TOTAL_COUNT__COUNT;
 import static org.kodelabs.domain.common.util.Fields.UPDATED_AT;
+import static org.kodelabs.domain.common.util.Fields.asFieldRef;
 
 public abstract class BaseRepository<T extends BaseEntity> {
 
@@ -122,7 +123,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
         itemsPipeline.add(Aggregates.sort(ascending ? Sorts.ascending(sortField) : Sorts.descending(sortField)));
         itemsPipeline.add(Aggregates.skip(page * size));
         itemsPipeline.add(Aggregates.limit(size));
-        totalCountPipeline.add(Aggregates.count(TOTAL_COUNT_SUBFIELD));
+        totalCountPipeline.add(Aggregates.count(__COUNT));
 
         List<Bson> pipeline = List.of(
                 Aggregates.facet(
@@ -131,7 +132,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
                 ),
                 Aggregates.project(
                         new Document(ITEMS, 1)
-                                .append(TOTAL_COUNT, new Document("$arrayElemAt", List.of(TOTAL_COUNT_VALUE, 0)))
+                                .append(TOTAL_COUNT, new Document("$arrayElemAt", List.of(asFieldRef(TOTAL_COUNT__COUNT), 0)))
                 )
         );
 

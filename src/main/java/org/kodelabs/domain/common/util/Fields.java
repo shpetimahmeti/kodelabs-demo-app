@@ -8,7 +8,6 @@ public class Fields {
     public static class FlightFields {
         public static final String FROM__IATA = "from.iata";
         public static final String TO__IATA = "to.iata";
-        public static final String TO_IATA_START_WITH_VALUE = "$" + TO__IATA;
         public static final String ARRIVAL_TIME = "arrivalTime";
         public static final String DEPARTURE_TIME = "departureTime";
         public static final String FLIGHT_COLLECTION_NAME = "flights";
@@ -34,12 +33,12 @@ public class Fields {
     public static class AggregationFacetResultFields {
         public static final String ITEMS = "items";
         public static final String TOTAL_COUNT = "totalCount";
-        public static final String TOTAL_COUNT_SUBFIELD = "count";
-        public static final String TOTAL_COUNT_VALUE = "$" + TOTAL_COUNT + "." + TOTAL_COUNT_SUBFIELD;
+        public static final String __COUNT = "count";
+        public static final String TOTAL_COUNT__COUNT = TOTAL_COUNT + "." + __COUNT;
     }
 
-    public static String nestedFieldValue(String fieldName, String nestedFieldName) {
-        return "$" + nestedFieldName + "." + fieldName;
+    public static String asFieldRef(String fieldName) {
+        return "$" + fieldName;
     }
 
     public static String positionalField(String arrayField, String nestedField) {

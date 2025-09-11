@@ -44,9 +44,9 @@ import static org.kodelabs.domain.common.util.Fields.FlightFields.SEATS;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.SEAT_NUMBER;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.STATUS;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.TO__IATA;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.TO_IATA_START_WITH_VALUE;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.__AVAILABLE;
 import static org.kodelabs.domain.common.util.Fields.ID;
+import static org.kodelabs.domain.common.util.Fields.asFieldRef;
 import static org.kodelabs.domain.common.util.Fields.positionalField;
 
 @ApplicationScoped
@@ -131,7 +131,7 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
                 Aggregates.sort(Sorts.ascending(DEPARTURE_TIME)),
                 Aggregates.graphLookup(
                         FLIGHT_COLLECTION_NAME,
-                        TO_IATA_START_WITH_VALUE,
+                        asFieldRef(TO__IATA),
                         TO__IATA,
                         FROM__IATA,
                         CONNECTIONS,
