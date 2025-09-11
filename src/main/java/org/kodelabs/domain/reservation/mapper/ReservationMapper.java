@@ -17,9 +17,12 @@ public class ReservationMapper {
 
     public static ReservationDTO toDto(ReservationEntity entity) {
         ReservationDTO dto = new ReservationDTO();
+
+        dto.setId(entity.get_id());
         dto.setFlightId(entity.getFlightId());
         dto.setSeatNumber(entity.getSeatNumber());
         dto.setUserId(entity.getUserId());
+        dto.setBookingDate(entity.createdAt);
 
         return dto;
     }

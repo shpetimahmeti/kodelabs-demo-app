@@ -27,9 +27,9 @@ public class ReservationService {
     @Inject
     TransactionService transactionService;
 
-    public Uni<ReservationEntity> findByObjectId(String id) {
+    public Uni<ReservationDTO> findByObjectId(String id) {
         return reservationRepository.findByObjectId(id)
-                .onItem().ifNull().failWith(new ReservationNotFoundException(id));
+                .onItem().ifNull().failWith(new ReservationNotFoundException(id)).map(ReservationMapper::toDto);
     }
 
     public Uni<PaginatedResponse<ReservationDTO>> findByUserId(String userId, int page, int size, boolean ascending) {
@@ -38,7 +38,7 @@ public class ReservationService {
                         PaginationMapper.toPaginatedResponse(result, page, size, ReservationMapper::toDto));
     }
 
-    public Uni<ReservationEntity> createReservation(CreateReservationDTO reservationDTO) {
+    public Uni<ReservationDTO> createReservation(CreateReservationDTO reservationDTO) {
         return transactionService.inTransaction((session -> {
             ReservationEntity entity = ReservationMapper.toEntity(reservationDTO);
 
@@ -49,7 +49,7 @@ public class ReservationService {
                             return Uni.createFrom().failure(new SeatNotAvailableException(entity.getSeatNumber()));
                         }
 
-                        return reservationRepository.insertOne(session, entity).replaceWith(entity);
+                        return reservationRepository.insertOne(session, entity).replaceWith(entity).map(ReservationMapper::toDto);
                     });
         }));
     }

@@ -28,12 +28,12 @@ public class ReservationResource {
 
     @GET
     @Path("/{id}")
-    public Uni<ReservationEntity> findByObjectId(@PathParam("id") String id) {
+    public Uni<ReservationDTO> findByObjectId(@PathParam("id") String id) {
         return reservationService.findByObjectId(id);
     }
 
     @POST
-    public Uni<ReservationEntity> crateReservation(@Valid CreateReservationDTO reservationDTO) {
+    public Uni<ReservationDTO> crateReservation(@Valid CreateReservationDTO reservationDTO) {
         return reservationService.createReservation(reservationDTO);
     }
 
