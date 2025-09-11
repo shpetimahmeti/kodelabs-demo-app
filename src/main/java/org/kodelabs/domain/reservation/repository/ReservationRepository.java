@@ -24,12 +24,12 @@ public class ReservationRepository extends BaseRepository<ReservationEntity> {
         return find(Filters.eq(ID, id)).collect().first();
     }
 
-    public Uni<PaginationFacetResult<ReservationEntity>> findByUserId(String userId, int page, int size, boolean ascending) {
+    public Uni<PaginationFacetResult<ReservationEntity>> findByUserId(String userId, int page, int size,String sortField, boolean ascending) {
         return loadPaginationFacetResult(
                 Filters.eq(USER_ID, userId),
                 page,
                 size,
-                ID,
+                sortField,
                 ascending);
     }
 }

@@ -4,6 +4,7 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.kodelabs.domain.common.dto.PaginatedResponse;
+import org.kodelabs.domain.common.dto.PaginationQueryParams;
 import org.kodelabs.domain.common.pagination.PaginationMapper;
 import org.kodelabs.domain.common.transaction.TransactionService;
 import org.kodelabs.domain.flight.repository.FlightRepository;
@@ -32,10 +33,10 @@ public class ReservationService {
                 .onItem().ifNull().failWith(new ReservationNotFoundException(id)).map(ReservationMapper::toDto);
     }
 
-    public Uni<PaginatedResponse<ReservationDTO>> findByUserId(String userId, int page, int size, boolean ascending) {
-        return reservationRepository.findByUserId(userId, page, size, ascending)
+    public Uni<PaginatedResponse<ReservationDTO>> findByUserId(String userId, PaginationQueryParams params) {
+        return reservationRepository.findByUserId(userId, params.page, params.size, params.sortField, params.ascending)
                 .map(result ->
-                        PaginationMapper.toPaginatedResponse(result, page, size, ReservationMapper::toDto));
+                        PaginationMapper.toPaginatedResponse(result, params.page, params.size, ReservationMapper::toDto));
     }
 
     public Uni<ReservationDTO> createReservation(CreateReservationDTO reservationDTO) {

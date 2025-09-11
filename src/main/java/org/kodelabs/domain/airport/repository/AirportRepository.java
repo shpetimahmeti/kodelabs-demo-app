@@ -11,7 +11,6 @@ import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 
 import static org.kodelabs.domain.common.util.Fields.AirportFields.IATA;
-import static org.kodelabs.domain.common.util.Fields.AirportFields.NAME;
 
 @ApplicationScoped
 public class AirportRepository extends BaseRepository<AirportEntity> {
@@ -25,10 +24,10 @@ public class AirportRepository extends BaseRepository<AirportEntity> {
         return find(Filters.eq(IATA, iata)).collect().first();
     }
 
-    public Uni<PaginationFacetResult<AirportEntity>> findAirportsWithPagination(int page, int size, boolean ascending) {
+    public Uni<PaginationFacetResult<AirportEntity>> findAirportsWithPagination(int page, int size, String sortField, boolean ascending) {
         return loadPaginationFacetResult(
                 page, size,
-                NAME,
+                sortField,
                 ascending);
     }
 }

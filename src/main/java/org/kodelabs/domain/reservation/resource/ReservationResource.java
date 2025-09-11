@@ -40,6 +40,6 @@ public class ReservationResource {
     @Path("/users/{userId}")
     public Uni<PaginatedResponse<ReservationDTO>> findByUserId(@PathParam("userId") String userId,
                                                                @Valid @BeanParam PaginationQueryParams params) {
-        return reservationService.findByUserId(userId, params.page, params.size, params.ascending);
+        return reservationService.findByUserId(userId, params);
     }
 }

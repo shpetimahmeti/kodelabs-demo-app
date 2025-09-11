@@ -2,18 +2,18 @@ package org.kodelabs.domain.airport.resource;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.Valid;
+import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.airport.dto.AirportDTO;
 import org.kodelabs.domain.airport.service.AirportService;
 import org.kodelabs.domain.common.dto.PaginatedResponse;
+import org.kodelabs.domain.common.dto.PaginationQueryParams;
 
 @Path("/airports")
 @Produces(MediaType.APPLICATION_JSON)
@@ -24,10 +24,8 @@ public class AirportResource {
     AirportService service;
 
     @GET
-    public Uni<PaginatedResponse<AirportDTO>> findAll(@QueryParam("page") @DefaultValue("0") @Min(0) int page,
-                                                      @QueryParam("size") @DefaultValue("20") @Min(1) int size,
-                                                      @QueryParam("asc") @DefaultValue("true") boolean ascending) {
-        return service.findAll(page, size, ascending);
+    public Uni<PaginatedResponse<AirportDTO>> findAll(@Valid @BeanParam PaginationQueryParams params) {
+        return service.findAll(params);
     }
 
     @GET

@@ -8,6 +8,7 @@ import org.kodelabs.domain.airport.repository.AirportRepository;
 import org.kodelabs.domain.airport.dto.AirportDTO;
 import org.kodelabs.domain.airport.mapper.AirportMapper;
 import org.kodelabs.domain.common.dto.PaginatedResponse;
+import org.kodelabs.domain.common.dto.PaginationQueryParams;
 import org.kodelabs.domain.common.pagination.PaginationMapper;
 
 @ApplicationScoped
@@ -22,9 +23,9 @@ public class AirportService {
                 .onItem().transform(AirportMapper::toDto);
     }
 
-    public Uni<PaginatedResponse<AirportDTO>> findAll(int page, int size, boolean ascending) {
-        return repository.findAirportsWithPagination(page, size, ascending)
-                .map(result -> PaginationMapper.toPaginatedResponse(result, page, size, AirportMapper::toDto));
+    public Uni<PaginatedResponse<AirportDTO>> findAll(PaginationQueryParams params) {
+        return repository.findAirportsWithPagination(params.page, params.size, params.sortField, params.ascending)
+                .map(result -> PaginationMapper.toPaginatedResponse(result, params.page, params.size, AirportMapper::toDto));
     }
 }
 
