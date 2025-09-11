@@ -17,7 +17,7 @@ public class SeatNotAvailableHandler implements ExceptionMapper<SeatNotAvailable
         LOG.error("Exception: ", ex);
 
         return Response.status(Response.Status.CONFLICT)
-                .entity(new ErrorResponse(ex.getMessage(), 409))
+                .entity(new ErrorResponse("Requested seat is not available", 409))
                 .build();
     }
 }
