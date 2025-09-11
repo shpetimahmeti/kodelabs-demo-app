@@ -15,7 +15,6 @@ import org.kodelabs.domain.common.dto.PaginatedResponse;
 import org.kodelabs.domain.common.dto.PaginationQueryParams;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationDTO;
-import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.service.ReservationService;
 
 @Path("/reservations")
