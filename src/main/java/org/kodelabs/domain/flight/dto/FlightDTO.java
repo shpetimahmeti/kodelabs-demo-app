@@ -1,14 +1,14 @@
 package org.kodelabs.domain.flight.dto;
 
+import org.kodelabs.domain.common.dto.BaseDTO;
 import org.kodelabs.domain.flight.model.Place;
 import org.kodelabs.domain.flight.model.Seat;
 
 import java.time.Instant;
 import java.util.List;
 
-public class FlightDTO {
+public class FlightDTO extends BaseDTO {
 
-    private String id;
     private String publishedFlightNumber;
     private String operatingFlightNumber;
     private Place from;
@@ -21,15 +21,6 @@ public class FlightDTO {
     private int availableSeatsCount;
     private List<Seat> seats;
     private int price;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
 
     public String getPublishedFlightNumber() {
         return publishedFlightNumber;

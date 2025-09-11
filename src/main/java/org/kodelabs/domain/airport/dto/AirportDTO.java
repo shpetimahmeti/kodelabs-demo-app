@@ -1,9 +1,10 @@
 package org.kodelabs.domain.airport.dto;
 
 import org.kodelabs.domain.airport.model.Location;
+import org.kodelabs.domain.common.dto.BaseDTO;
 
-public class AirportDTO {
-    private String id;
+public class AirportDTO extends BaseDTO {
+
     private String name;
     private String iata;
     private String icao;
@@ -87,13 +88,5 @@ public class AirportDTO {
 
     public void setLoc(Location loc) {
         this.loc = loc;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 }

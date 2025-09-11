@@ -1,10 +1,11 @@
 package org.kodelabs.domain.reservation.dto;
 
+import org.kodelabs.domain.common.dto.BaseDTO;
+
 import java.time.Instant;
 
-public class ReservationDTO {
+public class ReservationDTO extends BaseDTO {
 
-    private String id;
     private String userId;
     private String flightId;
     private String seatNumber;
@@ -32,14 +33,6 @@ public class ReservationDTO {
 
     public void setSeatNumber(String seatNumber) {
         this.seatNumber = seatNumber;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Instant getBookingDate() {
