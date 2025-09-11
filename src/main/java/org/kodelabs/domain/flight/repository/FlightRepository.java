@@ -16,6 +16,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.kodelabs.domain.common.mongo.AggregationExprs;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
@@ -34,18 +35,19 @@ import static com.mongodb.client.model.Updates.inc;
 import static com.mongodb.client.model.Updates.set;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.ARRIVAL_TIME;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.AVAILABLE_SEATS_COUNT;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS_FIELD;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS_TO_IATA;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTION_VALUE;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS__TO__IATA;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.DEPARTURE_TIME;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.FLIGHT_COLLECTION_NAME;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.FROM_IATA;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.FROM__IATA;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.SEATS;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.SEAT_NUMBER;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.STATUS;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.TO_IATA;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.TO__IATA;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.TO_IATA_START_WITH_VALUE;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.__AVAILABLE;
 import static org.kodelabs.domain.common.util.Fields.ID;
+import static org.kodelabs.domain.common.util.Fields.positionalField;
 
 @ApplicationScoped
 public class FlightRepository extends BaseRepository<FlightEntity> {
@@ -56,12 +58,11 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
     }
 
     public Uni<UpdateResult> reserveSeat(ClientSession session, String flightId, String seatNumber) {
-        Document filter = new Document(ID, flightId)
-                .append(SEATS, new Document("$elemMatch",
-                        new Document(SEAT_NUMBER, seatNumber).append("available", true)));
+        Document filter = new Document(ID, flightId).append(SEATS,
+                AggregationExprs.elemMatch(new Document(SEAT_NUMBER, seatNumber).append(__AVAILABLE, true)));
 
         Bson update = combine(
-                set("seats.$.available", false),
+                set(positionalField(SEATS, __AVAILABLE), false),
                 inc(AVAILABLE_SEATS_COUNT, -1)
         );
 
@@ -69,9 +70,9 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
     }
 
     public Uni<FlightEntity> updateFlightStatus(String flightId,
-                                                 FlightStatus newStatus,
-                                                 Instant newArrivalTime,
-                                                 Instant newDepartureTime) {
+                                                FlightStatus newStatus,
+                                                Instant newArrivalTime,
+                                                Instant newDepartureTime) {
         Set<FlightStatus> allowedPrevStatuses = FlightStatusUpdateValidator.allowedPreviousStatuses(newStatus);
 
         Bson filter = Filters.and(
@@ -123,7 +124,7 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
         return List.of(
                 Aggregates.match(
                         Filters.and(
-                                Filters.eq(FROM_IATA, originIata),
+                                Filters.eq(FROM__IATA, originIata),
                                 Filters.gte(DEPARTURE_TIME, departureDateMin),
                                 Filters.lte(DEPARTURE_TIME, departureDateMax)
                         )),
@@ -131,22 +132,23 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
                 Aggregates.graphLookup(
                         FLIGHT_COLLECTION_NAME,
                         TO_IATA_START_WITH_VALUE,
-                        TO_IATA,
-                        FROM_IATA,
-                        CONNECTIONS_FIELD,
+                        TO__IATA,
+                        FROM__IATA,
+                        CONNECTIONS,
                         options
                 ),
                 Aggregates.match(Filters.or(
-                        Filters.eq(TO_IATA, destIata),
-                        Filters.eq(CONNECTIONS_TO_IATA, destIata)
+                        Filters.eq(TO__IATA, destIata),
+                        Filters.eq(CONNECTIONS__TO__IATA, destIata)
                 )),
                 Aggregates.addFields(
-                        new Field<>(CONNECTIONS_FIELD,
-                                new Document("$sortArray",
-                                        new Document("input", CONNECTION_VALUE)
-                                                .append("sortBy", Sorts.ascending(DEPARTURE_TIME))
+                        new Field<>(CONNECTIONS,
+                                AggregationExprs.sortArray(
+                                        CONNECTIONS,
+                                        AggregationExprs.combineSorts(Sorts.ascending(DEPARTURE_TIME))
                                 )
-                        ))
+                        )
+                )
         );
     }
 
