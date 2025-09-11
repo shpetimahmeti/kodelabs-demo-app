@@ -6,9 +6,9 @@ public class Fields {
     public static final String UPDATED_AT = "updatedAt";
 
     public static class FlightFields {
-        public static final String FROM_IATA = "from.iata";
-        public static final String TO_IATA = "to.iata";
-        public static final String TO_IATA_START_WITH_VALUE = "$" + TO_IATA;
+        public static final String FROM__IATA = "from.iata";
+        public static final String TO__IATA = "to.iata";
+        public static final String TO_IATA_START_WITH_VALUE = "$" + TO__IATA;
         public static final String ARRIVAL_TIME = "arrivalTime";
         public static final String DEPARTURE_TIME = "departureTime";
         public static final String FLIGHT_COLLECTION_NAME = "flights";
@@ -17,9 +17,10 @@ public class Fields {
         public static final String AVAILABLE_SEATS_COUNT = "availableSeatsCount";
         public static final String SEATS = "seats";
 
-        public static final String CONNECTIONS_FIELD = "connections";
-        public static final String CONNECTION_VALUE = "$" + CONNECTIONS_FIELD;
-        public static final String CONNECTIONS_TO_IATA = "connections.to.iata";
+        public static final String CONNECTIONS = "connections";
+        public static final String CONNECTIONS__TO__IATA = "connections.to.iata";
+
+        public static final String __AVAILABLE = "available";
     }
 
     public static class ReservationFields {
@@ -27,7 +28,6 @@ public class Fields {
     }
 
     public static class AirportFields {
-        public static final String NAME = "name";
         public static final String IATA = "iata";
     }
 
@@ -36,5 +36,13 @@ public class Fields {
         public static final String TOTAL_COUNT = "totalCount";
         public static final String TOTAL_COUNT_SUBFIELD = "count";
         public static final String TOTAL_COUNT_VALUE = "$" + TOTAL_COUNT + "." + TOTAL_COUNT_SUBFIELD;
+    }
+
+    public static String nestedFieldValue(String fieldName, String nestedFieldName) {
+        return "$" + nestedFieldName + "." + fieldName;
+    }
+
+    public static String positionalField(String arrayField, String nestedField) {
+        return arrayField + ".$." + nestedField;
     }
 }
