@@ -2,9 +2,11 @@ package org.kodelabs.domain.flight.dto;
 
 import jakarta.validation.constraints.NotNull;
 import org.kodelabs.domain.flight.enums.FlightStatus;
+import org.kodelabs.domain.flight.validation.ValidFlightStatusUpdate;
 
 import java.time.Instant;
 
+@ValidFlightStatusUpdate
 public class UpdateFlightStatusRequest {
 
     @NotNull

@@ -21,21 +21,28 @@ import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 import org.kodelabs.domain.flight.enums.FlightStatus;
+import org.kodelabs.domain.flight.validation.FlightStatusUpdateValidator;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.inc;
 import static com.mongodb.client.model.Updates.set;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.ARRIVAL_TIME;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.AVAILABLE_SEATS_COUNT;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS_FIELD;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS_TO_IATA;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTION_VALUE;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.DEPARTURE_TIME;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.FLIGHT_COLLECTION_NAME;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.FROM_IATA;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.SEATS;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.SEAT_NUMBER;
+import static org.kodelabs.domain.common.util.Fields.FlightFields.STATUS;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.TO_IATA;
 import static org.kodelabs.domain.common.util.Fields.FlightFields.TO_IATA_START_WITH_VALUE;
 import static org.kodelabs.domain.common.util.Fields.ID;
@@ -50,32 +57,42 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
 
     public Uni<UpdateResult> reserveSeat(ClientSession session, String flightId, String seatNumber) {
         Document filter = new Document(ID, flightId)
-                .append("seats", new Document("$elemMatch",
-                        new Document("seatNumber", seatNumber).append("available", true)));
+                .append(SEATS, new Document("$elemMatch",
+                        new Document(SEAT_NUMBER, seatNumber).append("available", true)));
 
         Bson update = combine(
                 set("seats.$.available", false),
-                inc("availableSeatsCount", -1)
+                inc(AVAILABLE_SEATS_COUNT, -1)
         );
 
         return updateOne(session, filter, update);
     }
 
     public Uni<FlightEntity> updateFlightStatus(String flightId,
-                                                FlightStatus flightStatus,
-                                                Instant newArrivalTime,
-                                                Instant newDepartureTime) {
-        List<Bson> updates = new ArrayList<>();
-        updates.add(set("status", flightStatus.toValue()));
+                                                 FlightStatus newStatus,
+                                                 Instant newArrivalTime,
+                                                 Instant newDepartureTime) {
+        Set<FlightStatus> allowedPrevStatuses = FlightStatusUpdateValidator.allowedPreviousStatuses(newStatus);
 
-        if (newDepartureTime != null && newArrivalTime != null) {
-            updates.add(set("arrivalTime", newArrivalTime));
-            updates.add(set("departureTime", newDepartureTime));
+        Bson filter = Filters.and(
+                Filters.eq(ID, flightId),
+                Filters.in(STATUS, allowedPrevStatuses.stream().map(FlightStatus::toValue).toList())
+        );
+
+        List<Bson> updates = new ArrayList<>();
+        updates.add(set(STATUS, newStatus.toValue()));
+
+        if (newStatus == FlightStatus.DELAYED) {
+            if (newDepartureTime != null) {
+                updates.add(set(DEPARTURE_TIME, newDepartureTime));
+            }
+            if (newArrivalTime != null) {
+                updates.add(set(ARRIVAL_TIME, newArrivalTime));
+            }
         }
 
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER);
-
-        return findOneAndUpdateWithOptions(Filters.eq(ID, flightId), Updates.combine(updates), options);
+        return findOneAndUpdateWithOptions(filter, Updates.combine(updates), options);
     }
 
     public Uni<FlightEntity> findOneByObjectId(String id) {
@@ -139,7 +156,7 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
         options.maxDepth(3);
         options.depthField("depth");
         options.restrictSearchWithMatch(Filters.and(
-                Filters.lte("departureTime", departureDateMax)
+                Filters.lte(DEPARTURE_TIME, departureDateMax)
         ));
 
         return options;

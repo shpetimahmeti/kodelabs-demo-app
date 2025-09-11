@@ -9,8 +9,13 @@ public class Fields {
         public static final String FROM_IATA = "from.iata";
         public static final String TO_IATA = "to.iata";
         public static final String TO_IATA_START_WITH_VALUE = "$" + TO_IATA;
+        public static final String ARRIVAL_TIME = "arrivalTime";
         public static final String DEPARTURE_TIME = "departureTime";
         public static final String FLIGHT_COLLECTION_NAME = "flights";
+        public static final String STATUS = "status";
+        public static final String SEAT_NUMBER = "seatNumber";
+        public static final String AVAILABLE_SEATS_COUNT = "availableSeatsCount";
+        public static final String SEATS = "seats";
 
         public static final String CONNECTIONS_FIELD = "connections";
         public static final String CONNECTION_VALUE = "$" + CONNECTIONS_FIELD;
