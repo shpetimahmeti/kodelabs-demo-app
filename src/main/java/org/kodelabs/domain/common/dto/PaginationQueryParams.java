@@ -4,8 +4,6 @@ import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.QueryParam;
 
 import jakarta.validation.constraints.Min;
-import org.kodelabs.domain.common.annotation.ValidEntityField;
-import org.kodelabs.domain.common.entity.BaseEntity;
 
 import static org.kodelabs.domain.common.mongo.Fields.ID;
 
@@ -27,6 +25,5 @@ public class PaginationQueryParams {
 
     @QueryParam("sortField")
     @DefaultValue(ID)
-    @ValidEntityField(entity = BaseEntity.class, message = "Non existing sorting field")
     public String sortField;
 }

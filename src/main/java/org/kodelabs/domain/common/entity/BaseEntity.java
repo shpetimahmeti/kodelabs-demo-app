@@ -1,16 +1,18 @@
 package org.kodelabs.domain.common.entity;
 
 import org.bson.types.ObjectId;
+import org.kodelabs.domain.common.annotation.SortableField;
 
 import java.time.Instant;
 
 public abstract class BaseEntity {
 
+    @SortableField
     public String _id;
-    private boolean customGenerated = false;
-
     public Instant createdAt;
     public Instant updatedAt;
+
+    private boolean customGenerated = false;
 
     public String get_id() {
         return _id;

@@ -11,7 +11,9 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.airport.dto.AirportDTO;
+import org.kodelabs.domain.airport.entity.AirportEntity;
 import org.kodelabs.domain.airport.service.AirportService;
+import org.kodelabs.domain.common.annotation.ValidSortField;
 import org.kodelabs.domain.common.dto.PaginatedResponse;
 import org.kodelabs.domain.common.dto.PaginationQueryParams;
 
@@ -24,7 +26,10 @@ public class AirportResource {
     AirportService service;
 
     @GET
-    public Uni<PaginatedResponse<AirportDTO>> findAll(@Valid @BeanParam PaginationQueryParams params) {
+    public Uni<PaginatedResponse<AirportDTO>> findAll(@Valid
+                                                      @BeanParam
+                                                      @ValidSortField(entity = AirportEntity.class, message = "Non-existing sorting field")
+                                                      PaginationQueryParams params) {
         return service.findAll(params);
     }
 

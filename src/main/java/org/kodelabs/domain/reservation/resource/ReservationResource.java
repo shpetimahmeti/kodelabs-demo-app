@@ -11,10 +11,12 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.kodelabs.domain.common.annotation.ValidSortField;
 import org.kodelabs.domain.common.dto.PaginatedResponse;
 import org.kodelabs.domain.common.dto.PaginationQueryParams;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationDTO;
+import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.service.ReservationService;
 
 @Path("/reservations")
@@ -39,6 +41,7 @@ public class ReservationResource {
     @GET
     @Path("/users/{userId}")
     public Uni<PaginatedResponse<ReservationDTO>> findByUserId(@PathParam("userId") String userId,
+                                                               @ValidSortField(entity = ReservationEntity.class, message = "Non-existing sorting field")
                                                                @Valid @BeanParam PaginationQueryParams params) {
         return reservationService.findByUserId(userId, params);
     }

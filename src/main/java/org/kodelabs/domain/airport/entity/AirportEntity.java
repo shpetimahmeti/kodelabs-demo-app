@@ -1,10 +1,12 @@
 package org.kodelabs.domain.airport.entity;
 
 import org.kodelabs.domain.airport.model.Location;
+import org.kodelabs.domain.common.annotation.SortableField;
 import org.kodelabs.domain.common.entity.BaseEntity;
 
 public class AirportEntity extends BaseEntity {
     private String name;
+    @SortableField
     private String iata;
     private String icao;
     private String city;
