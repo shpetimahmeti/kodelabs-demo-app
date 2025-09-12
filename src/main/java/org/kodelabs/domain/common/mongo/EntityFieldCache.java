@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common.util;
+package org.kodelabs.domain.common.mongo;
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 

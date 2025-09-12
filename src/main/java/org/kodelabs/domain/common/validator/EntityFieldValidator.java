@@ -3,7 +3,7 @@ package org.kodelabs.domain.common.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.kodelabs.domain.common.annotation.ValidEntityField;
-import org.kodelabs.domain.common.util.EntityFieldCache;
+import org.kodelabs.domain.common.mongo.EntityFieldCache;
 
 import java.util.Set;
 
