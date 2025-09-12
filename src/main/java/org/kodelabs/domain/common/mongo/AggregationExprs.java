@@ -3,9 +3,15 @@ package org.kodelabs.domain.common.mongo;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.util.List;
+
 public final class AggregationExprs {
 
     private AggregationExprs() {
+    }
+
+    public static Document arrayElemAt(Object array, int index) {
+        return new Document("$arrayElemAt", List.of(array, index));
     }
 
     public static Document elemMatch(Document document) {

@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static org.kodelabs.domain.common.mongo.AggregationExprs.arrayElemAt;
 import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.__COUNT;
 import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.ITEMS;
 import static org.kodelabs.domain.common.util.Fields.AggregationFacetResultFields.TOTAL_COUNT;
@@ -132,7 +133,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
                 ),
                 Aggregates.project(
                         new Document(ITEMS, 1)
-                                .append(TOTAL_COUNT, new Document("$arrayElemAt", List.of(asFieldRef(TOTAL_COUNT__COUNT), 0)))
+                                .append(TOTAL_COUNT, arrayElemAt(asFieldRef(TOTAL_COUNT__COUNT), 0))
                 )
         );
 
