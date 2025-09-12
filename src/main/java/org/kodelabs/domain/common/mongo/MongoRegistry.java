@@ -35,11 +35,13 @@ public class MongoRegistry {
         this.nonReactiveClient = nonReactiveClient;
 
         collections.put(AirportEntity.class, client.getDatabase(databaseName).getCollection(airportCollectionName, AirportEntity.class));
-        collections.put(FlightEntity.class, client.getDatabase(databaseName).getCollection(flightCollectionName, FlightEntity.class));
-        collections.put(ReservationEntity.class, client.getDatabase(databaseName).getCollection(reservationCollectionName, ReservationEntity.class));
-
         nonReactiveCollections.put(AirportEntity.class, nonReactiveClient.getDatabase(databaseName).getCollection(airportCollectionName, AirportEntity.class));
+
+        collections.put(FlightEntity.class, client.getDatabase(databaseName).getCollection(flightCollectionName, FlightEntity.class));
         nonReactiveCollections.put(FlightEntity.class, nonReactiveClient.getDatabase(databaseName).getCollection(flightCollectionName, FlightEntity.class));
+
+        collections.put(ReservationEntity.class, client.getDatabase(databaseName).getCollection(reservationCollectionName, ReservationEntity.class));
+        nonReactiveCollections.put(ReservationEntity.class, nonReactiveClient.getDatabase(databaseName).getCollection(reservationCollectionName, ReservationEntity.class));
     }
 
     @SuppressWarnings("unchecked")
