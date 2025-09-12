@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.util.List;
 
-import static org.kodelabs.domain.common.util.Fields.ID;
+import static org.kodelabs.domain.common.mongo.Fields.ID;
 
 @ApplicationScoped
 public class FixtureLoaderService {

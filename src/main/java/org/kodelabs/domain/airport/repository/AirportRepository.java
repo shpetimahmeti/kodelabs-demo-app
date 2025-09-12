@@ -10,7 +10,7 @@ import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 
-import static org.kodelabs.domain.common.util.Fields.AirportFields.IATA;
+import static org.kodelabs.domain.common.mongo.Fields.AirportFields.IATA;
 
 @ApplicationScoped
 public class AirportRepository extends BaseRepository<AirportEntity> {

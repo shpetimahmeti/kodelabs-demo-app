@@ -8,7 +8,7 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import org.kodelabs.domain.airport.entity.AirportEntity;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
-import org.kodelabs.domain.common.util.Fields;
+import org.kodelabs.domain.common.mongo.Fields;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 

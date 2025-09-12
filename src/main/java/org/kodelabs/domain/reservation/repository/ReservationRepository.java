@@ -9,8 +9,8 @@ import org.kodelabs.domain.common.dto.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 
-import static org.kodelabs.domain.common.util.Fields.ID;
-import static org.kodelabs.domain.common.util.Fields.ReservationFields.USER_ID;
+import static org.kodelabs.domain.common.mongo.Fields.ID;
+import static org.kodelabs.domain.common.mongo.Fields.ReservationFields.USER_ID;
 
 @ApplicationScoped
 public class ReservationRepository extends BaseRepository<ReservationEntity> {

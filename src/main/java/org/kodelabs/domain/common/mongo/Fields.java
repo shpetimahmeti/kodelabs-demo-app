@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common.util;
+package org.kodelabs.domain.common.mongo;
 
 public class Fields {
 

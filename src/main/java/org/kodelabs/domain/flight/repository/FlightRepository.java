@@ -33,21 +33,21 @@ import java.util.Set;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.inc;
 import static com.mongodb.client.model.Updates.set;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.ARRIVAL_TIME;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.AVAILABLE_SEATS_COUNT;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.CONNECTIONS__TO__IATA;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.DEPARTURE_TIME;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.FLIGHT_COLLECTION_NAME;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.FROM__IATA;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.SEATS;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.SEAT_NUMBER;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.STATUS;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.TO__IATA;
-import static org.kodelabs.domain.common.util.Fields.FlightFields.__AVAILABLE;
-import static org.kodelabs.domain.common.util.Fields.ID;
-import static org.kodelabs.domain.common.util.Fields.asFieldRef;
-import static org.kodelabs.domain.common.util.Fields.positionalField;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.ARRIVAL_TIME;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.AVAILABLE_SEATS_COUNT;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.CONNECTIONS;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.CONNECTIONS__TO__IATA;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.DEPARTURE_TIME;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.FLIGHT_COLLECTION_NAME;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.FROM__IATA;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.SEATS;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.SEAT_NUMBER;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.STATUS;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.TO__IATA;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.__AVAILABLE;
+import static org.kodelabs.domain.common.mongo.Fields.ID;
+import static org.kodelabs.domain.common.mongo.Fields.asFieldRef;
+import static org.kodelabs.domain.common.mongo.Fields.positionalField;
 
 @ApplicationScoped
 public class FlightRepository extends BaseRepository<FlightEntity> {

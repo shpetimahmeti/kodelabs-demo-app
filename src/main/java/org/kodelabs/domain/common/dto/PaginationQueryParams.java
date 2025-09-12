@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Min;
 import org.kodelabs.domain.common.annotation.ValidEntityField;
 import org.kodelabs.domain.common.entity.BaseEntity;
 
-import static org.kodelabs.domain.common.util.Fields.ID;
+import static org.kodelabs.domain.common.mongo.Fields.ID;
 
 public class PaginationQueryParams {
 
