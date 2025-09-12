@@ -16,6 +16,7 @@ import org.kodelabs.domain.flight.repository.FlightRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,27 +47,30 @@ public class FlightService {
                                                                              String destIata,
                                                                              LocalDate departureDateMin,
                                                                              LocalDate departureDateMax) {
-
-        //TODO sort by price
         return repository.findConnectionsFromOriginToDestination(
-                originIata,
-                destIata,
-                departureDateMin,
-                departureDateMax).onItem().transformToMultiAndMerge(flightWithConnections -> {
+                        originIata,
+                        destIata,
+                        departureDateMin,
+                        departureDateMax).onItem().transformToMultiAndMerge(flightWithConnections -> {
 
-            Map<String, List<FlightEntity>> entitiesGraph = buildGraph(flightWithConnections);
+                    Map<String, List<FlightEntity>> entitiesGraph = buildGraph(flightWithConnections);
 
-            List<List<FlightEntity>> fullPathsFromOriginToDest = new ArrayList<>();
+                    List<List<FlightEntity>> fullPathsFromOriginToDest = new ArrayList<>();
 
-            findPathsRecursive(originIata, destIata, entitiesGraph, new ArrayList<>(), fullPathsFromOriginToDest);
+                    findPathsRecursive(originIata, destIata, entitiesGraph, new ArrayList<>(), fullPathsFromOriginToDest);
 
 
-            List<FlightRouteResponse> routes = fullPathsFromOriginToDest.stream().map(
-                    fullPath -> FlightMapper.buildFlightRouteResponse(originIata, destIata, fullPath)
-            ).toList();
+                    List<FlightRouteResponse> routes = fullPathsFromOriginToDest.stream().map(
+                            fullPath -> FlightMapper.buildFlightRouteResponse(originIata, destIata, fullPath)
+                    ).toList();
 
-            return Multi.createFrom().iterable(routes);
-        });
+                    return Multi.createFrom().iterable(routes);
+                }).collect().asList()
+                .onItem().transform(sortedRoutes -> {
+                    sortedRoutes.sort(Comparator.comparingInt(FlightRouteResponse::getTotalPrice));
+                    return sortedRoutes;
+                })
+                .onItem().transformToMulti(Multi.createFrom()::iterable);
     }
 
     private Map<String, List<FlightEntity>> buildGraph(FlightWithConnections flightWithConnections) {
