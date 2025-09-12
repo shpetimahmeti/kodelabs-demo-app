@@ -32,8 +32,7 @@ public class FlightResource {
     public Uni<FlightDTO> findByObjectId(@PathParam("id") String id) {
         return flightService.findOneByObjectId(id);
     }
-
-    //TODO use instant directly?
+    
     @GET
     @Path("/routes")
     public Uni<List<FlightRouteResponse>> findRoutes(@Valid @BeanParam RouteSearchParams params) {
