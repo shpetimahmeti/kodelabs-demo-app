@@ -58,3 +58,4 @@ Thumbs.db
 # =========================
 # Dev mode generated files
 /dev/
+quarkus-cli-catalog.json
