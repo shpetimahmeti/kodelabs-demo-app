@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common.transaction;
+package org.kodelabs.domain.common.mongo;
 
 import com.mongodb.reactivestreams.client.ClientSession;
 import io.quarkus.mongodb.reactive.ReactiveMongoClient;

@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common.dto;
+package org.kodelabs.domain.common.pagination;
 
 import java.util.List;
 

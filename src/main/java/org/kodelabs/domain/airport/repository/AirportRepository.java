@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.kodelabs.domain.airport.entity.AirportEntity;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
-import org.kodelabs.domain.common.dto.PaginationFacetResult;
+import org.kodelabs.domain.common.pagination.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 
 import static org.kodelabs.domain.common.mongo.Fields.AirportFields.IATA;

@@ -5,7 +5,7 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
-import org.kodelabs.domain.common.dto.PaginationFacetResult;
+import org.kodelabs.domain.common.pagination.PaginationFacetResult;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 

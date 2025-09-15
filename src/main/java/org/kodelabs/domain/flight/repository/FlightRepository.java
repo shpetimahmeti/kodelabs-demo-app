@@ -16,7 +16,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.kodelabs.domain.common.mongo.AggregationExprs;
+import org.kodelabs.domain.common.mongo.util.AggregationExprs;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;

@@ -14,8 +14,8 @@ import org.kodelabs.domain.airport.dto.AirportDTO;
 import org.kodelabs.domain.airport.entity.AirportEntity;
 import org.kodelabs.domain.airport.service.AirportService;
 import org.kodelabs.domain.common.annotation.ValidSortField;
-import org.kodelabs.domain.common.dto.PaginatedResponse;
-import org.kodelabs.domain.common.dto.PaginationQueryParams;
+import org.kodelabs.domain.common.pagination.dto.PaginatedResponse;
+import org.kodelabs.domain.common.pagination.dto.PaginationQueryParams;
 
 @Path("/airports")
 @Produces(MediaType.APPLICATION_JSON)

@@ -3,9 +3,9 @@ package org.kodelabs.domain.common.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.kodelabs.domain.common.annotation.ValidSortField;
-import org.kodelabs.domain.common.dto.PaginationQueryParams;
+import org.kodelabs.domain.common.pagination.dto.PaginationQueryParams;
 import org.kodelabs.domain.common.entity.BaseEntity;
-import org.kodelabs.domain.common.mongo.EntityFieldCache;
+import org.kodelabs.domain.common.mongo.util.EntityFieldCache;
 
 import java.util.Set;
 

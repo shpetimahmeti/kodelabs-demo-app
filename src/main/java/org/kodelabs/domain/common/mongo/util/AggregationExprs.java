@@ -1,4 +1,4 @@
-package org.kodelabs.domain.common.mongo;
+package org.kodelabs.domain.common.mongo.util;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;

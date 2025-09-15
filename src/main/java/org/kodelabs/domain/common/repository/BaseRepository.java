@@ -21,7 +21,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.kodelabs.domain.common.entity.BaseEntity;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
-import org.kodelabs.domain.common.dto.PaginationFacetResult;
+import org.kodelabs.domain.common.pagination.PaginationFacetResult;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-import static org.kodelabs.domain.common.mongo.AggregationExprs.arrayElemAt;
+import static org.kodelabs.domain.common.mongo.util.AggregationExprs.arrayElemAt;
 import static org.kodelabs.domain.common.mongo.Fields.AggregationFacetResultFields.__COUNT;
 import static org.kodelabs.domain.common.mongo.Fields.AggregationFacetResultFields.ITEMS;
 import static org.kodelabs.domain.common.mongo.Fields.AggregationFacetResultFields.TOTAL_COUNT;
