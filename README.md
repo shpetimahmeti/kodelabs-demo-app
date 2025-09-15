@@ -12,6 +12,17 @@ You can run your application in dev mode that enables live coding using:
 ./mvnw quarkus:dev
 ```
 
+- Provide the MongoDB connection string (including the password) via the environment variable:
+  ```bash
+  export MONGO_CONNECTION_STRING_WITH_PASSWORD="mongodb://user:password@host:port/database"
+  ``` 
+  The environment variable can also be set in your IDE’s run configuration.
+  
+
+- Swagger UI is enabled for testing the endpoints:
+
+   ```http://localhost:{port}/q/swagger-ui```
+
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
 
 ## Packaging and running the application
