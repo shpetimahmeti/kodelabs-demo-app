@@ -2,6 +2,7 @@ package org.kodelabs.domain.common.repository;
 
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Facet;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+import static org.kodelabs.domain.common.mongo.Fields.ID;
 import static org.kodelabs.domain.common.mongo.util.AggregationExprs.arrayElemAt;
 import static org.kodelabs.domain.common.mongo.Fields.AggregationFacetResultFields.__COUNT;
 import static org.kodelabs.domain.common.mongo.Fields.AggregationFacetResultFields.ITEMS;
@@ -57,6 +59,11 @@ public abstract class BaseRepository<T extends BaseEntity> {
                 fromProviders(PojoCodecProvider.builder().automatic(true).build())
         );
         this.codec = pojoRegistry.get(entityClass);
+    }
+
+    public Uni<UpdateResult> updateOne(ClientSession session, T entity) {
+        entity.setUpdatedAt(Instant.now());
+        return collection.replaceOne(session, Filters.eq(ID, entity.get_id()), entity);
     }
 
     public Uni<UpdateResult> updateOne(ClientSession session, Bson filter, Bson update) {
