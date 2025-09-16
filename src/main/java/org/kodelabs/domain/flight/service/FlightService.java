@@ -4,6 +4,7 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.kodelabs.domain.flight.dto.FlightAvailabilityResponse;
 import org.kodelabs.domain.flight.dto.FlightDTO;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
@@ -12,6 +13,7 @@ import org.kodelabs.domain.flight.entity.FlightEntity;
 import org.kodelabs.domain.flight.exception.FlightNotFoundException;
 import org.kodelabs.domain.flight.exception.InvalidFlightStatusTransitionException;
 import org.kodelabs.domain.flight.mapper.FlightMapper;
+import org.kodelabs.domain.flight.model.Seat;
 import org.kodelabs.domain.flight.repository.FlightRepository;
 
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class FlightService {
@@ -28,9 +31,33 @@ public class FlightService {
     FlightRepository repository;
 
     public Uni<FlightDTO> findOneByObjectId(String objectId) {
-        return repository.findOneByObjectId(objectId)
-                .onItem().ifNull().failWith(() -> new FlightNotFoundException(objectId))
-                .onItem().transform(FlightMapper::toDto);
+        return findOneByFlightId(objectId).onItem().transform(FlightMapper::toDto);
+    }
+
+    public Uni<FlightAvailabilityResponse> getSeatAvailability(String objectId) {
+        return findOneByFlightId(objectId).onItem().ifNotNull().transform(flight -> {
+
+            Map<String, List<Seat>> grouped = flight.getSeats().stream()
+                    .collect(Collectors.groupingBy(Seat::getSeatClass));
+
+            List<FlightAvailabilityResponse.SeatAvailability> seatClasses =
+                    grouped.entrySet().stream()
+                            .map(entry -> {
+                                String seatClass = entry.getKey();
+                                List<Seat> seats = entry.getValue();
+
+                                int total = seats.size();
+                                int booked = (int) seats.stream().filter(s -> !s.isAvailable()).count();
+                                int available = total - booked;
+
+                                return new FlightAvailabilityResponse.SeatAvailability(
+                                        seatClass, total, booked, available
+                                );
+                            })
+                            .toList();
+
+            return new FlightAvailabilityResponse(flight.get_id(), seatClasses);
+        });
     }
 
     public Uni<FlightDTO> updateFlightStatus(String id, UpdateFlightStatusRequest request) {
@@ -87,6 +114,7 @@ public class FlightService {
         return graph;
     }
 
+    //TODO add depth
     private static void findPathsRecursive(
             String current,
             String end,
@@ -111,5 +139,9 @@ public class FlightService {
                 currentPath.removeLast();
             }
         }
+    }
+
+    private Uni<FlightEntity> findOneByFlightId(String objectId) {
+        return repository.findOneByObjectId(objectId).onItem().ifNull().failWith(() -> new FlightNotFoundException(objectId));
     }
 }

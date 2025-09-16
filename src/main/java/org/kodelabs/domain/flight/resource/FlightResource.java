@@ -11,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.kodelabs.domain.flight.dto.FlightAvailabilityResponse;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
 import org.kodelabs.domain.flight.dto.UpdateFlightStatusRequest;
 import org.kodelabs.domain.flight.service.FlightService;
@@ -31,6 +32,12 @@ public class FlightResource {
     @Path("/{id}")
     public Uni<FlightDTO> findByObjectId(@PathParam("id") String id) {
         return flightService.findOneByObjectId(id);
+    }
+
+    @GET
+    @Path("/{id}/availability")
+    public Uni<FlightAvailabilityResponse> getSeatAvailability(@PathParam("id") String id) {
+        return flightService.getSeatAvailability(id);
     }
     
     @GET
