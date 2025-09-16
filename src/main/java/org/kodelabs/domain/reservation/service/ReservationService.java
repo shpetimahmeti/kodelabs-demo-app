@@ -10,11 +10,15 @@ import org.kodelabs.domain.common.mongo.TransactionService;
 import org.kodelabs.domain.flight.repository.FlightRepository;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationDTO;
+import org.kodelabs.domain.reservation.dto.ReservationsPerDayResponse;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.exception.ReservationNotFoundException;
 import org.kodelabs.domain.reservation.exception.SeatNotAvailableException;
 import org.kodelabs.domain.reservation.mapper.ReservationMapper;
 import org.kodelabs.domain.reservation.repository.ReservationRepository;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @ApplicationScoped
 public class ReservationService {
@@ -37,6 +41,10 @@ public class ReservationService {
         return reservationRepository.findByUserId(userId, params.page, params.size, params.sortField, params.ascending)
                 .map(result ->
                         PaginationMapper.toPaginatedResponse(result, params.page, params.size, ReservationMapper::toDto));
+    }
+
+    public Uni<List<ReservationsPerDayResponse>> getReservationsPerDay(LocalDate from, LocalDate to) {
+        return reservationRepository.countReservationsPerDay(from, to);
     }
 
     public Uni<ReservationDTO> createReservation(CreateReservationDTO reservationDTO) {

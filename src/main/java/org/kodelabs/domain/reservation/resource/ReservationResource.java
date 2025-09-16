@@ -1,5 +1,6 @@
 package org.kodelabs.domain.reservation.resource;
 
+import io.smallrye.common.constraint.NotNull;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -10,14 +11,19 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.common.annotation.ValidSortField;
 import org.kodelabs.domain.common.pagination.dto.PaginatedResponse;
 import org.kodelabs.domain.common.pagination.dto.PaginationQueryParams;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationDTO;
+import org.kodelabs.domain.reservation.dto.ReservationsPerDayResponse;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.service.ReservationService;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Path("/reservations")
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,6 +37,13 @@ public class ReservationResource {
     @Path("/{id}")
     public Uni<ReservationDTO> findByObjectId(@PathParam("id") String id) {
         return reservationService.findByObjectId(id);
+    }
+
+    @GET
+    @Path("/per-day")
+    public Uni<List<ReservationsPerDayResponse>> reservationsPerDay(@QueryParam("from") @NotNull LocalDate from,
+                                                                    @QueryParam("to") @NotNull LocalDate to) {
+        return reservationService.getReservationsPerDay(from, to);
     }
 
     @POST
