@@ -13,6 +13,7 @@ import org.kodelabs.domain.reservation.dto.ReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationsPerDayResponse;
 import org.kodelabs.domain.reservation.dto.TopUserReservationsResponse;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
+import org.kodelabs.domain.reservation.enums.ReservationStatus;
 import org.kodelabs.domain.reservation.exception.ReservationNotFoundException;
 import org.kodelabs.domain.reservation.exception.SeatNotAvailableException;
 import org.kodelabs.domain.reservation.mapper.ReservationMapper;
@@ -34,8 +35,7 @@ public class ReservationService {
     TransactionService transactionService;
 
     public Uni<ReservationDTO> findByObjectId(String id) {
-        return reservationRepository.findByObjectId(id)
-                .onItem().ifNull().failWith(new ReservationNotFoundException(id)).map(ReservationMapper::toDto);
+        return findById(id).map(ReservationMapper::toDto);
     }
 
     public Uni<PaginatedResponse<ReservationDTO>> findByUserId(String userId, PaginationQueryParams params) {
@@ -55,6 +55,7 @@ public class ReservationService {
     public Uni<ReservationDTO> createReservation(CreateReservationDTO reservationDTO) {
         return transactionService.inTransaction((session -> {
             ReservationEntity entity = ReservationMapper.toEntity(reservationDTO);
+            entity.setStatusEnum(ReservationStatus.PENDING);
 
             return flightRepository
                     .reserveSeat(session, reservationDTO.flightId, reservationDTO.seatNumber)
@@ -66,5 +67,22 @@ public class ReservationService {
                         return reservationRepository.insertOne(session, entity).replaceWith(entity).map(ReservationMapper::toDto);
                     });
         }));
+    }
+
+    public Uni<ReservationDTO> cancelReservation(String id) {
+        return transactionService.inTransaction(session ->
+                findById(id).flatMap(reservation -> {
+                    reservation.setStatusEnum(ReservationStatus.CANCELLED);
+
+                    return flightRepository
+                            .releaseSeat(session, reservation.getFlightId(), reservation.getSeatNumber())
+                            .flatMap(r -> reservationRepository.updateOne(session, reservation))
+                            .map(r -> ReservationMapper.toDto(reservation));
+                })
+        );
+    }
+
+    private Uni<ReservationEntity> findById(String id) {
+        return reservationRepository.findByObjectId(id).onItem().ifNull().failWith(new ReservationNotFoundException(id));
     }
 }

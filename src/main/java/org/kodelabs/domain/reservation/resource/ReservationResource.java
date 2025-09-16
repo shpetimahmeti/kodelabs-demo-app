@@ -59,6 +59,12 @@ public class ReservationResource {
         return reservationService.createReservation(reservationDTO);
     }
 
+    @POST
+    @Path("/{id}/cancel")
+    public Uni<ReservationDTO> cancelReservation(@PathParam("id") String id) {
+        return reservationService.cancelReservation(id);
+    }
+
     @GET
     @Path("/users/{userId}")
     public Uni<PaginatedResponse<ReservationDTO>> findByUserId(@PathParam("userId") String userId,
