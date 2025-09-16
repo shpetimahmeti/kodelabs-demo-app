@@ -23,6 +23,7 @@ public class ReservationMapper {
         dto.setSeatNumber(entity.getSeatNumber());
         dto.setUserId(entity.getUserId());
         dto.setBookingDate(entity.createdAt);
+        dto.setStatus(entity.getStatusEnum());
 
         return dto;
     }
