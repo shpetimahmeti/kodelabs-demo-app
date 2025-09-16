@@ -96,6 +96,20 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
         return findOneAndUpdateWithOptions(filter, Updates.combine(updates), options);
     }
 
+    public Uni<UpdateResult> releaseSeat(ClientSession session, String flightId, String seatNumber) {
+        Document filter = new Document(ID, flightId)
+                .append(SEATS, AggregationExprs.elemMatch(
+                        new Document(SEAT_NUMBER, seatNumber)
+                ));
+
+        Bson update = combine(
+                set(positionalField(SEATS, __AVAILABLE), true),
+                inc(AVAILABLE_SEATS_COUNT, 1)
+        );
+
+        return updateOne(session, filter, update);
+    }
+
     public Uni<FlightEntity> findOneByObjectId(String id) {
         return find(Filters.eq(ID, id)).collect().first();
     }
