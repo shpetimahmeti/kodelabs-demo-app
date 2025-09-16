@@ -11,6 +11,7 @@ import org.kodelabs.domain.flight.repository.FlightRepository;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationsPerDayResponse;
+import org.kodelabs.domain.reservation.dto.TopUserReservationsResponse;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.exception.ReservationNotFoundException;
 import org.kodelabs.domain.reservation.exception.SeatNotAvailableException;
@@ -45,6 +46,10 @@ public class ReservationService {
 
     public Uni<List<ReservationsPerDayResponse>> getReservationsPerDay(LocalDate from, LocalDate to) {
         return reservationRepository.countReservationsPerDay(from, to);
+    }
+
+    public Uni<List<TopUserReservationsResponse>> getTopUsers(int limit) {
+        return reservationRepository.findTopUsers(limit);
     }
 
     public Uni<ReservationDTO> createReservation(CreateReservationDTO reservationDTO) {

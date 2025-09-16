@@ -38,6 +38,10 @@ public class Fields {
         public static final String TOTAL_COUNT__COUNT = TOTAL_COUNT + "." + __COUNT;
     }
 
+    public static class AggregationFields {
+        public static final String COUNT_FIELD = "count";
+    }
+
     public static String asFieldRef(String fieldName) {
         return "$" + fieldName;
     }

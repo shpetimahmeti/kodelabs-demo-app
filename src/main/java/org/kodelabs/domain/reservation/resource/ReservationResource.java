@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -19,6 +20,7 @@ import org.kodelabs.domain.common.pagination.dto.PaginationQueryParams;
 import org.kodelabs.domain.reservation.dto.CreateReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationDTO;
 import org.kodelabs.domain.reservation.dto.ReservationsPerDayResponse;
+import org.kodelabs.domain.reservation.dto.TopUserReservationsResponse;
 import org.kodelabs.domain.reservation.entity.ReservationEntity;
 import org.kodelabs.domain.reservation.service.ReservationService;
 
@@ -44,6 +46,12 @@ public class ReservationResource {
     public Uni<List<ReservationsPerDayResponse>> reservationsPerDay(@QueryParam("from") @NotNull LocalDate from,
                                                                     @QueryParam("to") @NotNull LocalDate to) {
         return reservationService.getReservationsPerDay(from, to);
+    }
+
+    @GET
+    @Path("/top")
+    public Uni<List<TopUserReservationsResponse>> getTopUsers(@QueryParam("limit") @DefaultValue("10") int limit) {
+        return reservationService.getTopUsers(limit);
     }
 
     @POST
