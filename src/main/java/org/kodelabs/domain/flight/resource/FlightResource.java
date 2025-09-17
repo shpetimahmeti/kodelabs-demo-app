@@ -3,15 +3,19 @@ package org.kodelabs.domain.flight.resource;
 import io.smallrye.mutiny.Uni;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import jakarta.ws.rs.BeanParam;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import org.kodelabs.domain.flight.dto.AverageDelayResponse;
+import org.kodelabs.domain.flight.dto.DelayTrendResult;
 import org.kodelabs.domain.flight.dto.FlightAvailabilityResponse;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
 import org.kodelabs.domain.flight.dto.UpdateFlightStatusRequest;
@@ -68,6 +72,15 @@ public class FlightResource {
     @Path("/avg-delay/flight-number")
     public Uni<List<AverageDelayResponse>> avgDelayByRoute() {
         return flightService.getAverageDelaysByFlightNumber();
+    }
+
+    @GET
+    @Path("/delays")
+    public Uni<List<DelayTrendResult>> getDelayTrends(@QueryParam("unit")
+                                                      @DefaultValue("DAYS")
+                                                      @Pattern(regexp = "DAYS|WEEKS|MONTHS", message = "unit must be one of: DAYS, WEEKS, MONTHS")
+                                                      String unit) {
+        return flightService.getDelayTrendsOverTime(unit);
     }
 }
 

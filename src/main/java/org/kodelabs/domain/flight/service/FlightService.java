@@ -4,7 +4,9 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.BadRequestException;
 import org.kodelabs.domain.flight.dto.AverageDelayResponse;
+import org.kodelabs.domain.flight.dto.DelayTrendResult;
 import org.kodelabs.domain.flight.dto.FlightAvailabilityResponse;
 import org.kodelabs.domain.flight.dto.FlightDTO;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
@@ -18,6 +20,7 @@ import org.kodelabs.domain.flight.model.Seat;
 import org.kodelabs.domain.flight.repository.FlightRepository;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -83,6 +86,17 @@ public class FlightService {
 
     public Uni<List<AverageDelayResponse>> getAverageDelaysByAirline() {
         return repository.getAverageDelays(AIRLINE);
+    }
+
+    public Uni<List<DelayTrendResult>> getDelayTrendsOverTime(String unit) {
+        ChronoUnit chronoUnit = switch (unit.toUpperCase()) {
+            case "DAYS" -> ChronoUnit.DAYS;
+            case "WEEKS" -> ChronoUnit.WEEKS;
+            case "MONTHS" -> ChronoUnit.MONTHS;
+            default -> throw new BadRequestException("Invalid unit: " + unit);
+        };
+
+        return repository.getDelayTrendsOverTime(chronoUnit);
     }
 
     public Multi<FlightRouteResponse> findConnectionsFromOriginToDestination(String originIata,

@@ -22,6 +22,7 @@ import org.kodelabs.domain.common.mongo.util.AggregationExprs;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.repository.BaseRepository;
 import org.kodelabs.domain.flight.dto.AverageDelayResponse;
+import org.kodelabs.domain.flight.dto.DelayTrendResult;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 import org.kodelabs.domain.flight.enums.FlightStatus;
@@ -29,6 +30,7 @@ import org.kodelabs.domain.flight.validation.FlightStatusUpdateValidator;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -168,6 +170,45 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
                         doc.getString(ID),
                         doc.getDouble("avgDepartureDelay"),
                         doc.getDouble("avgArrivalDelay")
+                ))
+                .collect().asList();
+    }
+
+    public Uni<List<DelayTrendResult>> getDelayTrendsOverTime(ChronoUnit unit) {
+        String dateFormat;
+        switch (unit) {
+            case DAYS -> dateFormat = "%Y-%m-%d";
+            case WEEKS -> dateFormat = "%Y-%U";
+            case MONTHS -> dateFormat = "%Y-%m";
+            default -> throw new IllegalArgumentException("Unsupported unit: " + unit);
+        }
+
+        List<Bson> pipeline = List.of(
+                Aggregates.match(Filters.gte(DELAYED_COUNT, 1)),
+                Aggregates.project(Projections.fields(
+                        Projections.computed("departureDelay",
+                                new Document("$dateDiff", new Document("startDate", asFieldRef(DEPARTURE_TIME))
+                                        .append("endDate", asFieldRef(ACTUAL_DEPARTURE_TIME))
+                                        .append("unit", "minute"))),
+                        Projections.computed("bucket",
+                                new Document("$dateToString",
+                                        new Document("format", dateFormat)
+                                                .append("date", asFieldRef(DEPARTURE_TIME))))
+                )),
+                Aggregates.group("$bucket",
+                        Accumulators.avg("avgDepartureDelay", "$departureDelay"),
+                        Accumulators.sum("totalDepartureDelay", "$departureDelay"),
+                        Accumulators.sum("delayCount", 1)
+                ),
+                Aggregates.sort(Sorts.ascending(ID))
+        );
+
+        return withDocumentClass(Document.class, pipeline)
+                .map(doc -> new DelayTrendResult(
+                        doc.getString(ID),
+                        doc.getInteger("delayCount"),
+                        doc.getDouble("avgDepartureDelay"),
+                        doc.getLong("totalDepartureDelay")
                 ))
                 .collect().asList();
     }
