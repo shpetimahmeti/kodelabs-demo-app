@@ -1,10 +1,12 @@
 package org.kodelabs.domain.flight.repository;
 
+import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Field;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.GraphLookupOptions;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.ReturnDocument;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
@@ -19,6 +21,7 @@ import org.bson.conversions.Bson;
 import org.kodelabs.domain.common.mongo.util.AggregationExprs;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.common.repository.BaseRepository;
+import org.kodelabs.domain.flight.dto.AverageDelayResponse;
 import org.kodelabs.domain.flight.dto.FlightWithConnections;
 import org.kodelabs.domain.flight.entity.FlightEntity;
 import org.kodelabs.domain.flight.enums.FlightStatus;
@@ -126,6 +129,47 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
 
     public Uni<FlightEntity> findOneByObjectId(String id) {
         return find(Filters.eq(ID, id)).collect().first();
+    }
+
+    public Uni<List<AverageDelayResponse>> getAverageDelays(String groupByField) {
+        List<Bson> pipeline = new ArrayList<>();
+
+        pipeline.add(Aggregates.match(Filters.and(
+                Filters.exists(ACTUAL_DEPARTURE_TIME, true),
+                Filters.exists(ACTUAL_ARRIVAL_TIME, true)
+        )));
+
+        // 2. Project delays in minutes
+        pipeline.add(Aggregates.project(Projections.fields(
+                Projections.computed("groupKey", asFieldRef(groupByField)),
+                Projections.computed("departureDelay",
+                        new Document("$divide", List.of(
+                                new Document("$subtract", List.of(asFieldRef(ACTUAL_DEPARTURE_TIME), asFieldRef(DEPARTURE_TIME))),
+                                1000 * 60
+                        ))),
+                Projections.computed("arrivalDelay",
+                        new Document("$divide", List.of(
+                                new Document("$subtract", List.of(asFieldRef(ACTUAL_ARRIVAL_TIME), asFieldRef(ARRIVAL_TIME))),
+                                1000 * 60
+                        )))
+        )));
+
+        // 3. Group and average
+        pipeline.add(Aggregates.group("$groupKey",
+                Accumulators.avg("avgDepartureDelay", "$departureDelay"),
+                Accumulators.avg("avgArrivalDelay", "$arrivalDelay")
+        ));
+
+        // 4. Sort by biggest delays
+        pipeline.add(Aggregates.sort(Sorts.descending("avgDepartureDelay")));
+
+        return withDocumentClass(Document.class, pipeline)
+                .map(doc -> new AverageDelayResponse(
+                        doc.getString(ID),
+                        doc.getDouble("avgDepartureDelay"),
+                        doc.getDouble("avgArrivalDelay")
+                ))
+                .collect().asList();
     }
 
     public Multi<FlightWithConnections> findConnectionsFromOriginToDestination(String originIata,

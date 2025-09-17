@@ -11,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.kodelabs.domain.flight.dto.AverageDelayResponse;
 import org.kodelabs.domain.flight.dto.FlightAvailabilityResponse;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
 import org.kodelabs.domain.flight.dto.UpdateFlightStatusRequest;
@@ -39,7 +40,7 @@ public class FlightResource {
     public Uni<FlightAvailabilityResponse> getSeatAvailability(@PathParam("id") String id) {
         return flightService.getSeatAvailability(id);
     }
-    
+
     @GET
     @Path("/routes")
     public Uni<List<FlightRouteResponse>> findRoutes(@Valid @BeanParam RouteSearchParams params) {
@@ -54,6 +55,19 @@ public class FlightResource {
     @Path("/{id}/status")
     public Uni<FlightDTO> updateFlightStatus(@PathParam("id") String id, @Valid UpdateFlightStatusRequest request) {
         return flightService.updateFlightStatus(id, request);
+    }
+
+    //METRICS
+    @GET
+    @Path("/avg-delay/airline")
+    public Uni<List<AverageDelayResponse>> avgDelayByAirline() {
+        return flightService.getAverageDelaysByAirline();
+    }
+
+    @GET
+    @Path("/avg-delay/flight-number")
+    public Uni<List<AverageDelayResponse>> avgDelayByRoute() {
+        return flightService.getAverageDelaysByFlightNumber();
     }
 }
 

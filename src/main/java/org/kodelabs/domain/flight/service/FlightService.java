@@ -4,6 +4,7 @@ import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.kodelabs.domain.flight.dto.AverageDelayResponse;
 import org.kodelabs.domain.flight.dto.FlightAvailabilityResponse;
 import org.kodelabs.domain.flight.dto.FlightDTO;
 import org.kodelabs.domain.flight.dto.FlightRouteResponse;
@@ -23,6 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.AIRLINE;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.PUBLISHED_FLIGHT_NUMBER;
 
 @ApplicationScoped
 public class FlightService {
@@ -71,6 +75,14 @@ public class FlightService {
                 )
                 .onItem().ifNull().failWith(() -> new InvalidFlightStatusTransitionException(request.getStatus().toValue()))
                 .map(FlightMapper::toDto);
+    }
+
+    public Uni<List<AverageDelayResponse>> getAverageDelaysByFlightNumber() {
+        return repository.getAverageDelays(PUBLISHED_FLIGHT_NUMBER);
+    }
+
+    public Uni<List<AverageDelayResponse>> getAverageDelaysByAirline() {
+        return repository.getAverageDelays(AIRLINE);
     }
 
     public Multi<FlightRouteResponse> findConnectionsFromOriginToDestination(String originIata,
