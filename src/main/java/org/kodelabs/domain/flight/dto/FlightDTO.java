@@ -9,6 +9,7 @@ import java.util.List;
 
 public class FlightDTO extends BaseDTO {
 
+    private String airline;
     private String publishedFlightNumber;
     private String operatingFlightNumber;
     private Place from;
@@ -144,5 +145,13 @@ public class FlightDTO extends BaseDTO {
 
     public void setActualArrivalTime(Instant actualArrivalTime) {
         this.actualArrivalTime = actualArrivalTime;
+    }
+
+    public String getAirline() {
+        return airline;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
     }
 }

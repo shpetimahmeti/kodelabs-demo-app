@@ -9,6 +9,7 @@ import java.util.List;
 
 public class FlightEntity extends BaseEntity {
 
+    private String airline;
     private String publishedFlightNumber;
     private String operatingFlightNumber;
     private Place from;
@@ -159,5 +160,13 @@ public class FlightEntity extends BaseEntity {
 
     public void setActualArrivalTime(Instant actualArrivalTime) {
         this.actualArrivalTime = actualArrivalTime;
+    }
+
+    public String getAirline() {
+        return airline;
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
     }
 }

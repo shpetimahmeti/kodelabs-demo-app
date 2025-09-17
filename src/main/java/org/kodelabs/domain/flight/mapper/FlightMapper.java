@@ -13,6 +13,7 @@ public class FlightMapper {
         FlightDTO dto = new FlightDTO();
 
         dto.setId(flight.get_id());
+        dto.setAirline(flight.getAirline());
         dto.setPublishedFlightNumber(flight.getPublishedFlightNumber());
         dto.setOperatingFlightNumber(flight.getOperatingFlightNumber());
         dto.setFrom(flight.getFrom());
