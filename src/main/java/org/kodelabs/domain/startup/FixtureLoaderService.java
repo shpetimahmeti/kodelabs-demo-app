@@ -11,6 +11,7 @@ import jakarta.inject.Inject;
 import org.kodelabs.domain.airport.entity.AirportEntity;
 import org.kodelabs.domain.common.mongo.MongoRegistry;
 import org.kodelabs.domain.flight.entity.FlightEntity;
+import org.kodelabs.domain.reservation.entity.ReservationEntity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,16 +31,20 @@ public class FixtureLoaderService {
 
     MongoCollection<FlightEntity> flightCollection;
     MongoCollection<AirportEntity> airportCollection;
+    MongoCollection<ReservationEntity> reservationCollection;
 
     public void onStart(@Observes StartupEvent ev) {
         this.flightCollection = mongoRegistry.getNonReactiveCollection(FlightEntity.class);
         this.airportCollection = mongoRegistry.getNonReactiveCollection(AirportEntity.class);
+        this.reservationCollection = mongoRegistry.getNonReactiveCollection(ReservationEntity.class);
 
         try (InputStream flightIs = getClass().getResourceAsStream("/fixtures/flights.json");
              InputStream airportsIs = getClass().getResourceAsStream("/fixtures/airports.json");
+             InputStream reservationsIs = getClass().getResourceAsStream("/fixtures/reservations.json")
         ) {
             populateFlights(flightIs);
             populateAirportCollection(airportsIs);
+            populateReservationCollection(reservationsIs);
 
         } catch (Exception ex) {
             throw new RuntimeException("Failed to load json file", ex);
@@ -82,7 +87,6 @@ public class FixtureLoaderService {
                 .without(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
                 .readValue(airportsIs);
 
-
         for (AirportEntity airport : airportEntities) {
             airport.createdAt = Instant.now();
             airport.updatedAt = Instant.now();
@@ -92,6 +96,27 @@ public class FixtureLoaderService {
                 System.out.println("Inserted airport " + airport.get_id());
             } else {
                 System.out.println("Skipping duplicate airport " + airport.get_id());
+            }
+        }
+    }
+
+    private void populateReservationCollection(InputStream reservationIs) throws IOException {
+        if (reservationIs == null) {
+            throw new IllegalStateException("Reservation.json not found");
+        }
+
+        List<ReservationEntity> ReservationEntity = objectMapper
+                .readerFor(new TypeReference<List<ReservationEntity>>() {
+                })
+                .without(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+                .readValue(reservationIs);
+
+        for (ReservationEntity reservation : ReservationEntity) {
+            if (reservationCollection.find(new org.bson.Document(ID, reservation.get_id())).first() == null) {
+                reservationCollection.insertOne(reservation);
+                System.out.println("Inserted reservation " + reservation.get_id());
+            } else {
+                System.out.println("Skipping duplicate reservation " + reservation.get_id());
             }
         }
     }
