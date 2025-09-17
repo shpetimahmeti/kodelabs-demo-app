@@ -322,5 +322,14 @@
     "userId": "user36",
     "createdAt": "2025-08-29T09:37:00.000Z",
     "updatedAt": "2025-08-31T04:18:00.000Z"
+  },
+  {
+    "_id": "68ca9defdc07b856ac61d2bc",
+    "flightId": "68b6f6afb62afdce01bcad23",
+    "seatNumber": "1A",
+    "status": "CONFIRMED",
+    "userId": "user1",
+    "createdAt": "2025-08-29T09:50:00.000Z",
+    "updatedAt": "2025-08-31T04:28:00.000Z"
   }
 ]
