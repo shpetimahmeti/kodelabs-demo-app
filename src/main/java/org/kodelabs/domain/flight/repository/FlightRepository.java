@@ -33,10 +33,13 @@ import java.util.Set;
 import static com.mongodb.client.model.Updates.combine;
 import static com.mongodb.client.model.Updates.inc;
 import static com.mongodb.client.model.Updates.set;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.ACTUAL_ARRIVAL_TIME;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.ACTUAL_DEPARTURE_TIME;
 import static org.kodelabs.domain.common.mongo.Fields.FlightFields.ARRIVAL_TIME;
 import static org.kodelabs.domain.common.mongo.Fields.FlightFields.AVAILABLE_SEATS_COUNT;
 import static org.kodelabs.domain.common.mongo.Fields.FlightFields.CONNECTIONS;
 import static org.kodelabs.domain.common.mongo.Fields.FlightFields.CONNECTIONS__TO__IATA;
+import static org.kodelabs.domain.common.mongo.Fields.FlightFields.DELAYED_COUNT;
 import static org.kodelabs.domain.common.mongo.Fields.FlightFields.DEPARTURE_TIME;
 import static org.kodelabs.domain.common.mongo.Fields.FlightFields.FLIGHT_COLLECTION_NAME;
 import static org.kodelabs.domain.common.mongo.Fields.FlightFields.FROM__IATA;
@@ -72,7 +75,9 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
     public Uni<FlightEntity> updateFlightStatus(String flightId,
                                                 FlightStatus newStatus,
                                                 Instant newArrivalTime,
-                                                Instant newDepartureTime) {
+                                                Instant newDepartureTime,
+                                                Instant actualDepartureTime,
+                                                Instant actualArrivalTime) {
         Set<FlightStatus> allowedPrevStatuses = FlightStatusUpdateValidator.allowedPreviousStatuses(newStatus);
 
         Bson filter = Filters.and(
@@ -90,6 +95,15 @@ public class FlightRepository extends BaseRepository<FlightEntity> {
             if (newArrivalTime != null) {
                 updates.add(set(ARRIVAL_TIME, newArrivalTime));
             }
+            updates.add(inc(DELAYED_COUNT, 1));
+        }
+
+        if (newStatus == FlightStatus.DEPARTED) {
+            updates.add(set(ACTUAL_DEPARTURE_TIME, actualDepartureTime));
+        }
+
+        if (newStatus == FlightStatus.LANDED) {
+            updates.add(set(ACTUAL_ARRIVAL_TIME, actualArrivalTime));
         }
 
         FindOneAndUpdateOptions options = new FindOneAndUpdateOptions().returnDocument(ReturnDocument.AFTER);

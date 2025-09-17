@@ -64,8 +64,11 @@ public class FlightService {
         return repository.updateFlightStatus(
                         id,
                         request.getStatus(),
-                        request.getNewArrivalTime(),
-                        request.getNewDepartureTime())
+                        request.getNewPlannedArrivalTime(),
+                        request.getNewPlannedDepartureTime(),
+                        request.getActualDepartureTime(),
+                        request.getActualArrivalTime()
+                )
                 .onItem().ifNull().failWith(() -> new InvalidFlightStatusTransitionException(request.getStatus().toValue()))
                 .map(FlightMapper::toDto);
     }

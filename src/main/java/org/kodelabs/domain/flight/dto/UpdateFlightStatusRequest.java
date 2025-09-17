@@ -12,9 +12,11 @@ public class UpdateFlightStatusRequest {
     @NotNull
     private FlightStatus status;
 
-    private Instant newDepartureTime;
-    private Instant newArrivalTime;
+    private Instant newPlannedDepartureTime;
+    private Instant newPlannedArrivalTime;
 
+    private Instant actualDepartureTime;
+    private Instant actualArrivalTime;
 
     public FlightStatus getStatus() {
         return status;
@@ -24,19 +26,35 @@ public class UpdateFlightStatusRequest {
         this.status = status;
     }
 
-    public Instant getNewDepartureTime() {
-        return newDepartureTime;
+    public Instant getNewPlannedDepartureTime() {
+        return newPlannedDepartureTime;
     }
 
-    public void setNewDepartureTime(Instant newDepartureTime) {
-        this.newDepartureTime = newDepartureTime;
+    public void setNewPlannedDepartureTime(Instant newPlannedDepartureTime) {
+        this.newPlannedDepartureTime = newPlannedDepartureTime;
     }
 
-    public Instant getNewArrivalTime() {
-        return newArrivalTime;
+    public Instant getNewPlannedArrivalTime() {
+        return newPlannedArrivalTime;
     }
 
-    public void setNewArrivalTime(Instant newArrivalTime) {
-        this.newArrivalTime = newArrivalTime;
+    public void setNewPlannedArrivalTime(Instant newPlannedArrivalTime) {
+        this.newPlannedArrivalTime = newPlannedArrivalTime;
+    }
+
+    public Instant getActualArrivalTime() {
+        return actualArrivalTime;
+    }
+
+    public void setActualArrivalTime(Instant actualArrivalTime) {
+        this.actualArrivalTime = actualArrivalTime;
+    }
+
+    public Instant getActualDepartureTime() {
+        return actualDepartureTime;
+    }
+
+    public void setActualDepartureTime(Instant actualDepartureTime) {
+        this.actualDepartureTime = actualDepartureTime;
     }
 }

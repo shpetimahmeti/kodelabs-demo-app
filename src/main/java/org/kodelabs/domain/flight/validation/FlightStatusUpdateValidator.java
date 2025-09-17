@@ -28,10 +28,22 @@ public class FlightStatusUpdateValidator implements ConstraintValidator<ValidFli
 
     public static void validateTimesValuesPresenceForDelayedFlights(UpdateFlightStatusRequest request) {
         if (request.getStatus() == FlightStatus.DELAYED) {
-            if (request.getNewDepartureTime() == null && request.getNewArrivalTime() == null) {
+            if (request.getNewPlannedDepartureTime() == null && request.getNewPlannedArrivalTime() == null) {
                 throw new IllegalArgumentException("Delayed flights must have updated times");
             }
         }
+        if (request.getStatus() == FlightStatus.DEPARTED) {
+            if (request.getActualDepartureTime() == null) {
+                throw new IllegalArgumentException("Departed flights must have actual departure time set");
+            }
+        }
+
+        if (request.getStatus() == FlightStatus.LANDED) {
+            if (request.getActualArrivalTime() == null) {
+                throw new IllegalArgumentException("Landed flights must have actual arrival time set");
+            }
+        }
+
     }
 
     public static Set<FlightStatus> allowedPreviousStatuses(FlightStatus newStatus) {
