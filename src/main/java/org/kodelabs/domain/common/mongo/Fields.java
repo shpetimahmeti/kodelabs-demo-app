@@ -13,9 +13,12 @@ public class Fields {
         public static final String DEPARTURE_TIME = "departureTime";
         public static final String FLIGHT_COLLECTION_NAME = "flights";
         public static final String STATUS = "status";
+        public static final String ACTUAL_DEPARTURE_TIME = "actualDepartureTime";
+        public static final String ACTUAL_ARRIVAL_TIME = "actualArrivalTime";
         public static final String SEAT_NUMBER = "seatNumber";
         public static final String AVAILABLE_SEATS_COUNT = "availableSeatsCount";
         public static final String SEATS = "seats";
+        public static final String DELAYED_COUNT = "delayedCount";
 
         public static final String CONNECTIONS = "connections";
         public static final String CONNECTIONS__TO__IATA = "connections.to.iata";
