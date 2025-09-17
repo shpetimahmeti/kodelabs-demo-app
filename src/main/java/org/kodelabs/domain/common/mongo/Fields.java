@@ -7,6 +7,7 @@ public class Fields {
     public static final String UPDATED_AT = "updatedAt";
 
     public static class FlightFields {
+        public static final String AIRLINE = "airline";
         public static final String FROM__IATA = "from.iata";
         public static final String TO__IATA = "to.iata";
         public static final String ARRIVAL_TIME = "arrivalTime";
@@ -19,6 +20,7 @@ public class Fields {
         public static final String AVAILABLE_SEATS_COUNT = "availableSeatsCount";
         public static final String SEATS = "seats";
         public static final String DELAYED_COUNT = "delayedCount";
+        public static final String PUBLISHED_FLIGHT_NUMBER = "publishedFlightNumber";
 
         public static final String CONNECTIONS = "connections";
         public static final String CONNECTIONS__TO__IATA = "connections.to.iata";
