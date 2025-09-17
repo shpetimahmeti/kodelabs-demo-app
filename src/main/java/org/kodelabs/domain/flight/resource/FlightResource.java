@@ -61,7 +61,7 @@ public class FlightResource {
         return flightService.updateFlightStatus(id, request);
     }
 
-    //METRICS
+    //METRICS - TODO add from - to date params
     @GET
     @Path("/avg-delay/airline")
     public Uni<List<AverageDelayResponse>> avgDelayByAirline() {
