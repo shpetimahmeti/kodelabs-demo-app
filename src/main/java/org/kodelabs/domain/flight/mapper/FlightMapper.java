@@ -26,6 +26,9 @@ public class FlightMapper {
         dto.setAvailableSeatsCount(flight.getAvailableSeatsCount());
         dto.setSeats(flight.getSeats());
         dto.setPrice(flight.getPrice());
+        dto.setDelayedCount(flight.getDelayedCount());
+        dto.setActualDepartureTime(flight.getActualDepartureTime());
+        dto.setActualArrivalTime(flight.getActualArrivalTime());
 
         return dto;
     }

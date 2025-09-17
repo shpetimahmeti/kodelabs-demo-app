@@ -21,6 +21,9 @@ public class FlightEntity extends BaseEntity {
     private int availableSeatsCount;
     private List<Seat> seats;
     private int price;
+    private int delayedCount = 0;
+    private Instant actualDepartureTime;
+    private Instant actualArrivalTime;
 
     public String getPublishedFlightNumber() {
         return publishedFlightNumber;
@@ -132,5 +135,29 @@ public class FlightEntity extends BaseEntity {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getDelayedCount() {
+        return delayedCount;
+    }
+
+    public void setDelayedCount(int delayedCount) {
+        this.delayedCount = delayedCount;
+    }
+
+    public Instant getActualDepartureTime() {
+        return actualDepartureTime;
+    }
+
+    public void setActualDepartureTime(Instant actualDepartureTime) {
+        this.actualDepartureTime = actualDepartureTime;
+    }
+
+    public Instant getActualArrivalTime() {
+        return actualArrivalTime;
+    }
+
+    public void setActualArrivalTime(Instant actualArrivalTime) {
+        this.actualArrivalTime = actualArrivalTime;
     }
 }

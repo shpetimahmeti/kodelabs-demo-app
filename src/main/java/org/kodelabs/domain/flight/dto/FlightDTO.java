@@ -14,13 +14,17 @@ public class FlightDTO extends BaseDTO {
     private Place from;
     private Place to;
     private Instant departureTime;
+    private Instant actualDepartureTime;
     private Instant arrivalTime;
+    private Instant actualArrivalTime;
+
     private String aircraftRegistration;
     private String aircraftType;
     private String status;
     private int availableSeatsCount;
     private List<Seat> seats;
     private int price;
+    private int delayedCount;
 
     public String getPublishedFlightNumber() {
         return publishedFlightNumber;
@@ -116,5 +120,29 @@ public class FlightDTO extends BaseDTO {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getDelayedCount() {
+        return delayedCount;
+    }
+
+    public void setDelayedCount(int delayedCount) {
+        this.delayedCount = delayedCount;
+    }
+
+    public Instant getActualDepartureTime() {
+        return actualDepartureTime;
+    }
+
+    public void setActualDepartureTime(Instant actualDepartureTime) {
+        this.actualDepartureTime = actualDepartureTime;
+    }
+
+    public Instant getActualArrivalTime() {
+        return actualArrivalTime;
+    }
+
+    public void setActualArrivalTime(Instant actualArrivalTime) {
+        this.actualArrivalTime = actualArrivalTime;
     }
 }
